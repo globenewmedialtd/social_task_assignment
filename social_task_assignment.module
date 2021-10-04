@@ -1,0 +1,89 @@
+<?php
+
+use Drupal\node\NodeInterface;
+use Drupal\Core\Render\Element;
+
+/**
+ * @file
+ * Primary module hooks for Social Task Assignment module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+ /**
+ * Implements hook_ENTITY_TYPE_insert() for node entities.
+ *
+ * This inserts task assignments when task has been created.
+ *
+ * @see \Drupal\node\Tests\NodeSaveTest::testNodeSaveOnInsert()
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function social_task_assignment_theme() {
+  $theme['node__task__task_submission'] = [
+    'template' => 'node--task--task-submission',
+    'base hook' => 'node'
+  ];
+
+  $theme['task_assignment'] = [
+    'render element' => 'elements',
+    'template' => 'task-assignment'
+  ];
+
+  return $theme;
+}
+
+/**
+ * Prepares variables for entityname entity templates.
+ */
+function social_task_assignment_preprocess_task_assignment(&$variables) {
+  // Helpful $entityname variable for templates.
+  //$variables['task_assignment'] = [];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+
+  $entity = $variables['elements']['#task_assignment'];
+
+  $variables['feedback'] = \Drupal::service('entity.form_builder')->getForm($entity, 'feedback');
+
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function social_task_assignment_entity_type_alter(array &$entity_types) {
+  // We get all form modes, for all entities, and loop through them.
+  $form_modes = \Drupal::service('entity_display.repository')->getAllFormModes();
+  foreach ($form_modes as $entity_type => $display_modes) {
+    if ($entity_type !== 'task_assignment') {
+      // We are only interested in adding a handler to the Task assignment entity.
+      continue;
+    }
+
+    $entity_type = $entity_types[$entity_type];
+    foreach ($display_modes as $machine_name => $form_display) {
+      if ($machine_name !== 'feedback') {
+        // We are only interested in adding this form mode to the definition.
+        continue;
+      }
+      // We get the default handler class. It will be enough for us.
+      $default_handler_class = $entity_type->getHandlerClasses()['form']['default'];
+      // We set the form class, keyed by the machine name of our custom form mode.
+      $entity_type->setFormClass($machine_name, $default_handler_class);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+

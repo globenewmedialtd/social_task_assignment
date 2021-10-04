@@ -1,0 +1,22 @@
+uuid: eb9d58f1-04b3-4c1d-995d-b27ceec66109
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_submission_date
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.field_submission_date
+field_name: field_submission_date
+entity_type: task_assignment
+bundle: task_assignment
+label: 'Submission date'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1633318253
+default_value_callback: ''
+settings: {  }
+field_type: timestamp

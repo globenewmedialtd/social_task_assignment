@@ -1,0 +1,23 @@
+{#
+/**
+ * @file task_assignment.html.twig
+ * Default theme implementation to present task assignment data.
+ *
+ * This template is used when viewing Task assignment pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_task_assignment()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('task_assignment') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+  {{ feedback }}
+</div>

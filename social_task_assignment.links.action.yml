@@ -1,0 +1,5 @@
+entity.task_assignment.add_form:
+  route_name: entity.task_assignment.add_form
+  title: 'Add Task assignment'
+  appears_on:
+    - entity.task_assignment.collection

@@ -1,0 +1,28 @@
+uuid: 18f92615-274a-431a-ba43-a1585a00dc4c
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_task_assignment
+    - system
+  theme:
+    - socialblue
+_core:
+  default_config_hash: cYLX7yyHHtiOjVmUAwtMFIFAC2MZWzvgIX_IJb0CcuM
+id: groupaddtaskblock
+theme: socialblue
+region: complementary_top
+weight: -32
+provider: null
+plugin: group_add_task_block
+settings:
+  id: group_add_task_block
+  label: 'Group add task block'
+  provider: social_task_assignment
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '/group/*/tasks'
+    negate: false
+    context_mapping: {  }

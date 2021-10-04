@@ -1,0 +1,29 @@
+uuid: 68060251-7048-47a3-8c6b-dbc7e8e2fe6c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_account
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.field_account
+field_name: field_account
+entity_type: task_assignment
+bundle: task_assignment
+label: Account
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:user'
+  handler_settings:
+    include_anonymous: false
+    filter:
+      type: _none
+    target_bundles: null
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

@@ -1,0 +1,25 @@
+uuid: bbac2f2a-443b-437b-b8d6-1d89fa4ada0f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.task
+  module:
+    - text
+_core:
+  default_config_hash: Gzyll41jaY6DTP48tYkCBxDF5JBYP6n1t0OV6VoVA38
+id: node.task.body
+field_name: body
+entity_type: node
+bundle: task
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

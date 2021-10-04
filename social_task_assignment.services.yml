@@ -1,0 +1,13 @@
+services:
+  social_task_assignment_access.route_subscriber:
+    class: Drupal\social_task_assignment\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+
+  social_task_assignment_access.check_access:
+    class: Drupal\social_task_assignment\Access\SocialTaskAssignmentAccessCheck
+    tags:
+      - { name: access_check, applies_to: _social_task_assignment_custom_access }
+  social_task_assignment.status_helper:
+    class: Drupal\social_task_assignment\SocialTaskAssignmentStatusHelper
+    arguments: ['@current_route_match', '@entity_type.manager', '@current_user', '@config.factory']

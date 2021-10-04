@@ -1,0 +1,20 @@
+uuid: 1ed85d62-6601-4293-b202-820a12d19217
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+_core:
+  default_config_hash: PcuWm1dAAf9RhsYME-bXEE-fct6qlMkL4xl7xRWj3tk
+name: Task
+type: task
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,7 @@
+social_task_assignment.settings_form:
+  path: '/admin/config/system/social-task-assignment'
+  defaults:
+    _title: 'Social Task Assignment settings'
+    _form: 'Drupal\social_task_assignment\Form\SettingsForm'
+  requirements:
+    _permission: 'administer social_task_assignment configuration'

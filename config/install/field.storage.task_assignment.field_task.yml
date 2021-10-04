@@ -1,0 +1,20 @@
+uuid: a8dea7d1-9b66-4de9-a299-64d43a7a981e
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - social_task_assignment
+id: task_assignment.field_task
+field_name: field_task
+entity_type: task_assignment
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,29 @@
+uuid: 0e2a9294-2d02-4ced-b520-41ff8a4c61c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_task
+    - node.type.task
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.field_task
+field_name: field_task
+entity_type: task_assignment
+bundle: task_assignment
+label: Task
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      task: task
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

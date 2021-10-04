@@ -1,0 +1,7 @@
+social_task_assignment.settings:
+  type: config_object
+  label: 'Social Task Assignment Settings'
+  mapping:
+    group_member_sync:
+      type: boolean
+      label: 'Group member sync'

@@ -1,0 +1,55 @@
+uuid: 1dfa5eaf-8966-4dc2-80eb-1445339c2bf9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.task_assignment.task_assignment.field_account
+    - field.field.task_assignment.task_assignment.field_due_date
+    - field.field.task_assignment.task_assignment.field_feedback
+    - field.field.task_assignment.task_assignment.field_status
+    - field.field.task_assignment.task_assignment.field_submission_date
+    - field.field.task_assignment.task_assignment.field_submissions
+    - field.field.task_assignment.task_assignment.field_task
+    - field.field.task_assignment.task_assignment.field_webform_submissions
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.default
+targetEntityType: task_assignment
+bundle: task_assignment
+mode: default
+content:
+  field_feedback:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_submission_date:
+    weight: 0
+    label: above
+    settings:
+      date_format: medium
+      custom_date_format: ''
+      timezone: ''
+    third_party_settings: {  }
+    type: timestamp
+    region: content
+  field_webform_submissions:
+    weight: 1
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+hidden:
+  field_account: true
+  field_due_date: true
+  field_status: true
+  field_submissions: true
+  field_task: true
+  name: true
+  search_api_excerpt: true
+  user_id: true

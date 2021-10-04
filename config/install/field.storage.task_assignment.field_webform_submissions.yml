@@ -1,0 +1,20 @@
+uuid: 4634f594-dc07-47ff-8f12-1b240504f37f
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_task_assignment
+    - webform
+id: task_assignment.field_webform_submissions
+field_name: field_webform_submissions
+entity_type: task_assignment
+type: entity_reference
+settings:
+  target_type: webform_submission
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

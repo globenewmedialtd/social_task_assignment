@@ -1,0 +1,29 @@
+uuid: 9c9e4817-d130-4fdc-9ea4-449b74c7c098
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_webform_submissions
+    - webform.webform.default
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.field_webform_submissions
+field_name: field_webform_submissions
+entity_type: task_assignment
+bundle: task_assignment
+label: 'Webform Submissions'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:webform_submission'
+  handler_settings:
+    target_bundles:
+      default: default
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

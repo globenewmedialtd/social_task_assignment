@@ -1,0 +1,10 @@
+uuid: 916d1ed4-3742-49d2-b8ed-7459f0286d01
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_task_assignment
+id: task_assignment.feedback
+label: feedback
+targetEntityType: task_assignment
+cache: true

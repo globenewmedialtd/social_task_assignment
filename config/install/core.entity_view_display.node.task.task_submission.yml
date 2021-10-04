@@ -1,0 +1,113 @@
+uuid: fbb75e0d-8d8b-428e-98fd-a8487de61e55
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.task_submission
+    - field.field.node.task.body
+    - field.field.node.task.field_content_visibility
+    - field.field.node.task.field_webform
+    - node.type.task
+  module:
+    - layout_builder
+    - user
+    - webform
+third_party_settings:
+  layout_builder:
+    allow_custom: false
+    enabled: false
+_core:
+  default_config_hash: yfE28n1e2VRL2MRbFhBnI9-4DVIYrpvlo9Z9Hu42yKQ
+id: node.task.task_submission
+targetEntityType: node
+bundle: task
+mode: task_submission
+content:
+  field_webform:
+    weight: 9
+    label: hidden
+    settings:
+      source_entity: true
+    third_party_settings: {  }
+    type: webform_entity_reference_entity_view
+    region: content
+  groups_type_closed_group:
+    label: above
+    weight: 0
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_flexible_group:
+    label: above
+    weight: 1
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_fsadfdasf:
+    label: above
+    weight: 2
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_open_group:
+    label: above
+    weight: 3
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_public_group:
+    label: above
+    weight: 4
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_secret_group:
+    label: above
+    weight: 5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_super:
+    label: above
+    weight: 6
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_tm_community:
+    label: above
+    weight: 7
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_tm_training:
+    label: above
+    weight: 8
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+hidden:
+  body: true
+  field_content_visibility: true
+  flag_follow_content: true
+  groups: true
+  links: true
+  search_api_excerpt: true
+  social_tagging: true

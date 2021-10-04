@@ -1,0 +1,21 @@
+uuid: 293e15f3-17ff-4a1d-b001-b3a8a3610092
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_due_date
+  module:
+    - datetime
+    - social_task_assignment
+id: task_assignment.task_assignment.field_due_date
+field_name: field_due_date
+entity_type: task_assignment
+bundle: task_assignment
+label: 'Due date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

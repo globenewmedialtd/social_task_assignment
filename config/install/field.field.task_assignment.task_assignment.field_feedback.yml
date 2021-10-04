@@ -1,0 +1,20 @@
+uuid: caf5a4a4-04f0-4f93-b728-892292018e62
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_feedback
+  module:
+    - social_task_assignment
+id: task_assignment.task_assignment.field_feedback
+field_name: field_feedback
+entity_type: task_assignment
+bundle: task_assignment
+label: Feedback
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

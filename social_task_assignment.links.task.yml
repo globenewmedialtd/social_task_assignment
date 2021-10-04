@@ -1,0 +1,26 @@
+# Event enrollment routing definition
+task_assignment.settings_tab:
+  route_name: task_assignment.settings
+  title: 'Settings'
+  base_route: task_assignment.settings
+entity.task_assignment.canonical:
+  route_name: entity.task_assignment.canonical
+  base_route: entity.task_assignment.canonical
+  title: 'View'
+
+entity.task_assignment.edit_form:
+  route_name: entity.task_assignment.edit_form
+  base_route: entity.task_assignment.canonical
+  title: Edit
+
+entity.task_assignment.delete_form:
+  route_name:  entity.task_assignment.delete_form
+  base_route:  entity.task_assignment.canonical
+  title: Delete
+  weight: 10
+
+social_group.tasks:
+  route_name: view.group_tasks.page_group_tasks
+  base_route: entity.group.canonical
+  title: 'Tasks'
+  weight: 40

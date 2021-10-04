@@ -1,0 +1,27 @@
+uuid: e1b558af-1e93-4d2c-b985-41387b37d8c0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_webform
+    - node.type.task
+  module:
+    - webform
+_core:
+  default_config_hash: ySr4RKqEVVrCTQmzh6l0cr1Hp8y7SkwN1qnzER9RXqU
+id: node.task.field_webform
+field_name: field_webform
+entity_type: node
+bundle: task
+label: Webform
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:webform'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: webform

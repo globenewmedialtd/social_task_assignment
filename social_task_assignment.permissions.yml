@@ -1,0 +1,24 @@
+administer social_task_assignment configuration:
+  title: 'Administer social_task_assignment configuration'
+  description: 'Optional description.'
+  restrict access: true
+
+add task assignment entities:
+  title: 'Create new Task assignment entities'
+
+administer task assignment entities:
+  title: 'Administer Task assignment entities'
+  description: 'Allow to access the administration form to configure Task assignment entities.'
+  restrict access: true
+
+delete task assignment entities:
+  title: 'Delete Task assignment entities'
+
+edit task assignment entities:
+  title: 'Edit Task assignment entities'
+
+view published task assignment entities:
+  title: 'View published Task assignment entities'
+
+view unpublished task assignment entities:
+  title: 'View unpublished Task assignment entities'

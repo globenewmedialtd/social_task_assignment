@@ -1,0 +1,10 @@
+social_task_assignment.settings_form:
+  title: Social Task Assignment
+  description: Configure Social Task Assignment.  
+  route_name: social_task_assignment.settings_form
+  parent: social_core.admin.config.social
+task_assignment.admin.structure.settings:
+  title: Task assignment settings
+  description: 'Configure Task assignment entities'
+  route_name: task_assignment.settings
+  parent: system.admin_structure
