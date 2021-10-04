@@ -8,13 +8,12 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_feedback
     - field.field.task_assignment.task_assignment.field_status
     - field.field.task_assignment.task_assignment.field_submission_date
-    - field.field.task_assignment.task_assignment.field_submissions
     - field.field.task_assignment.task_assignment.field_task
     - field.field.task_assignment.task_assignment.field_webform_submissions
   module:
     - datetime
-    - link
     - social_task_assignment
+    - text
 id: task_assignment.task_assignment.default
 targetEntityType: task_assignment
 bundle: task_assignment
@@ -37,26 +36,18 @@ content:
     type: datetime_default
     region: content
   field_feedback:
-    weight: 6
+    weight: 10
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textarea
+    type: text_textarea
     region: content
   field_submission_date:
-    weight: 9
+    weight: 11
     settings: {  }
     third_party_settings: {  }
-    type: datetime_timestamp
-    region: content
-  field_submissions:
-    weight: 5
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
-    type: link_default
+    type: datetime_default
     region: content
   field_task:
     weight: 4

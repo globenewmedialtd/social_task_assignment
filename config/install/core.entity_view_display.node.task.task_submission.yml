@@ -9,13 +9,8 @@ dependencies:
     - field.field.node.task.field_webform
     - node.type.task
   module:
-    - layout_builder
     - user
     - webform
-third_party_settings:
-  layout_builder:
-    allow_custom: false
-    enabled: false
 _core:
   default_config_hash: yfE28n1e2VRL2MRbFhBnI9-4DVIYrpvlo9Z9Hu42yKQ
 id: node.task.task_submission

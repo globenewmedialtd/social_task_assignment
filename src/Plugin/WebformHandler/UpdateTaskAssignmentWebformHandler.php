@@ -156,8 +156,8 @@ class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
     // and status field.
     if ($assignment = array_pop($task_assignment)) {
       $submissions = [$submission_id];
-      $timestamnp_current = \Drupal::time()->getCurrentTime();
-      $assignment->set('field_submission_date',$timestamnp_current);
+      $current = date('Y-m-d\TH:i:s', time());
+      $assignment->set('field_submission_date',$current);
       $assignment->set('field_status','submitted');
       $assignment->set('field_webform_submissions',$submissions);
       $assignment->save();  

@@ -1,25 +1,25 @@
-uuid: f2a57500-b1a1-4153-9343-7553193dc3bf
+uuid: 36f02ae2-093d-4a47-9e8b-888c728ee47f
 langcode: en
 status: true
 dependencies:
   config:
-    - views.view.task_show_webform
+    - views.view.task_feedback
   module:
     - system
     - views
   theme:
     - socialblue
-id: views_block__task_show_webform_block_1
+id: views_block__task_feedback_block_1
 theme: socialblue
 region: content
-weight: -24
+weight: 0
 provider: null
-plugin: 'views_block:task_show_webform-block_1'
+plugin: 'views_block:task_feedback-block_1'
 settings:
-  id: 'views_block:task_show_webform-block_1'
+  id: 'views_block:task_feedback-block_1'
   label: ''
   provider: views
-  label_display: '0'
+  label_display: visible
   views_label: ''
   items_per_page: none
   type: none
@@ -27,6 +27,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '/node/*/edit'
+    pages: "/node/*/edit\r\n/node/*/delete"
     negate: true
     context_mapping: {  }

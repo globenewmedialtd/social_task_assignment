@@ -1,0 +1,6 @@
+services:
+  social_task_assignment_vbo.route_subscriber:
+    class: Drupal\social_task_assignment_vbo\EventSubscriber\RouteSubscriber
+    arguments: ['@module_handler']
+    tags:
+      - { name: 'event_subscriber' }

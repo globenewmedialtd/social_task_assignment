@@ -79,6 +79,36 @@ function social_task_assignment_entity_type_alter(array &$entity_types) {
   }
 }
 
+/**
+ * Return the Task from a given page.
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|null
+ *   The event or NULL if nothing found.
+ */
+function social_task_assignment_get_current_task() {
+  $task = &drupal_static(__FUNCTION__);
+
+  if (!isset($task)) {
+    $node = \Drupal::service('current_route_match')->getParameter('node');
+
+    if ($node !== NULL && (!$node instanceof NodeInterface)) {
+      $node = Node::load($node);
+    }
+
+    if ($node instanceof NodeInterface && $node->getType() === 'task') {
+      $task = $node;
+    }
+
+    // If we don't have a task then we can go back to NULL.
+    if (!isset($event)) {
+      $task = NULL;
+    }
+  }
+
+  return $task;
+}
+
+
 
 
 

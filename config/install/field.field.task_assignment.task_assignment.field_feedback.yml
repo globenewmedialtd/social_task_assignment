@@ -1,4 +1,4 @@
-uuid: caf5a4a4-04f0-4f93-b728-892292018e62
+uuid: 3d4b72d2-3e6b-41f5-b30b-99355d799782
 langcode: en
 status: true
 dependencies:
@@ -6,6 +6,7 @@ dependencies:
     - field.storage.task_assignment.field_feedback
   module:
     - social_task_assignment
+    - text
 id: task_assignment.task_assignment.field_feedback
 field_name: field_feedback
 entity_type: task_assignment
@@ -17,4 +18,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string_long
+field_type: text_long

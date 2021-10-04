@@ -1,0 +1,319 @@
+<?php
+
+/**
+ * @file
+ * Contains social_task_assignment.module.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultForbidden;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\social_task_assignment\TaskAssignmentInterface;
+use Drupal\user\Entity\User;
+use Drupal\views\ViewExecutable;
+use Drupal\social_task_assignment\Entity\TaskAssignment;
+use Drupal\views_bulk_operations\ViewsBulkOperationsBatch;
+
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function social_task_assignment_vbo_views_data_alter(array &$data) {
+  // Create our own views VBO field for task assignments.
+  $data['views']['social_views_bulk_operations_bulk_form_assignments'] = [
+    'title' => t('Social Views bulk operations for Assignments'),
+    'help' => t("Process assignments returned by the view with Views Bulk Operations' actions."),
+    'field' => [
+      'id' => 'social_views_bulk_operations_bulk_form_assignments',
+    ],
+  ];
+}
+
+
+/**
+ * Implements hook_entity_access().
+ */
+function social_event_managers_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
+  // Event Manager & Organizers can view/delete/edit enrollments for events
+  // they are organizing.
+  if ($entity instanceof EventEnrollmentInterface) {
+    if (social_event_manager_or_organizer()) {
+      return AccessResult::allowedIf($entity instanceof EventEnrollmentInterface);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function social_task_assignment_vbo_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Make sure we pass along the ccorrect view id, display id and node
+  // parameter to our custom views bulk forms and redirects.
+  if (isset($form['views_bulk_operations_bulk_form']) && isset($form['output'][0]['#view'])) {
+    $view = &$form['output'][0]['#view'];
+
+    if ($view instanceof ViewExecutable) {
+      $view_id = $view->id();
+      $display_id = $view->current_display;
+    }
+  }
+  elseif (isset($form['social_views_bulk_operations_bulk_form_assignments_1']) && isset($form['output'][0]['#view'])) {
+    $view = &$form['output'][0]['#view'];
+
+    if ($view instanceof ViewExecutable) {
+      $view_id = $view->id();
+      $display_id = $view->current_display;
+    }
+  }
+  elseif ($form_id === 'views_bulk_operations_configure_action') {
+    $data = $form_state->get('views_bulk_operations');
+    $view_id = $data['view_id'];
+    $display_id = $data['display_id'];
+  }
+
+  if (isset($view_id) && $view_id === 'manage_all_task_assignments' && $display_id === 'page_1') {
+    $form_state->set('node', \Drupal::routeMatch()->getRawParameter('node'));
+
+    if ($form_id === 'views_bulk_operations_configure_action') {
+      $callbacks = &$form['actions']['submit']['#submit'];
+    }
+    else {
+      $callbacks = &$form['#submit'];
+    }
+
+    $callbacks[] = '_social_task_assignment_vbo_views_bulk_operations_bulk_form_submit';
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function social_task_assignment_vbo_form_node_task_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // On task edit node form we check if users can alter author.
+  $node = \Drupal::routeMatch()->getParameter('node');
+
+  // Not on newly created nodes so we check if there is a route match for a node
+  // object.
+  if ($node) {
+    // Get the current user.
+    $user = \Drupal::currentUser();
+
+    // Remove authoring information for everybody on node event edit form.
+    $form['author']['#access'] = FALSE;
+
+    // Check for permission. Otherwise you can't change the author.
+    // Unless you are the author / have the right permissions.
+    if ($user->hasPermission('administer nodes') || $user->id() == $node->getOwnerId()) {
+      $form['author']['#access'] = TRUE;
+    }
+  }
+}
+
+/**
+ * Implements hook_batch_alter().
+ */
+function social_task_assignment_vbo_batch_alter(&$batch) {
+  if (!isset($batch['source_url'])) {
+    return;
+  }
+
+  $actions = [
+    'social_task_assignment_vbo_export_assignment_action',
+    'social_task_assignment_vbo_send_email_action',
+    'social_task_assignment_vbo_delete_task_assignment_action',
+  ];
+
+  /** @var \Drupal\Core\Url $url */
+  $url = &$batch['source_url'];
+
+  if ($url->getRouteName() === 'social_task_assignment_vbo.vbo.confirm' ||
+    $url->getRouteName() === 'views_bulk_operations.confirm' ||
+    $url->getRouteName() === 'views_bulk_operations.execute_batch') {
+    // Get the action ID.
+    $action_id = _social_task_assignment_vbo_get_action_id($batch);
+
+    $batch['sets'][0]['results']['action'] = $action_id;
+    if (in_array($action_id, $actions, TRUE)) {
+      $batch['sets'][0]['finished'] = '_social_task_assignment_vbo_action_batch_finish';
+    }
+  }
+}
+
+/**
+ * Action batch finished callback.
+ *
+ * @param bool $success
+ *   Was the process successfull?
+ * @param array $results
+ *   Batch process results array.
+ * @param array $operations
+ *   Performed operations array.
+ */
+function _social_task_assignment_vbo_action_batch_finish($success, array $results, array $operations) {
+  // When we do a bulk action on all the items in a view, across multiple pages,
+  // the saveList function needs to be called. So after pre-populating the list
+  // the actual action is performed on the entities.
+  if (!empty($results['view_id']) && !empty($results['display_id'])) {
+    ViewsBulkOperationsBatch::saveList(TRUE, $results, $operations);
+    return;
+  }
+
+  $operations = array_count_values($results['operations']);
+  $results_count = 0;
+
+  foreach ($operations as $count) {
+    $results_count += $count;
+  }
+
+  $hook = 'social_task_assignment_vbo_action_' . $results['action'] . '_finish';
+
+  foreach (\Drupal::moduleHandler()->getImplementations($hook) as $module) {
+    $function = $module . '_' . $hook;
+    $messages = $function($success);
+
+    if (is_array($messages)) {
+      $fields = 0;
+
+      foreach ($messages as $type => $message) {
+        if (($type === 'singular' || $type === 'plural') && !empty($message) && is_string($message)) {
+          $fields++;
+        }
+      }
+
+      if ($fields === 2) {
+        // @todo source strings will never be translatable when we use
+        // variables. This should be refactored.
+        $message = \Drupal::translation()->formatPlural($results_count, $messages['singular'], $messages['plural']);
+        $type = $success ? MessengerInterface::TYPE_STATUS : MessengerInterface::TYPE_WARNING;
+        \Drupal::messenger()->addMessage($message, $type);
+      }
+    }
+  }
+}
+
+/**
+ * Function to get the action id of a batch.
+ *
+ * @param array $batch
+ *   The batch array.
+ *
+ * @return string
+ *   Returns the batch action id.
+ */
+function _social_task_assignment_vbo_get_action_id(array &$batch) {
+  /** @var \Drupal\Core\Form\FormStateInterface $form_state */
+  $form_state = &$batch['form_state'];
+
+  $action_id = '';
+  if ($form_state instanceof FormStateInterface) {
+    $data = $form_state->get('views_bulk_operations');
+    $action_id = $data['action_id'];
+  }
+  else {
+    foreach ($batch['sets'][0]['operations'] as $operations) {
+      if (empty($operations) || !is_array($operations)) {
+        break;
+      }
+      foreach ($operations as $operation) {
+        if (empty($operation) || !is_array($operation)) {
+          break;
+        }
+        foreach ($operation as $items) {
+          if (empty($items) || !is_array($items)) {
+            break;
+          }
+
+          if (!empty($items['action_id'])) {
+            $action_id = $items['action_id'];
+            break;
+          }
+        }
+      }
+    }
+  }
+  return $action_id;
+}
+
+/**
+ * Implements hook_social_event_action_ACTION_ID_finish().
+ */
+function social_task_assignment_vbo_social_task_assignment_vbo_action_social_task_assignment_vbo_send_email_action_finish($success) {
+  if ($success) {
+    // When the queue storage module is enabled the email is send in the
+    // background.
+    if (\Drupal::moduleHandler()->moduleExists('social_queue_storage')) {
+      return [
+        'singular' => 'Your email will be send to 1 selected assignee',
+        'plural' => 'Your email will be send to @count selected assignees',
+      ];
+    }
+
+    return [
+      'singular' => 'Your email has been sent to 1 selected assignee successfully',
+      'plural' => 'Your email has been sent to @count selected assignees successfully',
+    ];
+  }
+
+  return [
+    'singular' => 'Your email has not been sent to 1 selected assignee successfully',
+    'plural' => 'Your email has not been sent to @count selected assignees successfully',
+  ];
+}
+
+/**
+ * Implements hook_social_event_action_ACTION_ID_finish().
+ */
+function social_task_assignment_vbo_social_task_assignment_vbo_action_social_task_assignment_vbo_delete_task_assignment_action_finish($success) {
+  if ($success) {
+    return [
+      'singular' => '1 selected assignee has been removed from the task successfully',
+      'plural' => '@count selected assignees have been removed from the task successfully',
+    ];
+  }
+
+  return [
+    'singular' => '1 selected assignee has not been removed from the task successfully',
+    'plural' => '@count selected assignees have not been removed from the task successfully',
+  ];
+}
+
+/**
+ * Add node ID to the route of action confirmation step.
+ */
+function _social_task_assignment_vbo_views_bulk_operations_bulk_form_submit($form, FormStateInterface $form_state) {
+  /** @var \Drupal\Core\Url $url */
+  $url = $form_state->getRedirect();
+
+  $node = '';
+  if ($form_state->get('node')) {
+    $node = $form_state->get('node');
+  }
+  if (empty($node)) {
+    $route = \Drupal::routeMatch()->getParameter('node');
+    $node = $route->id();
+  }
+
+  $route_parameters = [
+    'node' => $node,
+  ];
+
+  if (!empty($node)) {
+    if ($url->getRouteName() === 'views_bulk_operations.execute_configurable') {
+      $url = Url::fromRoute('social_task_assignment_vbo.vbo.execute_configurable', $route_parameters);
+    }
+    if ($url->getRouteName() === 'social_task_assignment_vbo.vbo.confirm') {
+      $url = Url::fromRoute('social_task_assignment_vbo.vbo.confirm', $route_parameters);
+    }
+  }
+
+  $form_state->setRedirectUrl($url);
+}
+

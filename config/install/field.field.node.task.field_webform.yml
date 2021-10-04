@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_webform
     - node.type.task
+    - webform.webform.default
   module:
     - webform
 _core:
@@ -17,7 +18,13 @@ label: Webform
 description: ''
 required: false
 translatable: false
-default_value: {  }
+default_value:
+  -
+    default_data: ''
+    status: open
+    open: ''
+    close: ''
+    target_uuid: cc72934e-3d03-4c08-b6dc-9c83e3587510
 default_value_callback: ''
 settings:
   handler: 'default:webform'

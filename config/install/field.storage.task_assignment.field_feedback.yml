@@ -1,16 +1,16 @@
-uuid: 0a06caa3-a9c2-4b43-b4c8-cc19832ace75
+uuid: a716133d-4060-47c3-bdbc-d84b0b917d3a
 langcode: en
 status: true
 dependencies:
   module:
     - social_task_assignment
+    - text
 id: task_assignment.field_feedback
 field_name: field_feedback
 entity_type: task_assignment
-type: string_long
-settings:
-  case_sensitive: false
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true

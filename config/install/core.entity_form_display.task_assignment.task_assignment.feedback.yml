@@ -9,24 +9,24 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_feedback
     - field.field.task_assignment.task_assignment.field_status
     - field.field.task_assignment.task_assignment.field_submission_date
-    - field.field.task_assignment.task_assignment.field_submissions
     - field.field.task_assignment.task_assignment.field_task
     - field.field.task_assignment.task_assignment.field_webform_submissions
   module:
     - social_task_assignment
+    - text
 id: task_assignment.task_assignment.feedback
 targetEntityType: task_assignment
 bundle: task_assignment
 mode: feedback
 content:
   field_feedback:
+    type: text_textarea
     weight: 0
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: string_textarea
-    region: content
   field_status:
     type: options_select
     weight: 1
@@ -37,7 +37,6 @@ hidden:
   field_account: true
   field_due_date: true
   field_submission_date: true
-  field_submissions: true
   field_task: true
   field_webform_submissions: true
   langcode: true
