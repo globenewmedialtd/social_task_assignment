@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - node
+    - social_task_assignment
 _core:
   default_config_hash: 4CXS0Bo_mOJJUp85Ld_tuWPMkYYCIDjt8CUwNqHkNgs
 id: node.task_submission

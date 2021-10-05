@@ -4,6 +4,7 @@ dependencies:
   module:
     - user
     - webform
+    - social_task_assignment
 id: attached_webform_submissions
 label: 'Attached Webform Submissions'
 module: views

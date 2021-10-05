@@ -4,6 +4,7 @@ dependencies:
   module:
     - node
     - webform
+    - social_task_assignment
 _core:
   default_config_hash: BUoPDNQOfDnQmHlRnX-SVodaSidLdgGmdY7A_ewiIh8
 id: node.field_webform
