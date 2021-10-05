@@ -2,17 +2,18 @@ langcode: en
 status: true
 dependencies:
   module:
-    - datetime
+    - file
     - social_task_assignment
-_core:
-  default_config_hash: hu0iL-grGsB2hYUrSpwZ2qjQZRmRGdSSCOTlWkWGUs8
-id: task_assignment.field_submission_date
-field_name: field_submission_date
+id: task_assignment.field_upload
+field_name: field_upload
 entity_type: task_assignment
-type: datetime
+type: file
 settings:
-  datetime_type: datetime
-module: datetime
+  display_field: false
+  display_default: false
+  uri_scheme: private
+  target_type: file
+module: file
 locked: false
 cardinality: 1
 translatable: true

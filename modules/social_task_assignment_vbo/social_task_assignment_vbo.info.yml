@@ -1,6 +1,6 @@
-name: 'Social Event Organisers'
+name: 'Social Task Assignment VBO'
 type: module
-description: 'Social Event Organisers'
+description: 'Social Task Assignment VBO'
 core: 8.x
 package: Social
 dependencies:

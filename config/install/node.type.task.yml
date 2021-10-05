@@ -1,4 +1,3 @@
-uuid: 1ed85d62-6601-4293-b202-820a12d19217
 langcode: en
 status: true
 dependencies:
@@ -10,11 +9,11 @@ third_party_settings:
       - main
     parent: 'main:'
 _core:
-  default_config_hash: PcuWm1dAAf9RhsYME-bXEE-fct6qlMkL4xl7xRWj3tk
+  default_config_hash: qbRWaSAA6nJrmQioJBDapxBeSb0o6py4FLGQgVjdUyQ
 name: Task
 type: task
 description: ''
 help: ''
-new_revision: true
+new_revision: false
 preview_mode: 0
 display_submitted: true

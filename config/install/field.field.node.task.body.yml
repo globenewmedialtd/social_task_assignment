@@ -1,4 +1,3 @@
-uuid: bbac2f2a-443b-437b-b8d6-1d89fa4ada0f
 langcode: en
 status: true
 dependencies:
@@ -8,7 +7,7 @@ dependencies:
   module:
     - text
 _core:
-  default_config_hash: Gzyll41jaY6DTP48tYkCBxDF5JBYP6n1t0OV6VoVA38
+  default_config_hash: 41HPvkXV7bPuz63xfh0oKJ7nSGgYQmLgUP_GD3iCyBg
 id: node.task.body
 field_name: body
 entity_type: node

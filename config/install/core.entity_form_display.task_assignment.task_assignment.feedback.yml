@@ -1,4 +1,3 @@
-uuid: 1501c7af-93fc-4b9e-854c-767bd5d63b62
 langcode: en
 status: true
 dependencies:
@@ -10,8 +9,10 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_status
     - field.field.task_assignment.task_assignment.field_submission_date
     - field.field.task_assignment.task_assignment.field_task
+    - field.field.task_assignment.task_assignment.field_upload
     - field.field.task_assignment.task_assignment.field_webform_submissions
   module:
+    - file
     - social_task_assignment
     - text
 id: task_assignment.task_assignment.feedback
@@ -29,9 +30,16 @@ content:
     third_party_settings: {  }
   field_status:
     type: options_select
-    weight: 1
+    weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_upload:
+    type: file_generic
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
     third_party_settings: {  }
 hidden:
   field_account: true

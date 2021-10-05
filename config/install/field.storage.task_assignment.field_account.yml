@@ -1,10 +1,11 @@
-uuid: e6c43b6e-daed-4755-bbe8-8348bc9938bd
 langcode: en
 status: true
 dependencies:
   module:
     - social_task_assignment
     - user
+_core:
+  default_config_hash: 2XtDlEHFklofBiHHYT5vrAiZjAvouaqirWgkHiP2GxQ
 id: task_assignment.field_account
 field_name: field_account
 entity_type: task_assignment

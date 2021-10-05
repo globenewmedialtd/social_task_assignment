@@ -1,6 +1,8 @@
 <?php
 
+use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
 /**
@@ -106,6 +108,44 @@ function social_task_assignment_get_current_task() {
   }
 
   return $task;
+}
+
+/**
+ * Implements
+ *   hook_form_BASE_FORM_ID_alter()
+ */
+function social_task_assignment_form_task_assignment_feedback_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // On our form here we want the following fields
+  // visible only when we have an submission.
+
+  $form['field_feedback']['#states'] = [ 
+    'visible' => [
+      ':input[name="field_status"]' => ['value' => 'submitted'],
+    ],
+  ];
+
+  $form['field_upload']['#states'] = [ 
+    'visible' => [
+      ':input[name="field_status"]' => ['value' => 'submitted'],
+    ],
+  ];
+
+  $form['field_status']['#states'] = [ 
+    'visible' => [
+      ':input[name="field_status"]' => ['value' => 'submitted'],
+    ],
+  ];
+
+  // We hide the action buttons, because we do not need them in
+  // our modal dialog form.
+
+  $form['actions']['#attributes'] = ['class' => ['visually-hidden']];
+
+
+
+
+  
 }
 
 

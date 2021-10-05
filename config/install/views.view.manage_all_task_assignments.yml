@@ -1,4 +1,3 @@
-uuid: d2d1fdfa-118d-4808-bd3a-54adaa8a3daa
 langcode: en
 status: true
 dependencies:
@@ -17,6 +16,8 @@ dependencies:
     - social_task_assignment
     - text
     - user
+_core:
+  default_config_hash: tbjDTPBKeWpPzAdBi7Z_wWjTMStDsmblgOeAEUN2joU
 id: manage_all_task_assignments
 label: 'Manage All Task Assignments'
 module: views
@@ -56,12 +57,17 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: mini
+        type: full
         options:
           items_per_page: 25
           offset: 0
           id: 0
           total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
           expose:
             items_per_page: false
             items_per_page_label: 'Items per page'
@@ -70,9 +76,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          tags:
-            previous: ‹‹
-            next: ››
+          quantity: 9
       style:
         type: table
         options:
@@ -570,8 +574,10 @@ display:
         - 'config:core.entity_view_display.profile.profile.autocomplete_item'
         - 'config:core.entity_view_display.profile.profile.compact'
         - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_private_message'
         - 'config:core.entity_view_display.profile.profile.compact_teaser'
         - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
         - 'config:core.entity_view_display.profile.profile.hero'
         - 'config:core.entity_view_display.profile.profile.medium_teaser'
         - 'config:core.entity_view_display.profile.profile.search_index'
@@ -613,8 +619,10 @@ display:
         - 'config:core.entity_view_display.profile.profile.autocomplete_item'
         - 'config:core.entity_view_display.profile.profile.compact'
         - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_private_message'
         - 'config:core.entity_view_display.profile.profile.compact_teaser'
         - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
         - 'config:core.entity_view_display.profile.profile.hero'
         - 'config:core.entity_view_display.profile.profile.medium_teaser'
         - 'config:core.entity_view_display.profile.profile.search_index'

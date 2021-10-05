@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.task_assignment.field_upload
+  module:
+    - file
+    - social_task_assignment
+id: task_assignment.task_assignment.field_upload
+field_name: field_upload
+entity_type: task_assignment
+bundle: task_assignment
+label: Upload
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  file_directory: 'task_assignments/[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'txt doc pdf docx'
+  max_filesize: ''
+  description_field: false
+  handler: 'default:file'
+  handler_settings: {  }
+field_type: file

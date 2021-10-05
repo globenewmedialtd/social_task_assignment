@@ -155,17 +155,17 @@ class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
     // We need to set submission date
     // and status field.
     if ($assignment = array_pop($task_assignment)) {
-      $submissions = [$submission_id];
-      $current = date('Y-m-d\TH:i:s', time());
-      $assignment->set('field_submission_date',$current);
-      $assignment->set('field_status','submitted');
-      $assignment->set('field_webform_submissions',$submissions);
-      $assignment->save();  
+      // For now we only want one submission.
+      if ($assignment->field_status->value === 'open') {      
+        $submissions = [$submission_id];
+        $current = date('Y-m-d\TH:i:s', time());
+        $assignment->set('field_submission_date',$current);
+        $assignment->set('field_status','submitted');
+        $assignment->set('field_webform_submissions',$submissions);
+        $assignment->save();
+      }  
     }
-
   }
-
-
 }
 
 

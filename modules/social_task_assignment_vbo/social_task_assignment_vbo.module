@@ -39,19 +39,6 @@ function social_task_assignment_vbo_views_data_alter(array &$data) {
 
 
 /**
- * Implements hook_entity_access().
- */
-function social_event_managers_entity_access(EntityInterface $entity, $operation, AccountInterface $account) {
-  // Event Manager & Organizers can view/delete/edit enrollments for events
-  // they are organizing.
-  if ($entity instanceof EventEnrollmentInterface) {
-    if (social_event_manager_or_organizer()) {
-      return AccessResult::allowedIf($entity instanceof EventEnrollmentInterface);
-    }
-  }
-}
-
-/**
  * Implements hook_form_alter().
  */
 function social_task_assignment_vbo_form_alter(&$form, FormStateInterface $form_state, $form_id) {

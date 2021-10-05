@@ -1,4 +1,3 @@
-uuid: 321101dd-3a5f-40bf-8947-adf4c52b0285
 langcode: en
 status: true
 dependencies:
@@ -10,34 +9,19 @@ dependencies:
   module:
     - text
     - user
-_core:
-  default_config_hash: yfE28n1e2VRL2MRbFhBnI9-4DVIYrpvlo9Z9Hu42yKQ
 id: node.task.default
 targetEntityType: node
 bundle: task
 mode: default
 content:
   body:
-    label: hidden
     type: text_default
-    weight: 9
-    settings: {  }
-    third_party_settings: {  }
+    weight: 0
     region: content
-  flag_follow_content:
-    weight: 11
-    region: content
+    label: hidden
     settings: {  }
     third_party_settings: {  }
   groups_type_closed_group:
-    label: above
-    weight: 0
-    region: content
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-  groups_type_flexible_group:
     label: above
     weight: 1
     region: content
@@ -45,7 +29,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
-  groups_type_fsadfdasf:
+  groups_type_flexible_group:
     label: above
     weight: 2
     region: content
@@ -77,38 +61,12 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
-  groups_type_super:
-    label: above
-    weight: 6
-    region: content
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-  groups_type_tm_community:
-    label: above
-    weight: 7
-    region: content
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-  groups_type_tm_training:
-    label: above
-    weight: 8
-    region: content
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-  links:
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   field_content_visibility: true
   field_webform: true
+  flag_follow_content: true
   groups: true
+  links: true
+  private_message_link: true
   search_api_excerpt: true
   social_tagging: true

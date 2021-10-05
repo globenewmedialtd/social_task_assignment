@@ -1,4 +1,3 @@
-uuid: 293e15f3-17ff-4a1d-b001-b3a8a3610092
 langcode: en
 status: true
 dependencies:
@@ -7,6 +6,8 @@ dependencies:
   module:
     - datetime
     - social_task_assignment
+_core:
+  default_config_hash: W1B7aBgLvyGRKPDzMyYL09ZJYdnR5oGBdkJ74gnyiIU
 id: task_assignment.task_assignment.field_due_date
 field_name: field_due_date
 entity_type: task_assignment

@@ -1,0 +1,2 @@
+route_callbacks:
+  - 'social_task_assignment_vbo.route_subscriber:routes'

@@ -1,4 +1,3 @@
-uuid: ffab2077-c63d-4659-bfbe-95e91c7ff785
 langcode: en
 status: true
 dependencies:
@@ -9,13 +8,12 @@ dependencies:
     - node.type.task
   module:
     - field_group
-    - path
     - social_group
     - text
     - webform
 third_party_settings:
   field_group:
-    group_basic_information:
+    group_basi:
       children:
         - title
         - body
@@ -25,44 +23,25 @@ third_party_settings:
       format_type: fieldset
       region: content
       format_settings:
+        id: ''
+        classes: card
         description: ''
         required_fields: true
-        id: content
-        classes: card
-      label: 'Basic information'
+      label: 'Basic Information'
     group_access_permissions:
       children:
         - groups
         - field_content_visibility
       parent_name: ''
-      weight: 2
-      format_type: fieldset
-      region: content
-      format_settings:
-        description: ''
-        required_fields: true
-        id: visibility
-        classes: card
-      label: 'Access permissions'
-    group_additional_information:
-      children:
-        - status
-        - uid
-        - created
-        - path
-        - url_redirects
-      parent_name: ''
       weight: 1
       format_type: fieldset
       region: content
       format_settings:
-        description: ''
-        required_fields: true
         id: ''
         classes: card
-      label: 'Additional information'
-_core:
-  default_config_hash: 0PHfxERgOcHy8ov16EkksOYS_K92CfvVMbiQlb7UwyM
+        description: ''
+        required_fields: true
+      label: 'Access permissions'
 id: node.task.default
 targetEntityType: node
 bundle: task
@@ -70,19 +49,13 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 11
+    weight: 2
+    region: content
     settings:
       rows: 9
       summary_rows: 3
       placeholder: ''
       show_summary: false
-    third_party_settings: {  }
-    region: content
-  created:
-    type: datetime_timestamp
-    weight: 7
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_content_visibility:
     type: options_buttons
@@ -91,56 +64,33 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_webform:
-    type: webform_entity_reference_select
-    weight: 12
-    region: content
+    weight: 3
     settings:
       default_data: true
       webforms: {  }
     third_party_settings: {  }
+    type: webform_entity_reference_select
+    region: content
   groups:
     type: social_group_selector_widget
+    settings: {  }
     weight: 5
     region: content
-    settings: {  }
-    third_party_settings: {  }
-  path:
-    type: path
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  status:
-    type: boolean_checkbox
-    weight: 5
-    region: content
-    settings:
-      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 10
+    weight: 1
     region: content
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  uid:
-    type: entity_reference_autocomplete
-    weight: 6
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  url_redirects:
-    weight: 9
-    region: content
-    settings: {  }
     third_party_settings: {  }
 hidden:
+  created: true
+  path: true
   promote: true
   social_tagging: true
+  status: true
   sticky: true
+  uid: true
+  url_redirects: true

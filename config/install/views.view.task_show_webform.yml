@@ -1,4 +1,3 @@
-uuid: b08639d2-c0f6-4f68-a053-5fae770e296b
 langcode: en
 status: true
 dependencies:
@@ -7,7 +6,8 @@ dependencies:
     - node.type.task
   module:
     - node
-    - user
+_core:
+  default_config_hash: BfiACBOAecXEgHSUzvDHGSp_NaBO9MPowhrnROArZv8
 id: task_show_webform
 label: 'Task show webform'
 module: views
@@ -23,9 +23,8 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
-        options:
-          perm: 'access content'
+        type: none
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -48,9 +47,8 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: some
+        type: none
         options:
-          items_per_page: 5
           offset: 0
       style:
         type: default
@@ -200,7 +198,6 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
       tags: {  }
   block_1:
     display_plugin: block
@@ -217,5 +214,4 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
-        - user.permissions
       tags: {  }

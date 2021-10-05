@@ -1,4 +1,3 @@
-uuid: f2a57500-b1a1-4153-9343-7553193dc3bf
 langcode: en
 status: true
 dependencies:
@@ -9,6 +8,8 @@ dependencies:
     - views
   theme:
     - socialblue
+_core:
+  default_config_hash: lVP-E0KWEbGa3b57lMoZdyh0HlodvQ9BDXfRdpFH6rE
 id: views_block__task_show_webform_block_1
 theme: socialblue
 region: content
@@ -19,7 +20,7 @@ settings:
   id: 'views_block:task_show_webform-block_1'
   label: ''
   provider: views
-  label_display: '0'
+  label_display: visible
   views_label: ''
   items_per_page: none
   type: none

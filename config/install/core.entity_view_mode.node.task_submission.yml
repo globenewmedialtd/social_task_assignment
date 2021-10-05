@@ -1,9 +1,10 @@
-uuid: 126ad0be-0e9c-41ce-917a-daea8263327b
 langcode: en
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: 4CXS0Bo_mOJJUp85Ld_tuWPMkYYCIDjt8CUwNqHkNgs
 id: node.task_submission
 label: 'Task submission'
 targetEntityType: node

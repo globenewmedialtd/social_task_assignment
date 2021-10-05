@@ -1,10 +1,11 @@
-uuid: a8dea7d1-9b66-4de9-a299-64d43a7a981e
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - social_task_assignment
+_core:
+  default_config_hash: gp3ECUw7WIRpRF8w-sRRVDHkpaAygvZeU4Z63lFKPPE
 id: task_assignment.field_task
 field_name: field_task
 entity_type: task_assignment
