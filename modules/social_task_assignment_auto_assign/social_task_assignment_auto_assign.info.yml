@@ -1,0 +1,7 @@
+name: 'Social Task Assignment Auto Assign'
+type: module
+description: 'Assigns all members of the group to the task'
+core: '8.x'
+dependencies:
+  - social_task_assignment
+package: Social

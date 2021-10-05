@@ -1,0 +1,19 @@
+social_task_assignment_auto_assign.task_assignment_auto_assign.*:
+  type: config_entity
+  label: 'Task assignment auto assign config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    auto_assign:
+      type: boolean
+      label: 'Auto Assign'
+    node:
+      label: 'Node'
+      type: mapping
+      mapping:
+        target_id:
+          type: string
+          label: 'Value'
+    uuid:
+      type: string

@@ -1,0 +1,4 @@
+services:
+  social_task_assignment_auto_assign:
+    class: Drupal\social_task_assignment_auto_assign\SocialTaskAssignmentAutoAssignService
+    arguments: ['@entity_type.manager','@config.factory']
