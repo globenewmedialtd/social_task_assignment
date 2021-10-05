@@ -12,6 +12,7 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_upload
     - field.field.task_assignment.task_assignment.field_webform_submissions
   module:
+    - datetime
     - file
     - social_task_assignment
     - text
@@ -34,6 +35,12 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_submission_date:
+    type: datetime_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_upload:
     type: file_generic
     weight: 1
@@ -44,9 +51,9 @@ content:
 hidden:
   field_account: true
   field_due_date: true
-  field_submission_date: true
   field_task: true
   field_webform_submissions: true
   langcode: true
   name: true
   user_id: true
+

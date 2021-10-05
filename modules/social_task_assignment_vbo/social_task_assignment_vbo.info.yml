@@ -15,3 +15,4 @@ dependencies:
   - social:social_user
   - drupal:views
   - views_bulk_operations:views_bulk_operations
+  - social_task_assignment

@@ -2,7 +2,8 @@ langcode: en
 status: open
 dependencies:
   module:
-    - social_task_assignment
+    - webform
+    - webform_views
 _core:
   default_config_hash: HpzOzOux3p2fkmdnUfy5751GdbUduVnN58dWEq_J8IU
 open: null

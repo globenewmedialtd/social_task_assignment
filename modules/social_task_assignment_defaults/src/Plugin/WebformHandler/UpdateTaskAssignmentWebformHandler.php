@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\social_task_assignment\Plugin\WebformHandler;
+namespace Drupal\social_task_assignment_defaults\Plugin\WebformHandler;
 
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Config\ConfigFactoryInterface;
