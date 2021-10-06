@@ -30,7 +30,7 @@ class SocialTaskAssignmentAccessCheck implements AccessInterface {
         return AccessResult::allowed();
     }
 
-    return AccessResult::forbidden();
+    return AccessResult::neutral();
     
   }
 

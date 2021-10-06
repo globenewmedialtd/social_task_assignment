@@ -22,3 +22,9 @@ view published task assignment entities:
 
 view unpublished task assignment entities:
   title: 'View unpublished Task assignment entities'
+
+view tasks on my profile:
+  title: 'View the My tasks overview and block on your own profile'
+
+view tasks on other profiles:
+  title: 'View the My tasks overview and block on other peoples profile'

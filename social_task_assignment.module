@@ -4,6 +4,11 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\block\Entity\Block;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Access\AccessResultNeutral;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\social_task_assignment\Controller\SocialTaskAssignmentController;
 
 /**
  * @file
@@ -30,6 +35,13 @@ function social_task_assignment_theme() {
     'template' => 'node--task--task-submission',
     'base hook' => 'node'
   ];
+/*
+
+  $theme['node__task__teaser'] = [
+    'template' => 'node--task--teaser',
+    'base hook' => 'node'
+  ];
+*/
 
   $theme['task_assignment'] = [
     'render element' => 'elements',
@@ -39,8 +51,10 @@ function social_task_assignment_theme() {
   return $theme;
 }
 
+
+
 /**
- * Prepares variables for entityname entity templates.
+ * Prepares variables for node task.
  */
 function social_task_assignment_preprocess_task_assignment(&$variables) {
   // Helpful $entityname variable for templates.
@@ -123,17 +137,26 @@ function social_task_assignment_form_task_assignment_feedback_form_alter(&$form,
     'visible' => [
       ':input[name="field_status"]' => ['value' => 'submitted'],
     ],
+    [
+      ':input[name="field_status"]' => ['value' => 'feedback'],
+    ],
   ];
 
   $form['field_upload']['#states'] = [ 
     'visible' => [
       ':input[name="field_status"]' => ['value' => 'submitted'],
     ],
+    'visible' => [
+      ':input[name="field_status"]' => ['value' => 'feedback'],
+    ],
   ];
 
   $form['field_status']['#states'] = [ 
     'visible' => [
       ':input[name="field_status"]' => ['value' => 'submitted'],
+    ],
+    'visible' => [
+      ':input[name="field_status"]' => ['value' => 'feedback'],
     ],
   ];
 
@@ -148,6 +171,30 @@ function social_task_assignment_form_task_assignment_feedback_form_alter(&$form,
   
 }
 
+/**
+ * Custom permission check, to see if people have access to users' topics.
+ *
+ * Implements hook_block_access().
+ */
+function social_task_assignment_block_access(Block $block, $operation, AccountInterface $account) {
+
+  if ($operation === 'view' && ($block->getPluginId() === 'views_exposed_filter_block:tasks-page_profile' || $block->getPluginId() === 'views_block:tasks-block_user_topics')) {
+    // Here we're going to assume by default access is not granted.
+    $taskController = SocialTaskAssignmentController::create(\Drupal::getContainer());
+    $access = $taskController->myTaskAccess($account);
+    // If the 'myTopicAccess' returns 'AccessResultNeutral', we have to assume
+    // that access must be denied.
+    if ($access instanceof AccessResultNeutral) {
+      // Return forbidden, since access was not explicitly granted.
+      return AccessResult::forbidden();
+    }
+
+    return $access;
+  }
+
+  // No opinion.
+  return AccessResult::neutral();
+}
 
 
 

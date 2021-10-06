@@ -94,11 +94,14 @@ class SocialTaskAssignmentAutoAssignService {
     }
 
     $due_date = $task->field_due_date->date;
-    $timestamp_due_date = $due_date->getTimestamp();
-    $timestamnp_current = \Drupal::time()->getCurrentTime();  
     $task_terminated = FALSE;
-    if ($timestamnp_current > $timestamp_due_date) {
-      $task_terminated = TRUE;
+    if (isset($due_date)) {
+    	$timestamp_due_date = $due_date->getTimestamp();
+    	$timestamnp_current = \Drupal::time()->getCurrentTime();  
+    	$task_terminated = FALSE;
+    	if ($timestamp_current > $timestamp_due_date) {
+      	$task_terminated = TRUE;
+    	}
     }
 
     if ($auto_assign && !$task_terminated) {

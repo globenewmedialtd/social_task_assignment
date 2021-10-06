@@ -17,5 +17,11 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('view.manage_all_task_assignments.page_1')) {
       $route->setRequirement('_social_task_assignment_custom_access', 'Drupal\social_task_assignment\Access\SocialTaskAssignmentAccessCheck');
     }
+    if ($route = $collection->get('view.tasks.page_profile')) {
+      $requirements = $route->getRequirements();
+      $requirements['_custom_access'] = "\Drupal\social_task_assignment\Controller\SocialTaskAssignmentController::myTaskAccess";
+      $route->setRequirements($requirements);
+    }
+
   }
 }

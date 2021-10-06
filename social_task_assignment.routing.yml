@@ -5,3 +5,9 @@ social_task_assignment.settings_form:
     _form: 'Drupal\social_task_assignment\Form\SettingsForm'
   requirements:
     _permission: 'administer social_task_assignment configuration'
+social_task_assignment.my_tasks:
+  path: '/my-tasks'
+  defaults:
+    _controller: '\Drupal\social_task_assignment\Controller\SocialTaskAssignmentController::redirectMyTasks'
+  requirements:
+    _user_is_logged_in: 'TRUE'
