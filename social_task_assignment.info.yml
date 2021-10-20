@@ -1,9 +1,10 @@
 name: Social Task Assignment
 type: module
 description: Providing new Group Content Task, Task Assignment Entity and other services.
-package: social
+package: Social
 core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
-  - social_task_assignment_defaults
   - social_group
+  - webform
+  - webform_views

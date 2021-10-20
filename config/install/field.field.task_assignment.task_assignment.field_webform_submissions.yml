@@ -1,3 +1,4 @@
+uuid: e5a8ce8f-2ad0-43c9-96d8-99c4684d2f21
 langcode: en
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - webform.webform.default
   module:
     - social_task_assignment
+_core:
+  default_config_hash: TpOfn_lXm3oB1Ws9P_QnF6zWw3KfFsQG07lP-XX-Vic
 id: task_assignment.task_assignment.field_webform_submissions
 field_name: field_webform_submissions
 entity_type: task_assignment

@@ -8,6 +8,7 @@ services:
     class: Drupal\social_task_assignment\Access\SocialTaskAssignmentAccessCheck
     tags:
       - { name: access_check, applies_to: _social_task_assignment_custom_access }
+      
   social_task_assignment.status_helper:
     class: Drupal\social_task_assignment\SocialTaskAssignmentStatusHelper
     arguments: ['@current_route_match', '@entity_type.manager', '@current_user', '@config.factory']

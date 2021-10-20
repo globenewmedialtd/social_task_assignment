@@ -26,6 +26,6 @@ social_group.tasks:
   weight: 40
 
 social_user.tasks:
-  route_name: view.tasks.page_profile
+  route_name: view.user_tasks.page_profile
   base_route: entity.user.canonical
   title: Tasks

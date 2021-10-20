@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\social_task_assignment_defaults\Plugin\WebformHandler;
+namespace Drupal\social_task_assignment\Plugin\WebformHandler;
 
 use Drupal\Core\Annotation\Translation;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -19,100 +19,30 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 
 
-
 /**
- * Update a new task assignment entity from a webform submission.
+ * Webform submission entity post handler.
  *
  * @WebformHandler(
  *   id = "update_task_assignment",
- *   label = @Translation("Update Task assignment"),
- *   category = @Translation("Entity Update"),
- *   description = @Translation("Updates a new task assignment from Webform Submissions."),
+ *   label = @Translation("Update task assignment"),
+ *   category = @Translation("Tasks"),
+ *   description = @Translation("Updates task assignments based on webform submissions."),
  *   cardinality = \Drupal\webform\Plugin\WebformHandlerInterface::CARDINALITY_UNLIMITED,
  *   results = \Drupal\webform\Plugin\WebformHandlerInterface::RESULTS_PROCESSED,
- *   submission = \Drupal\webform\Plugin\WebformHandlerInterface::SUBMISSION_REQUIRED,
+ *   submission = \Drupal\webform\Plugin\WebformHandlerInterface::SUBMISSION_OPTIONAL,
+ *   tokens = FALSE,
  * )
- */
+ */ 
 
 class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
 
-/**
-   * @var ConfigFactoryInterface
-   */
-  protected $configFactory;
-
   /**
-   * @var WebformSubmissionConditionsValidatorInterface
-   */
-  protected $conditionsValidator;
-
-  /**
-   * @var EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
-
-  /**
-   *
-   * @param array $configuration
-   * @param $plugin_id
-   * @param $plugin_definition
-   * @param LoggerChannelFactoryInterface $logger_factory
-   * @param ConfigFactoryInterface $config_factory
-   * @param EntityTypeManagerInterface $entity_type_manager
-   * @param WebformSubmissionConditionsValidatorInterface $conditions_validator
-   */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    LoggerChannelFactoryInterface $logger_factory,
-    ConfigFactoryInterface $config_factory,
-    EntityTypeManagerInterface $entity_type_manager,
-    WebformSubmissionConditionsValidatorInterface $conditions_validator
-  ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->loggerFactory = $logger_factory->get('update_task_assignment');
-    $this->configFactory = $config_factory;
-    $this->conditionsValidator = $conditions_validator;
-    $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
-   * @param ContainerInterface $container
-   * @param array $configuration
-   * @param string $plugin_id
-   * @param mixed $plugin_definition
-   *
-   * @return ContainerFactoryPluginInterface|EmailWebformHandler|WebformHandlerBase|WebformHandlerInterface|WebformHandlerMessageInterface|static
+   * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('logger.factory'),
-      $container->get('config.factory'),
-      $container->get('entity_type.manager'),
-      $container->get('webform_submission.conditions_validator')
-    );
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    return $instance;
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration() {
-    return [];
-  }
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state, WebformSubmissionInterface $webform_submission) {
-    // In here, we perform our logic to manipulate and use the webform submission data however we want.
-    // To access data from the webform submission, we call $webform_submission->getData(), we should be able to grab a part of the array that should be returned using a key.
-    // The key will be the machine name of the field on the webform. 
-    // So for example, if you have a field on the webform with a machine name of group, you code to get the value would be $webform_submission->getData()['group']
-  }
-
 
 
   /**

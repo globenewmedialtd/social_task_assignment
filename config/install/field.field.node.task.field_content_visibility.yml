@@ -1,3 +1,4 @@
+uuid: 1673e8ac-3627-4a98-a452-ed42456bf904
 langcode: en
 status: true
 dependencies:
@@ -7,16 +8,18 @@ dependencies:
   module:
     - entity_access_by_field
 _core:
-  default_config_hash: NVxVkgOEFe4QXBw577spHRY_Q6lRXyq-ENor4z1wUPo
+  default_config_hash: W_1jeIE4bicCQw4gVcRaN_MgQYIRX6Shsqw6wMPKzHY
 id: node.task.field_content_visibility
 field_name: field_content_visibility
 entity_type: node
 bundle: task
 label: Visibility
 description: ''
-required: false
+required: true
 translatable: true
-default_value: {  }
+default_value:
+  -
+    value: community
 default_value_callback: ''
 settings: {  }
 field_type: entity_access_field

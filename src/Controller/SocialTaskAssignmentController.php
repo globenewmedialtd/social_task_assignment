@@ -117,7 +117,7 @@ class SocialTaskAssignmentController extends ControllerBase {
    *   Returns a redirect to the topics of the currently logged in user.
    */
   public function redirectMyTasks() {
-    return $this->redirect('view.tasks.page_profile', [
+    return $this->redirect('view.user_tasks.page_profile', [
       'user' => $this->currentUser()->id(),
     ]);
   }

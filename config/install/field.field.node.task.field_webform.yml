@@ -1,3 +1,4 @@
+uuid: 6898c876-5084-4509-92fe-be9655457f5f
 langcode: en
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - node.type.task
   module:
     - webform
+_core:
+  default_config_hash: J7RDUlnhuXhhxsftRYfuhHhqN2P5yoz95FrT1IqTGRw
 id: node.task.field_webform
 field_name: field_webform
 entity_type: node

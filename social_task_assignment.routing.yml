@@ -11,3 +11,11 @@ social_task_assignment.my_tasks:
     _controller: '\Drupal\social_task_assignment\Controller\SocialTaskAssignmentController::redirectMyTasks'
   requirements:
     _user_is_logged_in: 'TRUE'
+    
+social_task_assignment.add_assignees:
+  path: '/node/{node}/manage-task-assignments/add-assignees'
+  defaults:
+    _form: '\Drupal\social_task_assignment\Form\SocialTaskAssignmentAddAssigneeForm'
+    _title: 'Add assignee'
+  requirements:
+    _enrollee_permission: 'manage everything assignments'

@@ -1,12 +1,12 @@
+uuid: 954520df-4770-4f55-be55-82fcb2e716b0
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - webform
-    - social_task_assignment
 _core:
-  default_config_hash: BUoPDNQOfDnQmHlRnX-SVodaSidLdgGmdY7A_ewiIh8
+  default_config_hash: SMyxDDC0l2-Z059FPycXVsR9oXByAm-KlnzuBvn9eaM
 id: node.field_webform
 field_name: field_webform
 entity_type: node

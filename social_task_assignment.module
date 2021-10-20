@@ -7,8 +7,16 @@ use Drupal\Core\Render\Element;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Access\AccessResultNeutral;
+use Drupal\Core\Access\AccessResultAllowed;
+use Drupal\Core\Access\AccessResultForbidden;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\social_task_assignment\Controller\SocialTaskAssignmentController;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
+use Drupal\social_task_assignment\TaskAssignmentInterface;
+use Drupal\social_task_assignment\SocialTaskAssignmentAccessHelper;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * @file
@@ -35,13 +43,11 @@ function social_task_assignment_theme() {
     'template' => 'node--task--task-submission',
     'base hook' => 'node'
   ];
-/*
 
   $theme['node__task__teaser'] = [
     'template' => 'node--task--teaser',
     'base hook' => 'node'
   ];
-*/
 
   $theme['task_assignment'] = [
     'render element' => 'elements',
@@ -94,6 +100,26 @@ function social_task_assignment_entity_type_alter(array &$entity_types) {
     }
   }
 }
+
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function social_task_assignment_field_widget_form_alter(&$element, FormStateInterface $form_state, $context) {
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+  $field_definition = $items->getFieldDefinition();
+  if ($field_definition->getType() !== 'webform') {
+    return;
+  }
+  if ($items->getEntity()->getEntityTypeId() !== 'node') {
+    return;
+  }
+  
+  // Hide Webform field settings.
+  $element['settings']['#access'] = FALSE;
+}
+
 
 /**
  * Return the Task from a given page.
@@ -151,14 +177,7 @@ function social_task_assignment_form_task_assignment_feedback_form_alter(&$form,
     ],
   ];
 
-  $form['field_status']['#states'] = [ 
-    'visible' => [
-      ':input[name="field_status"]' => ['value' => 'submitted'],
-    ],
-    'visible' => [
-      ':input[name="field_status"]' => ['value' => 'feedback'],
-    ],
-  ];
+
 
   // We hide the action buttons, because we do not need them in
   // our modal dialog form.
@@ -195,6 +214,306 @@ function social_task_assignment_block_access(Block $block, $operation, AccountIn
   // No opinion.
   return AccessResult::neutral();
 }
+
+/**
+ * Implements hook_social_user_account_header_create_links().
+ *
+ * Adds the "Create Tasks" link to the content creation menu.
+ */
+function social_task_assignment_social_user_account_header_create_links($context) {
+  return [
+    'add_task' => [
+      '#type' => 'link',
+      '#attributes' => [
+        'title' => new TranslatableMarkup('Create New Task'),
+      ],
+      '#title' => new TranslatableMarkup('New Task'),
+      '#weight' => 200,
+    ] + Url::fromRoute('node.add', ['node_type' => 'task'])->toRenderArray(),
+  ];
+}
+
+/**
+ * Implements hook_social_user_account_header_account_links().
+ *
+ * Adds the "View my tasks" link to the user menu.
+ */
+function social_task_assignment_social_user_account_header_account_links(array $context) {
+  // We require a user for this link.
+  if (empty($context['user']) || !($context['user'] instanceof AccountInterface)) {
+    return [];
+  }
+
+  return [
+    'my_tasks' => [
+      '#type' => 'link',
+      '#attributes' => [
+        'title' => new TranslatableMarkup('View my tasks'),
+      ],
+      '#title' => new TranslatableMarkup('My tasks'),
+      '#weight' => 700,
+    ] + Url::fromRoute('view.user_tasks.page_profile', [
+      'user' => $context['user']->id(),
+    ])->toRenderArray(),
+  ];
+}
+
+/**
+ * Check if the user is allowed to manage task assignments.
+ *
+ * @param \Drupal\node\NodeInterface|null $node
+ *   The node the current user could be organizer of.
+ * @param bool $skip_trusted_roles
+ *   Should we skip CM/SM with the manage everything enrollments.
+ *
+ * @return bool
+ *   If the user is actually a manager or organizer.
+ */
+function social_task_assignment_manager_or_organizer(NodeInterface $node = NULL, $skip_trusted_roles = FALSE) {
+  $social_task_assignment_manager_or_organizer = &drupal_static(__FUNCTION__);
+
+  if (!isset($social_task_assignment_manager_or_organizer)) {
+    $account = \Drupal::currentUser();
+
+    // Allow if user has the manage everything permission.
+    // We can skip this to make sure we truly only check organizer & managers
+    // used for context in notifications.
+    if ($skip_trusted_roles === FALSE && $account->hasPermission('manage everything assignments')) {
+      $result = TRUE;
+    }
+
+    if (!$node && !isset($result)) {
+      // Get the current task node.
+      $node = social_task_assignment_get_current_task();
+
+      // If there's no node, we might be looking at an task assignment.
+      if (!$node) {
+        // If we are altering / deleting an Event Enrollment check if user
+        // is manager or organizer from the referenced node.
+        $task_assignment = \Drupal::routeMatch()
+          ->getParameter('task_assignment');
+
+        if ($task_assignment instanceof TaskAssignmentInterface) {
+          $node = $task_assignment->field_task->entity;
+        }
+      }
+    }
+
+    // If we now have a node we can check if there are task managers.
+    if ($node instanceof NodeInterface && !isset($result) && $node->bundle() === 'task') {
+      // The task owner has access.
+      if ($node->getOwnerId() === $account->id()) {
+        $result = TRUE;
+      }
+
+      // Check if the user is an task manager/organizer.
+      if (!isset($result) && $node->hasField('field_task_managers') && !$node->field_task_managers->isEmpty()) {
+        foreach ($node->field_task_managers->getValue() as $value) {
+          if ($value && $value['target_id'] === $account->id()) {
+            $result = TRUE;
+            break;
+          }
+        }
+      }
+    }
+
+    // No result means the user does not have access.
+    if (!isset($result)) {
+      $result = FALSE;
+    }
+
+    $social_task_assignment_manager_or_organizer = $result;
+  }
+
+  return $social_task_assignment_manager_or_organizer;
+}
+
+/**
+ * Implements hook_node_access_records().
+ */
+function social_task_assignment_node_access_records(NodeInterface $node) {
+  $grants = [];
+  // Only for tasks.
+  if (($node->getType() === 'task') && $task_managers_ids = array_column($node->get('field_task_managers')
+    ->getValue(), 'target_id')) {
+    // Task organizers should be granted access.
+    // Load the task managers accounts.
+    $users = User::loadMultiple($task_managers_ids);
+    foreach ($users as $task_manager) {
+      // Task organizers must have access
+      // to view the record in the first place.
+      if ($node->access('view', $task_manager)) {
+        // Add grant.
+        $grants[] = [
+          'realm' => 'social_task_assignment_managers:' . $node->id(),
+          'gid' => $task_manager->id(),
+          'grant_view' => 1,
+          'grant_update' => 1,
+          'grant_delete' => 0,
+        ];
+      }
+    }
+  }
+
+  return $grants;
+}
+
+/**
+ * Implements hook_node_grants().
+ */
+function social_task_assignment_node_grants(AccountInterface $account, $op) {
+
+  $grants = [];
+
+  // @todo Fetch all nodes this user has access to
+  // and add a grant for each of those.
+  $query = \Drupal::database()->select('node__field_task_managers', 'tm');
+  $query->fields('tm', ['entity_id']);
+  $query->condition('tm.field_task_managers_target_id', $account->id());
+  // Add grants.
+  foreach ($query->execute()->fetchAllAssoc('entity_id') as $nid) {
+    $grants['social_task_assignment_managers:' . $nid->entity_id][] = $account->id();
+  }
+
+  // Tell Drupal about users grants.
+  return $grants;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function social_task_assignment_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'node_access') {
+    // Remove the gnode implementation, we have a fallback in our hook.
+    if (isset($implementations['gnode']) && function_exists('gnode_node_access')) {
+      unset($implementations['gnode']);
+    }
+  }
+}
+
+/**
+ * Implements hook_node_access().
+ *
+ * Remember: if any module returns forbidden and denies access to certain node
+ * and operation it will not allow the user to do the operation on the node.
+ *
+ * We need this implementation because we also want to give edit access to task
+ * manager regardless these scenarios thought of in gnode_node_access:
+ * - is a member in the group and:
+ * - has edit own or edit any permission in the group
+ *
+ * The gnode module specifically returns allowed if any of the above scenarios
+ * are met, but forbidden in all the other scenarios. Our code ensures that if
+ * we are in operation update and if gnode already returns forbidden we are able
+ * to return an allowed if user is an task manager.
+ */
+function social_task_assignment_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  // Only continue if the gnode module is enabled.
+  if (function_exists('gnode_node_access')) {
+    $gnode_access = gnode_node_access($node, $op, $account);
+
+    if ($op === 'update') {
+      if ($gnode_access instanceof AccessResultForbidden) {
+        $social_task_assignment_access = SocialTaskAssignmentAccessHelper::getEntityAccessResult($node, $op, $account);
+
+        // Only return the result of SocialTaskAssignmentAccessHelper
+        // if it is allowed.
+        if ($social_task_assignment_access instanceof AccessResultAllowed) {
+          return $social_task_assignment_access;
+        }
+      }
+      return $gnode_access;
+    }
+    return $gnode_access;
+  }
+
+  return SocialTaskAssignmentAccessHelper::getEntityAccessResult($node, $op, $account);
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function social_task_assignment_views_data_alter(array &$data) {
+  $data['node']['task_assigned_or_created_filter'] = [
+    'title' => t('Task assigned or created'),
+    'filter' => [
+      'title' => t('Task assigned or created'),
+      'help' => t('Enable tasks for on the user profiles.'),
+      'field' => 'field_task',
+      'id' => 'task_assigned_or_created',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter().
+ */
+function social_task_assignment_node_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
+  $current_user = \Drupal::currentUser();
+  if (!$current_user->isAnonymous() && $entity->getType() === 'task') {
+    $uid = $current_user->id();
+    $nid = $entity->id();
+
+    // Create our custom task assignment tag so we can also invalidate f.e. teasers
+    // cache when people assigned. 
+    $assignment_tag = 'task_assignment:' . $nid . '-' . $uid;
+    $build['#cache']['tags'][] = $assignment_tag;
+    $build['#cache']['contexts'][] = 'user';
+
+    if (empty($nid)) {
+      return;
+    }
+
+    $storage = \Drupal::entityTypeManager()->getStorage('task_assignment');
+
+    // Prepare 'Enrolled' label for teasers.
+    $assigned = $storage->loadByProperties([
+      'field_account' => $uid,
+      'field_task' => $nid,
+    ]);
+
+    $assignment_status = FALSE;
+
+    if ($task_assigned = array_pop($assigned)) {
+      $assignment_status = $task_assigned->field_status->value;
+    }
+
+    
+    if ($assigned) {
+      $build['assigned'] = [
+        '#type' => '#text_field',
+        '#markup' => t('You have assigned'),
+      ];
+    }
+
+    if ($assignment_status) {
+      $build['assigned_status'] = [
+        '#type' => '#text_field',
+        '#markup' => $assignment_status,
+      ];
+    }
+
+    // Prepare assignments counter for teasers.
+    $assignments_count = $storage->getQuery()
+      ->condition('field_task', $nid)
+      ->count()
+      ->execute();
+
+    $build['assignments_count'] = [
+      '#type' => '#text_field',
+      '#markup' => $assignments_count,
+    ];
+
+
+  }
+}
+
+
+
+
+
+
+
 
 
 

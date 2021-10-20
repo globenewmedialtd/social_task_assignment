@@ -1,13 +1,27 @@
+uuid: 831ab925-0793-4ae1-a919-6948941ea82c
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.node.task.body
     - field.field.node.task.field_content_visibility
+    - field.field.node.task.field_date
+    - field.field.node.task.field_date_cut_off
+    - field.field.node.task.field_date_due
+    - field.field.node.task.field_files
+    - field.field.node.task.field_task_flow
+    - field.field.node.task.field_task_image
+    - field.field.node.task.field_task_managers
     - field.field.node.task.field_webform
+    - image.style.social_x_large
     - node.type.task
   module:
+    - datetime
     - field_group
+    - file
+    - image_widget_crop
+    - path
+    - social_group
     - text
     - webform
 third_party_settings:
@@ -15,8 +29,8 @@ third_party_settings:
     group_basic_info:
       children:
         - title
+        - field_task_image
         - body
-        - field_webform
       parent_name: ''
       weight: 0
       format_type: fieldset
@@ -32,7 +46,7 @@ third_party_settings:
         - groups
         - field_content_visibility
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       region: content
       format_settings:
@@ -41,6 +55,71 @@ third_party_settings:
         description: ''
         required_fields: true
       label: 'Access permissions'
+    group_task_settings:
+      children:
+        - field_task_flow
+        - field_webform
+        - field_date
+        - field_date_due
+        - field_date_cut_off
+      parent_name: ''
+      weight: 1
+      format_type: fieldset
+      region: content
+      format_settings:
+        description: ''
+        required_fields: true
+        id: ''
+        classes: card
+      label: 'Task settings'
+    group_additional_information:
+      children:
+        - field_files
+        - field_task_managers
+      parent_name: ''
+      weight: 3
+      format_type: details
+      region: content
+      format_settings:
+        description: ''
+        required_fields: true
+        id: ''
+        classes: social-collapsible-fieldset
+        open: false
+      label: 'Additional information'
+    group_settings:
+      children:
+        - path
+        - created
+        - status
+        - uid
+        - langcode
+        - revision_log
+      parent_name: ''
+      weight: 4
+      format_type: details
+      region: content
+      format_settings:
+        description: ''
+        required_fields: true
+        id: ''
+        classes: social-collapsible-fieldset
+        open: false
+      label: Settings
+    group_social_tags:
+      children: {  }
+      parent_name: ''
+      weight: 1
+      label: Tags
+      format_type: fieldset
+      format_settings:
+        required_fields: true
+        id: tags
+        classes: card
+        label: Tags
+      region: hidden
+_core:
+  default_config_hash: SNSKEg0OoBp_L-VFDn01J2rEb7iNLf6Amef_bGk7ufY
 id: node.task.default
 targetEntityType: node
 bundle: task
@@ -48,7 +127,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 4
+    weight: 5
     region: content
     settings:
       rows: 9
@@ -56,14 +135,77 @@ content:
       placeholder: ''
       show_summary: false
     third_party_settings: {  }
-  field_content_visibility:
-    type: options_buttons
-    weight: 7
+  created:
+    type: datetime_timestamp
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_webform:
+  field_content_visibility:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_date:
     weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_cut_off:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_due:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_files:
+    weight: 6
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_task_flow:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_task_image:
+    weight: 4
+    settings:
+      show_crop_area: true
+      show_default_crop: true
+      warn_multiple_usages: true
+      preview_image_style: social_x_large
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - hero
+        - teaser
+      progress_indicator: throbber
+      crop_types_required: {  }
+    third_party_settings: {  }
+    type: image_widget_crop
+    region: content
+  field_task_managers:
+    weight: 7
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_webform:
+    weight: 4
     settings:
       default_data: true
       webforms: {  }
@@ -71,10 +213,23 @@ content:
     type: webform_entity_reference_select
     region: content
   groups:
-    type: options_select
+    type: social_group_selector_widget
     settings: {  }
     weight: 6
     region: content
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 12
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -84,12 +239,18 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 13
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
-  created: true
-  path: true
   promote: true
-  status: true
+  social_tagging: true
   sticky: true
-  uid: true
   url_redirects: true
-

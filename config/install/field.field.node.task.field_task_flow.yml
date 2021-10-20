@@ -1,0 +1,23 @@
+uuid: 6fea94b0-5597-472a-8fdf-679953e441ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_task_flow
+    - node.type.task
+  module:
+    - options
+id: node.task.field_task_flow
+field_name: field_task_flow
+entity_type: node
+bundle: task
+label: 'Task flow'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: feedback
+default_value_callback: ''
+settings: {  }
+field_type: list_string

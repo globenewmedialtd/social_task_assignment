@@ -1,3 +1,4 @@
+uuid: 88513159-f8d7-4d9d-8cc4-7796c6118909
 langcode: en
 status: true
 dependencies:
@@ -5,11 +6,20 @@ dependencies:
     - core.entity_view_mode.node.task_submission
     - field.field.node.task.body
     - field.field.node.task.field_content_visibility
+    - field.field.node.task.field_date
+    - field.field.node.task.field_date_cut_off
+    - field.field.node.task.field_date_due
+    - field.field.node.task.field_files
+    - field.field.node.task.field_task_flow
+    - field.field.node.task.field_task_image
+    - field.field.node.task.field_task_managers
     - field.field.node.task.field_webform
     - node.type.task
   module:
     - user
     - webform
+_core:
+  default_config_hash: 08FdgTRM6JqKSj8I1vqJPciA0S1PIt6U-oew31R-SKs
 id: node.task.task_submission
 targetEntityType: node
 bundle: task
@@ -39,6 +49,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+  groups_type_fsadfdasf:
+    label: above
+    weight: -5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
   groups_type_open_group:
     label: above
     weight: 2
@@ -63,9 +81,32 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+  groups_type_super:
+    label: above
+    weight: -5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_tm_community:
+    label: above
+    weight: -5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
 hidden:
   body: true
   field_content_visibility: true
+  field_date: true
+  field_date_cut_off: true
+  field_date_due: true
+  field_files: true
+  field_task_flow: true
+  field_task_image: true
+  field_task_managers: true
   flag_follow_content: true
   groups: true
   links: true

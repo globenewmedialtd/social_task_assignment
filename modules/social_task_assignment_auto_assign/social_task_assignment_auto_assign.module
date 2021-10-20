@@ -26,17 +26,18 @@ function social_task_assignment_auto_assign_form_alter(&$form, FormStateInterfac
     $node = $form_state->getformObject()->getEntity();
     $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign');
     $auto_assign = $social_task_auto_assign->getSocialTaskAutoAssignConfig($node->id());
+    $auto_assign_default = FALSE;
     if ($auto_assign) {
       $auto_assign_default = $auto_assign->getAutoAssign();      
     }
 
     // Attach new fieldset
   $form['social_task_assignment_auto_assign'] = [
-    '#type' => 'details',
-    '#description' => t("Auto assign"),
-    '#open' => TRUE,
+    '#type' => 'fieldset',
+    '#title' => t('Auto assign'),
     '#tree' => TRUE,
     '#weight' => 5,
+    '#attributes' => ['class' => ['card']],
   ];
 
   $form['social_task_assignment_auto_assign']['enable_auto_assign'] = [
@@ -93,7 +94,7 @@ function social_task_assignment_auto_assign_group_content_insert(GroupContentInt
     $nid = $group_content->getEntity()->id();
     $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign'); 
     if ($config = $social_task_auto_assign->getSocialTaskAutoAssignConfig($nid)) {
-      $auto_assign = $config->getAutoAssign();  
+      $auto_assign = $config->getAutoAssign(); 
     }
 
     if ($auto_assign === TRUE) {

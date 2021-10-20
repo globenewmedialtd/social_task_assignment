@@ -1,14 +1,28 @@
+uuid: ca2e908f-287d-4779-be5b-acd6f30b7796
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.node.task.body
     - field.field.node.task.field_content_visibility
+    - field.field.node.task.field_date
+    - field.field.node.task.field_date_cut_off
+    - field.field.node.task.field_date_due
+    - field.field.node.task.field_files
+    - field.field.node.task.field_task_flow
+    - field.field.node.task.field_task_image
+    - field.field.node.task.field_task_managers
     - field.field.node.task.field_webform
     - node.type.task
   module:
+    - datetime
+    - file
+    - image
+    - options
     - text
     - user
+_core:
+  default_config_hash: gsPMvWJ8DPg7Rh9Sx5N6AmNTT7vvSTKXeCQ6v62xKC8
 id: node.task.default
 targetEntityType: node
 bundle: task
@@ -21,6 +35,65 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_date:
+    weight: 9
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_cut_off:
+    weight: 10
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_due:
+    weight: 8
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_files:
+    weight: 12
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_task_flow:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_task_image:
+    weight: 11
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_task_managers:
+    weight: 7
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   groups_type_closed_group:
     label: above
     weight: 1
@@ -32,6 +105,14 @@ content:
   groups_type_flexible_group:
     label: above
     weight: 2
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_fsadfdasf:
+    label: above
+    weight: -5
     region: content
     settings:
       link: true
@@ -56,6 +137,22 @@ content:
   groups_type_secret_group:
     label: above
     weight: 5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_super:
+    label: above
+    weight: -5
+    region: content
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+  groups_type_tm_community:
+    label: above
+    weight: -5
     region: content
     settings:
       link: true

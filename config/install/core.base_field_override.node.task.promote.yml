@@ -1,8 +1,11 @@
+uuid: 30382809-7994-4ea9-bbfe-66a5d207e1ab
 langcode: en
 status: true
 dependencies:
   config:
     - node.type.task
+_core:
+  default_config_hash: fny4t_htFGohN-zLwQrhfpeHHTUT3od2AIFn4RFj95Y
 id: node.task.promote
 field_name: promote
 entity_type: node

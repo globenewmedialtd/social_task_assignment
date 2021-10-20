@@ -2,10 +2,9 @@ langcode: en
 status: open
 dependencies:
   module:
-    - webform
-    - webform_views
+    - social_task_assignment
 _core:
-  default_config_hash: HpzOzOux3p2fkmdnUfy5751GdbUduVnN58dWEq_J8IU
+  default_config_hash: SevW0llzE2IPI9yro7FTwZSO6SGoxqPnXjdltrEBShU
 open: null
 close: null
 weight: 0
@@ -202,9 +201,9 @@ handlers:
     label: 'Update Task assignment'
     notes: ''
     handler_id: null
-    status: true
+    status: 1
     conditions: {  }
-    weight: null
+    weight: ''
     settings:
       id: update_task_assignment
       label: 'Update Task assignment'
@@ -260,7 +259,7 @@ handlers:
                   handler_id: null
                   status: true
                   conditions: {  }
-                  weight: -50
+                  weight: null
                   settings:
                     id: update_task_assignment
                     label: 'Update Task assignment'
@@ -268,7 +267,7 @@ handlers:
                     handler_id: null
                     status: true
                     conditions: {  }
-                    weight: null
+                    weight: -50
                     settings:
                       id: update_task_assignment
                       label: 'Update Task assignment'
@@ -290,17 +289,17 @@ handlers:
                           label: 'Update Task assignment'
                           notes: ''
                           handler_id: null
-                          status: 1
+                          status: true
                           conditions: {  }
-                          weight: ''
+                          weight: null
                           settings:
                             id: update_task_assignment
                             label: 'Update Task assignment'
                             notes: ''
                             handler_id: null
-                            status: true
+                            status: 1
                             conditions: {  }
-                            weight: null
+                            weight: ''
                             settings:
                               id: update_task_assignment
                               label: 'Update Task assignment'
@@ -329,9 +328,17 @@ handlers:
                                     id: update_task_assignment
                                     label: 'Update Task assignment'
                                     notes: ''
-                                    handler_id: update_task_assignment
+                                    handler_id: null
                                     status: true
                                     conditions: {  }
-                                    weight: 0
-                                    settings: {  }
+                                    weight: null
+                                    settings:
+                                      id: update_task_assignment
+                                      label: 'Update Task assignment'
+                                      notes: ''
+                                      handler_id: update_task_assignment
+                                      status: true
+                                      conditions: {  }
+                                      weight: 0
+                                      settings: {  }
 variants: {  }

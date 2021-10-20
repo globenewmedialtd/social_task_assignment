@@ -1,3 +1,4 @@
+uuid: 0547c57c-fb82-447d-81e3-66d0e2789cac
 langcode: en
 status: true
 dependencies:
@@ -5,11 +6,10 @@ dependencies:
     - menu_ui
 third_party_settings:
   menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+    available_menus: {  }
+    parent: ''
 _core:
-  default_config_hash: qbRWaSAA6nJrmQioJBDapxBeSb0o6py4FLGQgVjdUyQ
+  default_config_hash: 0XIurqZ8OlyOiBDPcyCqWHKputkyC6n9Pcsfn86qAX8
 name: Task
 type: task
 description: ''

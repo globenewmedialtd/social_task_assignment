@@ -1,0 +1,20 @@
+uuid: 86c53927-c2e1-4e31-898b-967bfd2b5253
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - user
+id: node.field_task_managers
+field_name: field_task_managers
+entity_type: node
+type: entity_reference
+settings:
+  target_type: user
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

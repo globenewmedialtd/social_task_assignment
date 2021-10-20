@@ -1,11 +1,11 @@
+uuid: 84dd9f29-4d41-47cb-9176-e554b80ba15c
 langcode: en
 status: true
 dependencies:
   module:
     - node
-    - social_task_assignment
 _core:
-  default_config_hash: 4CXS0Bo_mOJJUp85Ld_tuWPMkYYCIDjt8CUwNqHkNgs
+  default_config_hash: zQ1AX8W8Qq-cXNYgVF7KCQ01iN73lp8NW0xZWYZmHF4
 id: node.task_submission
 label: 'Task submission'
 targetEntityType: node
