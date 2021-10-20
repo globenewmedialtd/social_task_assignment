@@ -28,3 +28,8 @@ view tasks on my profile:
 
 view tasks on other profiles:
   title: 'View the My tasks overview and block on other peoples profile'
+
+manage everything assignments:  
+  title: 'Manage Everything Assignments'
+  description: 'Access to Manage All Assignments page on tasks.'
+  restrict access: false

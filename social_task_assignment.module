@@ -17,6 +17,7 @@ use Drupal\social_task_assignment\TaskAssignmentInterface;
 use Drupal\social_task_assignment\SocialTaskAssignmentAccessHelper;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\user\Entity\User;
 
 /**
  * @file
