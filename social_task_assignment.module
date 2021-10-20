@@ -493,7 +493,7 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
       ];
     }
 
-    // Prepare assignments counter for teasers.
+    // Prepare assignments counter for teasers - TOTAL.
     $assignments_count = $storage->getQuery()
       ->condition('field_task', $nid)
       ->count()
@@ -503,6 +503,42 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
       '#type' => '#text_field',
       '#markup' => $assignments_count,
     ];
+
+    // Prepare assignments counter for teasers - OPEN.
+    $assignments_count_open = $storage->getQuery()
+      ->condition('field_task', $nid)
+      ->condition('field_status', 'open')
+      ->count()
+      ->execute();
+
+    $build['assignments_count_open'] = [
+      '#type' => '#text_field',
+      '#markup' => $assignments_count_open,
+    ];
+
+    // Prepare assignments counter for teasers - SUBMITTED.
+    $assignments_count_submitted = $storage->getQuery()
+      ->condition('field_task', $nid)
+      ->condition('field_status', 'submitted')
+      ->count()
+      ->execute();
+
+    $build['assignments_count_submitted'] = [
+      '#type' => '#text_field',
+      '#markup' => $assignments_count_submitted,
+    ];    
+
+    // Prepare assignments counter for teasers - COMPLETED.
+    $assignments_count_submitted = $storage->getQuery()
+      ->condition('field_task', $nid)
+      ->condition('field_status', 'completed')
+      ->count()
+      ->execute();
+
+    $build['assignments_count_completed'] = [
+      '#type' => '#text_field',
+      '#markup' => $assignments_count_completed,
+    ];     
 
 
   }

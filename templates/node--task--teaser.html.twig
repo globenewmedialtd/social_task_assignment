@@ -94,7 +94,7 @@
   {% endif %}
 
   {% if content.assignments_count is not empty %}
-    <div class="badge teaser__badge" title="{% trans %}Total amount of enrollments{% endtrans %}">
+    <div class="badge teaser__badge" title="{% trans %}Total amount of assignments{% endtrans %}">
       <span class="badge__container">
         <svg class="badge__icon" aria-hidden="true">
           <use xlink:href="#icon-person"></use>
@@ -105,6 +105,51 @@
       </span>
     </div>
   {% endif %}
+
+   
+
+    {% if content.assignments_count_open is not empty %}
+    <div class="badge teaser__badge" title="{% trans %}open assignments{% endtrans %}">
+      <span class="badge__container">
+        <svg class="badge__icon" aria-hidden="true">
+          <use xlink:href="#icon-person"></use>
+        </svg>
+        <span class="badge__label text-gray">
+          {{ content.assignments_count_open }}
+        </span>
+      </span>
+    </div>
+  {% endif %}
+
+    {% if content.assignments_count_submitted is not empty %}
+    <div class="badge teaser__badge" title="{% trans %}submitted assignments{% endtrans %}">
+      <span class="badge__container">
+        <svg class="badge__icon" aria-hidden="true">
+          <use xlink:href="#icon-person"></use>
+        </svg>
+        <span class="badge__label text-gray">
+          {{ content.assignments_count_submitted }}
+        </span>
+      </span>
+    </div>
+  {% endif %}  
+
+  {% if content.field_task_flow == 'feedback' %}
+
+    {% if content.assignments_count_completed is not empty %}
+    <div class="badge teaser__badge" title="{% trans %}completed assignments{% endtrans %}">
+      <span class="badge__container">
+        <svg class="badge__icon" aria-hidden="true">
+          <use xlink:href="#icon-person"></use>
+        </svg>
+        <span class="badge__label text-gray">
+          {{ content.assignments_count_completed }}
+        </span>
+      </span>
+    </div>
+  {% endif %}  
+
+  {% endif %}  
 
   {% if content.ongoing %}
     <span class="badge badge-primary teaser__badge">
