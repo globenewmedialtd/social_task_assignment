@@ -465,6 +465,7 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
       return;
     }
 
+    // Prepare storage to get task_assignment
     $storage = \Drupal::entityTypeManager()->getStorage('task_assignment');
 
     // Prepare 'Enrolled' label for teasers.
@@ -479,68 +480,77 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
       $assignment_status = $task_assigned->field_status->value;
     }
 
+    // We want hour new variables only appear on teasers
+    if ($build['#view_mode'] === 'teaser') {
+
+      if ($assignment_status) {
+        $build['assigned'] = [
+          '#type' => '#text_field',
+          '#markup' => t('You have assigned'),
+        ];
+      }
+  
+      if ($assignment_status) {
+        $build['assigned_status'] = [
+          '#type' => '#text_field',
+          '#markup' => $assignment_status,
+        ];
+      }
+  
+      // Prepare assignments counter for teasers - TOTAL.
+      $assignments_count = $storage->getQuery()
+        ->condition('field_task', $nid)
+        ->count()
+        ->execute();
+  
+      $build['assignments_count'] = [
+        '#type' => '#text_field',
+        '#markup' => $assignments_count,
+      ];
+  
+      // Prepare assignments counter for teasers - OPEN.
+      $assignments_count_open = $storage->getQuery()
+        ->condition('field_task', $nid)
+        ->condition('field_status', 'open')
+        ->count()
+        ->execute();
+  
+      $build['assignments_count_open'] = [
+        '#type' => '#text_field',
+        '#markup' => $assignments_count_open,
+      ];
+  
+      // Prepare assignments counter for teasers - SUBMITTED.
+      $assignments_count_submitted = $storage->getQuery()
+        ->condition('field_task', $nid)
+        ->condition('field_status', 'submitted')
+        ->count()
+        ->execute();
+  
+      $build['assignments_count_submitted'] = [
+        '#type' => '#text_field',
+        '#markup' => $assignments_count_submitted,
+      ];    
+  
+      // Prepare assignments counter for teasers - COMPLETED.
+      $assignments_count_completed = $storage->getQuery()
+        ->condition('field_task', $nid)
+        ->condition('field_status', 'completed')
+        ->count()
+        ->execute();
+  
+      $build['assignments_count_completed'] = [
+        '#type' => '#text_field',
+        '#markup' => $assignments_count_completed,
+      ];     
+  
+
+
+
+    }
+
     
-    if ($assigned) {
-      $build['assigned'] = [
-        '#type' => '#text_field',
-        '#markup' => t('You have assigned'),
-      ];
-    }
-
-    if ($assignment_status) {
-      $build['assigned_status'] = [
-        '#type' => '#text_field',
-        '#markup' => $assignment_status,
-      ];
-    }
-
-    // Prepare assignments counter for teasers - TOTAL.
-    $assignments_count = $storage->getQuery()
-      ->condition('field_task', $nid)
-      ->count()
-      ->execute();
-
-    $build['assignments_count'] = [
-      '#type' => '#text_field',
-      '#markup' => $assignments_count,
-    ];
-
-    // Prepare assignments counter for teasers - OPEN.
-    $assignments_count_open = $storage->getQuery()
-      ->condition('field_task', $nid)
-      ->condition('field_status', 'open')
-      ->count()
-      ->execute();
-
-    $build['assignments_count_open'] = [
-      '#type' => '#text_field',
-      '#markup' => $assignments_count_open,
-    ];
-
-    // Prepare assignments counter for teasers - SUBMITTED.
-    $assignments_count_submitted = $storage->getQuery()
-      ->condition('field_task', $nid)
-      ->condition('field_status', 'submitted')
-      ->count()
-      ->execute();
-
-    $build['assignments_count_submitted'] = [
-      '#type' => '#text_field',
-      '#markup' => $assignments_count_submitted,
-    ];    
-
-    // Prepare assignments counter for teasers - COMPLETED.
-    $assignments_count_submitted = $storage->getQuery()
-      ->condition('field_task', $nid)
-      ->condition('field_status', 'completed')
-      ->count()
-      ->execute();
-
-    $build['assignments_count_completed'] = [
-      '#type' => '#text_field',
-      '#markup' => $assignments_count_completed,
-    ];     
-
+    
 
   }
 }

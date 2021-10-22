@@ -5,6 +5,7 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_account
     - field.field.task_assignment.task_assignment.field_due_date
     - field.field.task_assignment.task_assignment.field_feedback
+    - field.field.task_assignment.task_assignment.field_information
     - field.field.task_assignment.task_assignment.field_status
     - field.field.task_assignment.task_assignment.field_submission_date
     - field.field.task_assignment.task_assignment.field_task
@@ -12,6 +13,8 @@ dependencies:
     - field.field.task_assignment.task_assignment.field_webform_submissions
   module:
     - social_task_assignment
+_core:
+  default_config_hash: jr2elFFjkp1VoCsMM-k0QTq2adJAzmLXo1cv95Ud_Js
 id: task_assignment.task_assignment.default
 targetEntityType: task_assignment
 bundle: task_assignment
@@ -37,6 +40,7 @@ content:
 hidden:
   field_due_date: true
   field_feedback: true
+  field_information: true
   field_status: true
   field_submission_date: true
   field_task: true
@@ -44,4 +48,3 @@ hidden:
   name: true
   search_api_excerpt: true
   user_id: true
-

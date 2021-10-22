@@ -1,10 +1,7 @@
+uuid: ebcd8608-e598-450c-bf40-9b3ba10004bd
 langcode: en
 status: open
-dependencies:
-  module:
-    - social_task_assignment
-_core:
-  default_config_hash: SevW0llzE2IPI9yro7FTwZSO6SGoxqPnXjdltrEBShU
+dependencies: {  }
 open: null
 close: null
 weight: 0
@@ -15,7 +12,7 @@ id: default
 title: Default
 description: ''
 category: ''
-elements: "text:\n  '#type': textarea\n  '#title': Text\nupload:\n  '#type': webform_document_file\n  '#title': Upload"
+elements: "text:\n  '#type': text_format\n  '#title': Text\n  '#allowed_formats':\n    basic_html: basic_html\n  '#required': true"
 css: ''
 javascript: ''
 settings:
@@ -24,16 +21,16 @@ settings:
   ajax_progress_type: ''
   ajax_effect: ''
   ajax_speed: null
-  page: false
+  page: true
   page_submit_path: ''
   page_confirm_path: ''
   page_theme_name: ''
-  form_title: source_entity_webform
-  form_submit_once: true
+  form_title: both
+  form_submit_once: false
   form_exception_message: ''
   form_open_message: ''
   form_close_message: ''
-  form_previous_submissions: false
+  form_previous_submissions: true
   form_confidential: false
   form_confidential_message: ''
   form_disable_remote_addr: false
@@ -82,7 +79,7 @@ settings:
   autofill: false
   autofill_message: ''
   autofill_excluded_elements: {  }
-  wizard_progress_bar: false
+  wizard_progress_bar: true
   wizard_progress_pages: false
   wizard_progress_percentage: false
   wizard_progress_link: false
@@ -97,7 +94,7 @@ settings:
   wizard_track: ''
   wizard_prev_button_label: ''
   wizard_next_button_label: ''
-  wizard_toggle: true
+  wizard_toggle: false
   wizard_toggle_show_label: ''
   wizard_toggle_hide_label: ''
   preview: 0
@@ -115,12 +112,12 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: inline
+  confirmation_type: page
   confirmation_title: ''
-  confirmation_message: 'Your submission has been sent. Thank you!'
+  confirmation_message: ''
   confirmation_url: ''
   confirmation_attributes: {  }
-  confirmation_back: false
+  confirmation_back: true
   confirmation_back_label: ''
   confirmation_back_attributes: {  }
   confirmation_exclude_query: false
@@ -133,7 +130,7 @@ settings:
   limit_user: null
   limit_user_interval: null
   limit_user_message: ''
-  limit_user_unique: true
+  limit_user_unique: false
   entity_limit_total: null
   entity_limit_total_interval: null
   entity_limit_user: null
@@ -176,7 +173,8 @@ access:
     users: {  }
     permissions: {  }
   update_own:
-    roles: {  }
+    roles:
+      - authenticated
     users: {  }
     permissions: {  }
   delete_own:
@@ -195,150 +193,5 @@ access:
     roles: {  }
     users: {  }
     permissions: {  }
-handlers:
-  update_task_assignment:
-    id: update_task_assignment
-    label: 'Update Task assignment'
-    notes: ''
-    handler_id: null
-    status: 1
-    conditions: {  }
-    weight: ''
-    settings:
-      id: update_task_assignment
-      label: 'Update Task assignment'
-      notes: ''
-      handler_id: null
-      status: true
-      conditions: {  }
-      weight: null
-      settings:
-        id: update_task_assignment
-        label: 'Update Task assignment'
-        notes: ''
-        handler_id: null
-        status: true
-        conditions: {  }
-        weight: null
-        settings:
-          id: update_task_assignment
-          label: 'Update Task assignment'
-          notes: ''
-          handler_id: null
-          status: true
-          conditions: {  }
-          weight: null
-          settings:
-            id: update_task_assignment
-            label: 'Update Task assignment'
-            notes: ''
-            handler_id: null
-            status: true
-            conditions: {  }
-            weight: null
-            settings:
-              id: update_task_assignment
-              label: 'Update Task assignment'
-              notes: ''
-              handler_id: null
-              status: true
-              conditions: {  }
-              weight: null
-              settings:
-                id: update_task_assignment
-                label: 'Update Task assignment'
-                notes: ''
-                handler_id: null
-                status: true
-                conditions: {  }
-                weight: null
-                settings:
-                  id: update_task_assignment
-                  label: 'Update Task assignment'
-                  notes: ''
-                  handler_id: null
-                  status: true
-                  conditions: {  }
-                  weight: null
-                  settings:
-                    id: update_task_assignment
-                    label: 'Update Task assignment'
-                    notes: ''
-                    handler_id: null
-                    status: true
-                    conditions: {  }
-                    weight: -50
-                    settings:
-                      id: update_task_assignment
-                      label: 'Update Task assignment'
-                      notes: ''
-                      handler_id: null
-                      status: true
-                      conditions: {  }
-                      weight: null
-                      settings:
-                        id: update_task_assignment
-                        label: 'Update Task assignment'
-                        notes: ''
-                        handler_id: null
-                        status: true
-                        conditions: {  }
-                        weight: null
-                        settings:
-                          id: update_task_assignment
-                          label: 'Update Task assignment'
-                          notes: ''
-                          handler_id: null
-                          status: true
-                          conditions: {  }
-                          weight: null
-                          settings:
-                            id: update_task_assignment
-                            label: 'Update Task assignment'
-                            notes: ''
-                            handler_id: null
-                            status: 1
-                            conditions: {  }
-                            weight: ''
-                            settings:
-                              id: update_task_assignment
-                              label: 'Update Task assignment'
-                              notes: ''
-                              handler_id: null
-                              status: true
-                              conditions: {  }
-                              weight: null
-                              settings:
-                                id: update_task_assignment
-                                label: 'Update Task assignment'
-                                notes: ''
-                                handler_id: null
-                                status: true
-                                conditions: {  }
-                                weight: null
-                                settings:
-                                  id: update_task_assignment
-                                  label: 'Update Task assignment'
-                                  notes: ''
-                                  handler_id: null
-                                  status: true
-                                  conditions: {  }
-                                  weight: null
-                                  settings:
-                                    id: update_task_assignment
-                                    label: 'Update Task assignment'
-                                    notes: ''
-                                    handler_id: null
-                                    status: true
-                                    conditions: {  }
-                                    weight: null
-                                    settings:
-                                      id: update_task_assignment
-                                      label: 'Update Task assignment'
-                                      notes: ''
-                                      handler_id: update_task_assignment
-                                      status: true
-                                      conditions: {  }
-                                      weight: 0
-                                      settings: {  }
+handlers: {  }
 variants: {  }

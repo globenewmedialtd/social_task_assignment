@@ -135,7 +135,6 @@
   {% endif %}  
 
   {% if content.field_task_flow == 'feedback' %}
-
     {% if content.assignments_count_completed is not empty %}
     <div class="badge teaser__badge" title="{% trans %}completed assignments{% endtrans %}">
       <span class="badge__container">
@@ -147,15 +146,9 @@
         </span>
       </span>
     </div>
+    {% endif %}
   {% endif %}  
 
-  {% endif %}  
-
-  {% if content.ongoing %}
-    <span class="badge badge-primary teaser__badge">
-          {{ content.ongoing }}
-        </span>
-  {% endif %}
   {% if content.assigned %}
     <span class="badge badge-default teaser__badge">
       {{ content.assigned }}

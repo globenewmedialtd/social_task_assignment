@@ -19,7 +19,7 @@ dependencies:
     - user
     - webform
 _core:
-  default_config_hash: 08FdgTRM6JqKSj8I1vqJPciA0S1PIt6U-oew31R-SKs
+  default_config_hash: fTXLv-jYqCNIPkDdJerMuYAIxnhkP4OiGxfvakZgzsM
 id: node.task.task_submission
 targetEntityType: node
 bundle: task

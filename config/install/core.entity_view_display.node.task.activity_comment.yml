@@ -1,8 +1,9 @@
-uuid: ca2e908f-287d-4779-be5b-acd6f30b7796
+uuid: 741fdd1e-2556-406c-9dd1-c13793a0c7e5
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.activity_comment
     - field.field.node.task.body
     - field.field.node.task.field_content_visibility
     - field.field.node.task.field_date
@@ -15,34 +16,88 @@ dependencies:
     - field.field.node.task.field_webform
     - node.type.task
   module:
+    - datetime
     - file
+    - image
+    - options
     - text
     - user
 _core:
   default_config_hash: x7K9NJACA7TgpF1oy0MVWyWyiQKWMq0kYXHPl-iaL18
-id: node.task.default
+id: node.task.activity_comment
 targetEntityType: node
 bundle: task
-mode: default
+mode: activity_comment
 content:
   body:
     type: text_default
-    weight: 4
+    weight: 0
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_date:
+    weight: 9
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_cut_off:
+    weight: 10
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_due:
+    weight: 8
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_files:
-    weight: 5
+    weight: 12
     label: above
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
     type: file_default
     region: content
+  field_task_flow:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_task_image:
+    weight: 11
+    label: above
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: content
+  field_task_managers:
+    weight: 7
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   groups_type_closed_group:
     label: above
-    weight: 0
+    weight: 1
     region: content
     settings:
       link: true
@@ -50,7 +105,7 @@ content:
     type: entity_reference_label
   groups_type_flexible_group:
     label: above
-    weight: 1
+    weight: 2
     region: content
     settings:
       link: true
@@ -66,7 +121,7 @@ content:
     type: entity_reference_label
   groups_type_open_group:
     label: above
-    weight: 2
+    weight: 3
     region: content
     settings:
       link: true
@@ -74,7 +129,7 @@ content:
     type: entity_reference_label
   groups_type_public_group:
     label: above
-    weight: 3
+    weight: 4
     region: content
     settings:
       link: true
@@ -106,12 +161,6 @@ content:
     type: entity_reference_label
 hidden:
   field_content_visibility: true
-  field_date: true
-  field_date_cut_off: true
-  field_date_due: true
-  field_task_flow: true
-  field_task_image: true
-  field_task_managers: true
   field_webform: true
   flag_follow_content: true
   groups: true
