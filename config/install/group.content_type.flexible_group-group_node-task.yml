@@ -1,0 +1,19 @@
+uuid: d5473507-a8c4-41e5-b348-dcfb6141adc7
+langcode: en
+status: true
+dependencies:
+  config:
+    - group.type.flexible_group
+    - node.type.task
+  module:
+    - gnode
+    - node
+id: flexible_group-group_node-task
+label: 'Flexible group: Group node (Task)'
+description: 'Adds <em class="placeholder">Task</em> content to groups both publicly and privately.'
+group_type: flexible_group
+content_plugin: 'group_node:task'
+plugin_config:
+  group_cardinality: 0
+  entity_cardinality: 1
+  use_creation_wizard: false
