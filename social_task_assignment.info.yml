@@ -8,3 +8,4 @@ dependencies:
   - social_group
   - webform
   - webform_views
+  - twig_field_value
