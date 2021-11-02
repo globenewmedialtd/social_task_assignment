@@ -10,6 +10,7 @@ dependencies:
     - options
     - profile
     - social_profile
+    - social_task_assignment
     - social_task_assignment_vbo
     - text
     - user
