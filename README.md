@@ -1,6 +1,12 @@
 # Social Task Assignment
 This module adds a new task content type to opensocial.
 
+## Requirements
+Please make sure you have the following modules installed and enabled:
+- drupal/twig_field_value : Work with field_values and field_labels seperatley on TWIG Level
+- drupal/webform : Needed for the submissions
+- drupal/webform_views : Needed for the submissions
+
 ## How to install
 Please install like any other modules.
 
