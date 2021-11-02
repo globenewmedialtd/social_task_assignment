@@ -15,6 +15,8 @@ Please do not forget to tick "update and view own webform submission" at the dru
 ## Activity Stream / Notifications
 There are several message templates used, preconfigured. BUG: At the moment email sending is not working through "Activities", you can use a VBO action on the management table for the task assignments. Due to a lack of proper hooks, you need to adjust the notification views. Please remove the "activity_notification_visibility_access" and add our new "social_task_assignment_activity_notification_visibility_access". This is needed because of the permission settings shipped with Activities.
 
+You find it here -> /admin/structure/views/view/activity_stream_notifications
+
 ### Available message templates
 - Create task in group
 - An organizer/tutor added me to a task
