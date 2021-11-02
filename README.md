@@ -15,6 +15,12 @@ Please do not forget to tick "update and view own webform submission" at the dru
 ## Activity Stream / Notifications
 There are several message templates used, preconfigured. BUG: At the moment email sending is not working through "Activities", you can use a VBO action on the management table for the task assignments. Due to a lack of proper hooks, you need to adjust the notification views. Please remove the "activity_notification_visibility_access" and add our new "social_task_assignment_activity_notification_visibility_access". This is needed because of the permission settings shipped with Activities.
 
+### Available message templates
+- Create task in group
+- An organizer/tutor added me to a task
+- Activity on tasks I am organizing
+
+
 ## Task Assignment & VBO
 If you create your first task, you will see that all group members will be around shortly and are waiting for you to assign. BUG: Exposed filter issue.
 If you delete a group member also the task assignment will be deleted. If you add one or more members, they automatically will be available for you to assign.
