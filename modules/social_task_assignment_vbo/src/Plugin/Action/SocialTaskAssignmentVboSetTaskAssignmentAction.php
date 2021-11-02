@@ -41,9 +41,7 @@ class SocialTaskAssignmentVboSetTaskAssignmentAction extends ViewsBulkOperations
 
     if ($object instanceof TaskAssignmentInterface) {
       //$access = $object->access('edit', $account, TRUE);
-      $access = AccessResult::allowedIfHasPermission($account, 'manage everything assignments');
-
-      \Drupal::logger('social_task_assignment_vbo')->notice('<pre><code>' . print_r($access, TRUE) . '</code></pre>' );
+      $access = AccessResult::allowedIfHasPermission($account, 'manage everything assignments');     
 
       $task_id = $object->getFieldValue('field_task', 'target_id');
       $node = \Drupal::entityTypeManager()->getStorage('node')->load($task_id);

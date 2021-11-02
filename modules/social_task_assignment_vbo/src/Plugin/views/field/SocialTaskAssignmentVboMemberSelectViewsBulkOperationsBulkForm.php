@@ -206,7 +206,7 @@ class SocialTaskAssignmentVboMemberSelectViewsBulkOperationsBulkForm extends Vie
       $arguments = $title->getArguments();
       $count = empty($arguments['%count']) ? 0 : $arguments['%count'];
     }
-    $title = $this->formatPlural($count, '<b><em class="placeholder">@count</em> assignee</b> is selected', '<b><em class="placeholder">@count</em> assignees</b> are selected');
+    $title = $this->formatPlural($count, '<b><em class="placeholder">@count</em> member</b> is selected', '<b><em class="placeholder">@count</em> members</b> are selected');
     $wrapper['multipage']['#title'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
@@ -223,12 +223,12 @@ class SocialTaskAssignmentVboMemberSelectViewsBulkOperationsBulkForm extends Vie
       if (!empty($tempstoreData['exclude_mode']) && $tempstoreData['exclude_mode']) {
         $excluded = TRUE;
       }
-      $wrapper['multipage']['list']['#title'] = !$excluded ? $this->t('See selected assignees on other pages') : $this->t('See excluded assignees on other pages');
+      $wrapper['multipage']['list']['#title'] = !$excluded ? $this->t('See selected members on other pages') : $this->t('See excluded members on other pages');
     }
 
     // Update the clear submit button.
     if (!empty($wrapper['multipage']['clear'])) {
-      $wrapper['multipage']['clear']['#value'] = $this->t('Clear all selected assignees');
+      $wrapper['multipage']['clear']['#value'] = $this->t('Clear all selected members');
       $wrapper['multipage']['clear']['#attributes']['class'][] = 'btn-default dropdown-toggle waves-effect waves-btn margin-top-l margin-left-m';
     }
 
