@@ -1,4 +1,3 @@
-uuid: 264c64d5-849d-4cdb-9b32-f3cf8b96b2a4
 langcode: en
 status: true
 dependencies:
@@ -100,77 +99,6 @@ display:
       row:
         type: fields
       fields:
-        social_views_bulk_operations_bulk_form_assignment_data_source:
-          id: social_views_bulk_operations_bulk_form_assignment_data_source
-          table: views
-          field: social_views_bulk_operations_bulk_form_assignment_data_source
-          relationship: none
-          group_type: group
-          admin_label: ''
-          label: 'Social Views bulk operations for adding new members to task TEST'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          batch: 1
-          batch_size: '10'
-          form_step: true
-          buttons: 0
-          clear_on_exposed: 0
-          action_title: Action
-          selected_actions:
-            comment_delete_action: 0
-            social_task_assignment_vbo_test_action: social_task_assignment_vbo_test_action
-            social_user_send_email: 0
-            social_user_export_user_action: 0
-            user_remove_role_action: 0
-            user_unblock_user_action: 0
-            user_add_role_action: 0
-            user_block_user_action: 0
-            views_bulk_operations_delete_entity: 0
-            vbo_cancel_user_action: 0
-            social_group_add_members_to_group_action: 0
-            'entity:save_action:user': 0
-          preconfiguration:
-            social_task_assignment_vbo_test_action:
-              label_override: ''
-          plugin_id: social_views_bulk_operations_bulk_form_assignment_data_source
         profile_entity_sortable:
           id: profile_entity_sortable
           table: profile
@@ -318,7 +246,7 @@ display:
       arguments: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -348,7 +276,7 @@ display:
       display_extenders: {  }
       path: admin/manage-task-assignment-members
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -369,3 +297,4 @@ display:
         - 'config:core.entity_view_display.profile.profile.table'
         - 'config:core.entity_view_display.profile.profile.teaser'
         - 'config:field.storage.profile.field_profile_organization'
+

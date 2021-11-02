@@ -10,3 +10,4 @@ dependencies:
   - webform_views
   - twig_field_value
   - lazy
+  - social_task_assignment_vbo
