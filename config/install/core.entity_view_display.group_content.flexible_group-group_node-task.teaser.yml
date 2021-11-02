@@ -1,0 +1,24 @@
+uuid: dbb2baa8-eb7f-4d0c-8c45-23a75c4dbede
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.group_content.teaser
+    - group.content_type.flexible_group-group_node-task
+id: group_content.flexible_group-group_node-task.teaser
+targetEntityType: group_content
+bundle: flexible_group-group_node-task
+mode: teaser
+content:
+  entity_id:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: teaser
+      link: false
+    third_party_settings: {  }
+hidden:
+  search_api_excerpt: true
+  uid: true
