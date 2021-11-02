@@ -1,4 +1,3 @@
-uuid: 5fcb4084-519f-49c6-b3f4-d87e72b29b08
 langcode: en
 status: true
 dependencies:
@@ -11,7 +10,6 @@ dependencies:
     - options
     - profile
     - social_profile
-    - social_task_assignment
     - social_task_assignment_vbo
     - text
     - user
