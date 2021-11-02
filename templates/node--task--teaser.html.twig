@@ -19,9 +19,8 @@
   {% if content.field_date_due|render is not empty %}
     {% embed "node--teaser__field.html.twig" %}
       {%- block field_icon -%} event {%- endblock -%}
-      {%- block field_value -%}
-        <span class="sr-only">{% trans %}The event will take place at the{% endtrans %} </span>
-        {{ content.field_date_due }}
+      {%- block field_value -%}        
+        {{ content.field_date_due|field_label}} {{ content.field_date_due|field_value}}
       {%- endblock -%}
     {% endembed %}
   {% endif %}
@@ -29,9 +28,8 @@
   {% if content.field_date|render is not empty %}
     {% embed "node--teaser__field.html.twig" %}
       {%- block field_icon -%} event {%- endblock -%}
-      {%- block field_value -%}
-        
-        {{ content.field_date }}
+      {%- block field_value -%}        
+        {{ content.field_date|field_label }} {{ content.field_date|field_value }}
       {%- endblock -%}
     {% endembed %}
   {% endif %}
@@ -39,9 +37,8 @@
   {% if content.field_date_cut_off|render is not empty %}
     {% embed "node--teaser__field.html.twig" %}
       {%- block field_icon -%} event {%- endblock -%}
-      {%- block field_value -%}
-        <span class="sr-only">{% trans %}The event will take place at the{% endtrans %} </span>
-        {{ content.field_date_cut_off }}
+      {%- block field_value -%}        
+        {{ content.field_date_cut_off|field_label }} {{ content.field_date_cut_off|field_value }}
       {%- endblock -%}
     {% endembed %}
   {% endif %}
@@ -94,45 +91,19 @@
   {% endif %}
 
   {% if content.assignments_count is not empty %}
-    <div class="badge teaser__badge" title="{% trans %}Total amount of assignments{% endtrans %}">
+    <div class="badge teaser__badge" title="{% trans %}submitted / total amount of assignments{% endtrans %}">
       <span class="badge__container">
         <svg class="badge__icon" aria-hidden="true">
           <use xlink:href="#icon-person"></use>
         </svg>
         <span class="badge__label text-gray">
-          {{ content.assignments_count }}
-        </span>
-      </span>
-    </div>
-  {% endif %}
-
-   
-
-    {% if content.assignments_count_open is not empty %}
-    <div class="badge teaser__badge" title="{% trans %}open assignments{% endtrans %}">
-      <span class="badge__container">
-        <svg class="badge__icon" aria-hidden="true">
-          <use xlink:href="#icon-person"></use>
-        </svg>
-        <span class="badge__label text-gray">
-          {{ content.assignments_count_open }}
-        </span>
-      </span>
-    </div>
-  {% endif %}
-
-    {% if content.assignments_count_submitted is not empty %}
-    <div class="badge teaser__badge" title="{% trans %}submitted assignments{% endtrans %}">
-      <span class="badge__container">
-        <svg class="badge__icon" aria-hidden="true">
-          <use xlink:href="#icon-person"></use>
-        </svg>
-        <span class="badge__label text-gray">
-          {{ content.assignments_count_submitted }}
+          {{ content.assignments_count_submitted }} / {{ content.assignments_count }}
         </span>
       </span>
     </div>
   {% endif %}  
+
+     
 
   {% if content.field_task_flow == 'feedback' %}
     {% if content.assignments_count_completed is not empty %}

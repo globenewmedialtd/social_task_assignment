@@ -1,9 +1,12 @@
+uuid: 675d987c-2773-4dcc-881b-122912cbac7a
 langcode: en
 status: true
 dependencies:
   module:
     - datetime
     - node
+_core:
+  default_config_hash: LYN0iHe6h6aK0FuV6mGVZo135TiPmqT2-8NkkLVZyEA
 id: node.field_date
 field_name: field_date
 entity_type: node

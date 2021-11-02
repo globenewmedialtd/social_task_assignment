@@ -1,3 +1,4 @@
+uuid: ff39a676-1ea0-4920-aea3-38b8626b0ded
 langcode: en
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
   module:
     - file
     - social_task_assignment
+_core:
+  default_config_hash: '-Hl6d7I-xRKFu3yVlBIhIzir7E6uArBk_Z3RdUZQF0g'
 id: task_assignment.task_assignment.field_upload
 field_name: field_upload
 entity_type: task_assignment

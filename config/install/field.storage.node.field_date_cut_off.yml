@@ -1,9 +1,12 @@
+uuid: 4397b893-58df-4f00-ba0e-6cff3f57c9bd
 langcode: en
 status: true
 dependencies:
   module:
     - datetime
     - node
+_core:
+  default_config_hash: v4bZpAwDOmY-w0dB0A8y8pMvXHJ3Bpp3mSavq08BFXg
 id: node.field_date_cut_off
 field_name: field_date_cut_off
 entity_type: node

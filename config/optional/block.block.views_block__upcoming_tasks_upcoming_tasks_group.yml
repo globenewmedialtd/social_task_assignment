@@ -1,0 +1,32 @@
+uuid: d2a7c904-2e8d-4520-ac5b-8a5bcf1fb10f
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.upcoming_tasks
+  module:
+    - system
+    - views
+  theme:
+    - socialblue
+id: views_block__upcoming_tasks_upcoming_tasks_group
+theme: socialblue
+region: complementary_bottom
+weight: 0
+provider: null
+plugin: 'views_block:upcoming_tasks-upcoming_tasks_group'
+settings:
+  id: 'views_block:upcoming_tasks-upcoming_tasks_group'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  type: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: "/group/*/stream\r\n/group/*/about"
+    negate: false
+    context_mapping: {  }

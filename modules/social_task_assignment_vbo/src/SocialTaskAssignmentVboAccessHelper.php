@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\social_task_assignment;
+namespace Drupal\social_task_assignment_vbo;
 
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
@@ -9,7 +9,7 @@ use Drupal\node\NodeInterface;
 /**
  * Helper class for checking update access on task managers nodes.
  */
-class SocialTaskAssignmentAccessHelper {
+class SocialTaskAssignmentVboAccessHelper {
 
   /**
    * NodeAccessCheck for given operation, node and user account.

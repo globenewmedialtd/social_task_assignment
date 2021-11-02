@@ -1,3 +1,4 @@
+uuid: 54a65a07-30b1-4a4d-8c96-b9d260e1662d
 langcode: en
 status: true
 dependencies:
@@ -5,6 +6,8 @@ dependencies:
     - file
     - image
     - node
+_core:
+  default_config_hash: UFNs6UHULBfxI7kc_LamPt92St7E75raCEj4J-3mMXI
 id: node.field_task_image
 field_name: field_task_image
 entity_type: node

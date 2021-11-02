@@ -13,12 +13,6 @@ entity.task_assignment.edit_form:
   base_route: entity.task_assignment.canonical
   title: Edit
 
-entity.task_assignment.delete_form:
-  route_name:  entity.task_assignment.delete_form
-  base_route:  entity.task_assignment.canonical
-  title: Delete
-  weight: 10
-
 social_group.tasks:
   route_name: view.group_tasks.page_group_tasks
   base_route: entity.group.canonical

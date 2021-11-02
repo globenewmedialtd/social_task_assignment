@@ -13,8 +13,8 @@ class SocialTaskAssignmentVboViewsBulkOperationsConfigureAction extends Configur
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $view_id = 'manage_all_task_assignments', $display_id = 'page_1') {
-    return parent::buildForm($form, $form_state, 'manage_all_task_assignments', 'page_1');
+  public function buildForm(array $form, FormStateInterface $form_state, $view_id = 'task_assignment_selection_source', $display_id = 'page') {
+    return parent::buildForm($form, $form_state, 'task_assignment_selection_source', 'page');
   }
 
 }

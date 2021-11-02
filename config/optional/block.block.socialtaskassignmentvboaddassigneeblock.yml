@@ -1,0 +1,26 @@
+uuid: 0ee6b070-d668-465c-947a-c9b011247b78
+langcode: en
+status: true
+dependencies:
+  module:
+    - social_task_assignment_vbo
+    - system
+  theme:
+    - socialblue
+id: socialtaskassignmentvboaddassigneeblock
+theme: socialblue
+region: complementary_top
+weight: 0
+provider: null
+plugin: social_task_assignment_vbo_add_assignee_block
+settings:
+  id: social_task_assignment_vbo_add_assignee_block
+  label: 'Social Task Assignment VBO add assignee block'
+  provider: social_task_assignment_vbo
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '/node/*/manage-task-assignments/add-assignees'
+    negate: false
+    context_mapping: {  }

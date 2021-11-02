@@ -18,6 +18,11 @@ use Drupal\social_task_assignment\SocialTaskAssignmentAccessHelper;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\user\Entity\User;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\views\Views;
+use Drupal\Core\Database\Query\Condition;
+
 
 /**
  * @file
@@ -55,13 +60,61 @@ function social_task_assignment_theme() {
     'template' => 'task-assignment'
   ];
 
+  $theme['block__views_block__task_show_webform_block_1'] = [
+    'base hook' => 'block',
+    'template' => 'block--views-block--task-show-webform-block-1'
+  ];
+
+  $theme['block__views_block__task_feedback_block_1'] = [
+    'base hook' => 'block',
+    'template' => 'block--views-block--task-feedback-block-1'
+  ];  
+
+  $theme['block__views_block__attached_webform_submissions_block_1'] = [
+    'base hook' => 'block',
+    'template' => 'block--views-block--attached-webform-submissions-block-1'
+  ];    
+
   return $theme;
 }
 
-
-
 /**
  * Prepares variables for node task.
+ */
+function social_task_assignment_preprocess_node(&$variables) {
+
+  // Processing on task_submission view mode
+  if ($variables['view_mode'] === 'task_submission') {
+    $node = $variables['node'];
+    $social_task_assignment = \Drupal::service('social_task_assignment.status_helper');
+
+    // First let's check if we have a submission from date
+    if (!isset($node->field_date->date)) {
+      $submission_from_date = FALSE;
+    }
+    else {
+      $submission_from_date = $node->field_date->date->getTimestamp();
+    } 
+
+    // Second let's check if we have a cut off date
+    if (!isset($node->field_date_cut_off->date)) {
+      $cut_off_date = FALSE;
+    }
+    else {
+      $cut_off_date = $node->field_date_cut_off->date->getTimestamp();
+    }
+    
+    $show_form = $social_task_assignment->showTaskSubmissionForm($submission_from_date, $cut_off_date, $node);
+    
+    $variables['show_form'] = $show_form['status'];
+    $variables['show_no_form_text'] = $show_form['text'];
+
+  }  
+
+}
+
+/**
+ * Prepares variables for entity task assignment.
  */
 function social_task_assignment_preprocess_task_assignment(&$variables) {
   // Helpful $entityname variable for templates.
@@ -143,7 +196,7 @@ function social_task_assignment_get_current_task() {
     }
 
     // If we don't have a task then we can go back to NULL.
-    if (!isset($event)) {
+    if (!isset($task)) {
       $task = NULL;
     }
   }
@@ -198,11 +251,11 @@ function social_task_assignment_form_task_assignment_feedback_form_alter(&$form,
  */
 function social_task_assignment_block_access(Block $block, $operation, AccountInterface $account) {
 
-  if ($operation === 'view' && ($block->getPluginId() === 'views_exposed_filter_block:tasks-page_profile' || $block->getPluginId() === 'views_block:tasks-block_user_topics')) {
+  if ($operation === 'view' && ($block->getPluginId() === 'views_exposed_filter_block:tasks-page_profile' || $block->getPluginId() === 'views_block:tasks-block_user_tasks')) {
     // Here we're going to assume by default access is not granted.
     $taskController = SocialTaskAssignmentController::create(\Drupal::getContainer());
     $access = $taskController->myTaskAccess($account);
-    // If the 'myTopicAccess' returns 'AccessResultNeutral', we have to assume
+    // If the 'myTaskAccess' returns 'AccessResultNeutral', we have to assume
     // that access must be denied.
     if ($access instanceof AccessResultNeutral) {
       // Return forbidden, since access was not explicitly granted.
@@ -214,24 +267,6 @@ function social_task_assignment_block_access(Block $block, $operation, AccountIn
 
   // No opinion.
   return AccessResult::neutral();
-}
-
-/**
- * Implements hook_social_user_account_header_create_links().
- *
- * Adds the "Create Tasks" link to the content creation menu.
- */
-function social_task_assignment_social_user_account_header_create_links($context) {
-  return [
-    'add_task' => [
-      '#type' => 'link',
-      '#attributes' => [
-        'title' => new TranslatableMarkup('Create New Task'),
-      ],
-      '#title' => new TranslatableMarkup('New Task'),
-      '#weight' => 200,
-    ] + Url::fromRoute('node.add', ['node_type' => 'task'])->toRenderArray(),
-  ];
 }
 
 /**
@@ -329,107 +364,7 @@ function social_task_assignment_manager_or_organizer(NodeInterface $node = NULL,
   return $social_task_assignment_manager_or_organizer;
 }
 
-/**
- * Implements hook_node_access_records().
- */
-function social_task_assignment_node_access_records(NodeInterface $node) {
-  $grants = [];
-  // Only for tasks.
-  if (($node->getType() === 'task') && $task_managers_ids = array_column($node->get('field_task_managers')
-    ->getValue(), 'target_id')) {
-    // Task organizers should be granted access.
-    // Load the task managers accounts.
-    $users = User::loadMultiple($task_managers_ids);
-    foreach ($users as $task_manager) {
-      // Task organizers must have access
-      // to view the record in the first place.
-      if ($node->access('view', $task_manager)) {
-        // Add grant.
-        $grants[] = [
-          'realm' => 'social_task_assignment_managers:' . $node->id(),
-          'gid' => $task_manager->id(),
-          'grant_view' => 1,
-          'grant_update' => 1,
-          'grant_delete' => 0,
-        ];
-      }
-    }
-  }
 
-  return $grants;
-}
-
-/**
- * Implements hook_node_grants().
- */
-function social_task_assignment_node_grants(AccountInterface $account, $op) {
-
-  $grants = [];
-
-  // @todo Fetch all nodes this user has access to
-  // and add a grant for each of those.
-  $query = \Drupal::database()->select('node__field_task_managers', 'tm');
-  $query->fields('tm', ['entity_id']);
-  $query->condition('tm.field_task_managers_target_id', $account->id());
-  // Add grants.
-  foreach ($query->execute()->fetchAllAssoc('entity_id') as $nid) {
-    $grants['social_task_assignment_managers:' . $nid->entity_id][] = $account->id();
-  }
-
-  // Tell Drupal about users grants.
-  return $grants;
-}
-
-/**
- * Implements hook_module_implements_alter().
- */
-function social_task_assignment_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'node_access') {
-    // Remove the gnode implementation, we have a fallback in our hook.
-    if (isset($implementations['gnode']) && function_exists('gnode_node_access')) {
-      unset($implementations['gnode']);
-    }
-  }
-}
-
-/**
- * Implements hook_node_access().
- *
- * Remember: if any module returns forbidden and denies access to certain node
- * and operation it will not allow the user to do the operation on the node.
- *
- * We need this implementation because we also want to give edit access to task
- * manager regardless these scenarios thought of in gnode_node_access:
- * - is a member in the group and:
- * - has edit own or edit any permission in the group
- *
- * The gnode module specifically returns allowed if any of the above scenarios
- * are met, but forbidden in all the other scenarios. Our code ensures that if
- * we are in operation update and if gnode already returns forbidden we are able
- * to return an allowed if user is an task manager.
- */
-function social_task_assignment_node_access(NodeInterface $node, $op, AccountInterface $account) {
-  // Only continue if the gnode module is enabled.
-  if (function_exists('gnode_node_access')) {
-    $gnode_access = gnode_node_access($node, $op, $account);
-
-    if ($op === 'update') {
-      if ($gnode_access instanceof AccessResultForbidden) {
-        $social_task_assignment_access = SocialTaskAssignmentAccessHelper::getEntityAccessResult($node, $op, $account);
-
-        // Only return the result of SocialTaskAssignmentAccessHelper
-        // if it is allowed.
-        if ($social_task_assignment_access instanceof AccessResultAllowed) {
-          return $social_task_assignment_access;
-        }
-      }
-      return $gnode_access;
-    }
-    return $gnode_access;
-  }
-
-  return SocialTaskAssignmentAccessHelper::getEntityAccessResult($node, $op, $account);
-}
 
 /**
  * Implements hook_views_data_alter().
@@ -444,6 +379,48 @@ function social_task_assignment_views_data_alter(array &$data) {
       'id' => 'task_assigned_or_created',
     ],
   ];
+
+  $data['node']['task_upcoming_due_date_sort'] = [
+    'title' => t('Task sorting (overdue and upcoming)'),
+    'help' => t('For upcoming tasks sort ASC by due date and for overdue tasks change order to DESC.'),
+    'sort' => [
+      'field' => 'field_date_due_value',
+      'id' => 'task_upcoming_due_date_sort',
+    ],
+  ];
+
+  $data['node__field_date_due']['task_due_date_upcoming_filter'] = [
+    'title' => t('Due date'),
+    'group' => t('Social'),
+    'filter' => [
+      'title' => t('Due date'),
+      'help' => t('Filter task by due date'),
+      'id' => 'task_due_date_upcoming_filter',
+      'field' => 'field_date_due_value',
+    ],
+    'sort' => [
+      'title' => t('Task sorting (upcoming and overdue)'),
+      'help' => t('For upcoming tasks sort ASC by due date and for over due tasks change order to DESC.'),
+      'id' => 'social_task_assignment_sorting',
+      'field' => 'field_date_due_value',
+    ],
+  ];  
+
+  $data['activity']['social_task_assignment_activity_notification_visibility_access'] = [
+    'title' => t('Activity notification visibility access (Social Task Assignment)'),
+    'filter' => [
+      'title' => t('Activity notification visibility access (Social Task Assignment)'),
+      'help' => t('Enable activity access control for notifications.'),
+      'field' => 'field_visibility',
+      'id' => 'social_task_assignment_activity_notification_visibility_access',
+    ],
+  ];
+
+
+
+  
+
+
 }
 
 /**
@@ -555,6 +532,65 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
   }
 }
 
+/**
+ * Implements hook_cron()
+ */
+/*
+function social_task_assignment_cron() {
+
+
+  // Build Drupal DateTime & set correct format for your query
+  $curent_time = new DrupalDateTime('now');
+  $curent_time = $curent_time->format('Y-m-d\TH:i:s');
+
+  // Get Entity Manager to build your query
+  $storage = \Drupal::entityTypeManager()
+      ->getStorage('node');
+
+  // Get all Nodes satisfing your conditions
+  $nids = $storage->getQuery()
+      ->condition('type', 'task')
+      ->condition('field_date_reminder', $curent_time, '<=')
+      ->execute();
+
+  // Load all Node entities according to their IDs
+  $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+
+  // Do whatever you want with Nodes
+  foreach ($nodes as $node) {
+    // Do something
+    $node->save();  
+  }
+
+  
+
+}
+*/
+
+function social_task_assignment_activity_creator_related_entity_object_alter(&$related_object, $data) {
+  if(isset($related_object['target_type']) && $related_object['target_type'] === 'task_assignment') {
+
+    \Drupal::logger('social_task_assignment')->warning('<pre><code>' . print_r($related_object, TRUE) . '</code></pre>');
+    \Drupal::logger('social_task_assignment')->warning('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
+
+    $entityTypeManager = \Drupal::entityTypeManager();
+    $entity_storage = $entityTypeManager
+      ->getStorage($related_object['target_type']);
+    $entity = $entity_storage->load($related_object['target_id']);
+
+  if ($entity instanceof TaskAssignmentInterface) {
+    /** @var \Drupal\social_task_assignment\Entity\TaskAssignment $entity */
+    $task_id = $entity->getFieldValue('field_task', 'target_id');
+    if (!empty($task_id)) {
+      $related_object = [
+        'target_type' => 'node',
+        'target_id' => $task_id,
+      ];
+    }
+  }    
+    
+  }
+}
 
 
 

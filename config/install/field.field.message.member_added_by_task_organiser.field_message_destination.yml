@@ -1,0 +1,21 @@
+uuid: d9bbb9e9-5a80-44ea-9c84-6c44a752fb9b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_destination
+    - message.template.member_added_by_task_organiser
+  module:
+    - options
+id: message.member_added_by_task_organiser.field_message_destination
+field_name: field_message_destination
+entity_type: message
+bundle: member_added_by_task_organiser
+label: field_message_destination
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

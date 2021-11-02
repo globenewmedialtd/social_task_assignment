@@ -24,9 +24,9 @@ use Psr\Log\LoggerInterface;
  *   label = @Translation("Send email to task assignment users"),
  *   type = "task_assignment",
  *   view_id = "manage_all_task_assignments",
- *   display_id = "page_1",
+ *   display_id = "page",
  *   confirm = TRUE,
- *   confirm_form_route_name = "social_task_assignment_vbo.vbo.confirm",
+ *   confirm_form_route_name = "social_task_assignment_vbo.management.vbo.confirm",
  * )
  */
 class SocialTaskAssignmentVboSendEmail extends SocialSendEmail {

@@ -1,13 +1,13 @@
+uuid: d75db330-bab1-4631-827a-3df980b3fc6e
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.task_assignment.task_assignment.field_account
-    - field.field.task_assignment.task_assignment.field_due_date
+    - field.field.task_assignment.task_assignment.field_assigned
     - field.field.task_assignment.task_assignment.field_feedback
     - field.field.task_assignment.task_assignment.field_information
     - field.field.task_assignment.task_assignment.field_status
-    - field.field.task_assignment.task_assignment.field_submission_date
     - field.field.task_assignment.task_assignment.field_task
     - field.field.task_assignment.task_assignment.field_upload
     - field.field.task_assignment.task_assignment.field_webform_submissions
@@ -30,6 +30,23 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_assigned:
+    weight: 2
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_task:
+    type: entity_reference_autocomplete
+    weight: 3
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 0
@@ -39,12 +56,9 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
-  field_due_date: true
   field_feedback: true
   field_information: true
   field_status: true
-  field_submission_date: true
-  field_task: true
   field_upload: true
   field_webform_submissions: true
   langcode: true

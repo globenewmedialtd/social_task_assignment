@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.task.field_date
     - field.field.node.task.field_date_cut_off
     - field.field.node.task.field_date_due
+    - field.field.node.task.field_date_reminder
     - field.field.node.task.field_files
     - field.field.node.task.field_task_flow
     - field.field.node.task.field_task_image
@@ -38,7 +39,7 @@ content:
     third_party_settings: {  }
   field_date:
     weight: 8
-    label: above
+    label: inline
     settings:
       format_type: medium
       timezone_override: ''
@@ -47,7 +48,7 @@ content:
     region: content
   field_date_cut_off:
     weight: 9
-    label: above
+    label: inline
     settings:
       format_type: medium
       timezone_override: ''
@@ -56,7 +57,7 @@ content:
     region: content
   field_date_due:
     weight: 7
-    label: above
+    label: inline
     settings:
       format_type: medium
       timezone_override: ''
@@ -161,6 +162,7 @@ content:
     type: entity_reference_label
 hidden:
   field_content_visibility: true
+  field_date_reminder: true
   field_webform: true
   flag_follow_content: true
   groups: true

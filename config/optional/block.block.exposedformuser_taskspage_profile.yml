@@ -1,0 +1,29 @@
+uuid: c51499b6-4e44-4acd-8712-4b609ee2a377
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.user_tasks
+  module:
+    - system
+    - views
+  theme:
+    - socialblue
+id: exposedformuser_taskspage_profile
+theme: socialblue
+region: complementary_bottom
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:user_tasks-page_profile'
+settings:
+  id: 'views_exposed_filter_block:user_tasks-page_profile'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: '/user/*/tasks'
+    negate: false
+    context_mapping: {  }

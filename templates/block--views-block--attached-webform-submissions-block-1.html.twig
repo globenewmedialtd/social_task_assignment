@@ -62,7 +62,7 @@
 
 {% if not bare %}
 
-  <section>
+  <section{{ attributes.addClass(classes) }}>
 
     {{ title_prefix }}
     {% if label %}
@@ -72,13 +72,9 @@
 
 {% endif %}
 
-<div {{ attributes.addClass(classes) }}>
-
   {% block content %}
     {{ content }}
   {% endblock %}
-
-</div>
 
 {% if not bare %}
   </section>

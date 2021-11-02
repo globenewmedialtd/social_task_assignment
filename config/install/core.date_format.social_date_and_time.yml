@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: social_date_and_time
+label: 'Social date and time'
+locked: false
+pattern: 'd.m.Y H:i'

@@ -1,22 +1,25 @@
+uuid: 1e3b08ac-b528-45b9-b47a-ae721eed645e
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
-    - node.type.task
+    - core.entity_view_mode.group_content.teaser
+    - group.content_type.flexible_group-group_node-task
+    - group.type.closed_group
+    - group.type.flexible_group
+    - group.type.open_group
+    - group.type.public_group
   module:
+    - datetime
     - group
     - node
-    - user
-_core:
-  default_config_hash: YcL-_3YRkEQg8Lu3gMJ3H6-BqedVMoYvFOoN_322eQM
 id: group_tasks
 label: 'Group tasks'
 module: views
 description: ''
 tag: ''
-base_table: node_field_data
-base_field: nid
+base_table: group_content_field_data
+base_field: id
 display:
   default:
     display_plugin: default
@@ -25,9 +28,9 @@ display:
     position: 0
     display_options:
       access:
-        type: perm
+        type: group_permission
         options:
-          perm: 'access content'
+          group_permission: 'view group_node:task content'
       cache:
         type: tag
         options: {  }
@@ -35,7 +38,7 @@ display:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }
@@ -50,42 +53,70 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: none
+        type: mini
         options:
-          items_per_page: 0
+          items_per_page: 10
           offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
       style:
         type: default
       row:
-        type: 'entity:node'
+        type: 'entity:group_content'
         options:
+          relationship: none
           view_mode: teaser
       fields:
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          entity_type: node
-          entity_field: title
-          label: ''
-          alter:
-            alter_text: false
-            make_link: false
-            absolute: false
-            trim: false
-            word_boundary: false
-            ellipsis: false
-            strip_tags: false
-            html: false
-          hide_empty: false
-          empty_zero: false
-          settings:
-            link_to_entity: true
+        label:
+          table: group_content_field_data
+          field: label
+          id: label
+          entity_type: null
+          entity_field: label
           plugin_id: field
           relationship: none
           group_type: group
           admin_label: ''
+          label: ''
           exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
           element_type: ''
           element_class: ''
           element_label_type: ''
@@ -95,9 +126,12 @@ display:
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
+          hide_empty: false
+          empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
           type: string
+          settings: {  }
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -109,47 +143,100 @@ display:
           separator: ', '
           field_api_classes: false
       filters:
-        status:
-          value: '1'
-          table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-          group: 1
         type:
           id: type
-          table: node_field_data
+          table: group_content_field_data
           field: type
-          value:
-            task: task
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-      sorts:
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          order: DESC
-          entity_type: node
-          entity_field: created
-          plugin_id: date
           relationship: none
           group_type: group
           admin_label: ''
+          operator: in
+          value:
+            flexible_group-group_node-task: flexible_group-group_node-task
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: group_content
+          entity_field: type
+          plugin_id: bundle
+        nid:
+          id: nid
+          table: node_access
+          field: nid
+          relationship: gc__node
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: node_access
+      sorts:
+        field_date_due_value:
+          id: field_date_due_value
+          table: node__field_date_due
+          field: field_date_due_value
+          relationship: gc__node
+          group_type: group
+          admin_label: ''
+          order: ASC
           exposed: false
           expose:
             label: ''
-          granularity: second
+          granularity: minute
+          plugin_id: datetime
       title: 'Group tasks'
       header: {  }
       footer: {  }
@@ -163,41 +250,34 @@ display:
           admin_label: ''
           empty: true
           tokenize: false
-          content: 'There are no tasks in this group.'
+          content: 'No tasks in this group'
           plugin_id: text_custom
       relationships:
-        group_content:
-          id: group_content
-          table: node_field_data
-          field: group_content
+        gc__node:
+          id: gc__node
+          table: group_content_field_data
+          field: gc__node
           relationship: none
           group_type: group
-          admin_label: 'Content group content'
+          admin_label: 'Group content Content'
           required: true
           group_content_plugins:
             'group_node:task': 'group_node:task'
-            'group_node:album': '0'
-            'group_node:book': '0'
-            'group_node:course_article': '0'
-            'group_node:course_section': '0'
-            'group_node:course_video': '0'
-            'group_node:course_webform': '0'
             'group_node:event': '0'
             'group_node:landing_page': '0'
             'group_node:page': '0'
             'group_node:topic': '0'
-            'group_node:webform': '0'
-          entity_type: node
-          plugin_id: group_content_to_entity_reverse
+          entity_type: group_content
+          plugin_id: group_content_to_entity
       arguments:
         gid:
           id: gid
           table: group_content_field_data
           field: gid
-          relationship: group_content
+          relationship: none
           group_type: group
           admin_label: ''
-          default_action: empty
+          default_action: 'not found'
           exception:
             value: all
             title_enable: false
@@ -217,11 +297,19 @@ display:
             sort_order: asc
             number_of_records: 0
             format: default_summary
-          specify_validation: false
+          specify_validation: true
           validate:
-            type: none
+            type: 'entity:group'
             fail: 'not found'
-          validate_options: {  }
+          validate_options:
+            bundles:
+              closed_group: closed_group
+              flexible_group: flexible_group
+              open_group: open_group
+              public_group: public_group
+            operation: view
+            multiple: 0
+            access: false
           break_phrase: false
           not: false
           entity_type: group_content
@@ -233,9 +321,11 @@ display:
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - route.group
         - url
+        - url.query_args
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.permissions
       tags: {  }
   page_group_tasks:
     display_plugin: page
@@ -245,12 +335,15 @@ display:
     display_options:
       display_extenders: {  }
       path: group/%group/tasks
+      exposed_block: false
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
+        - route.group
         - url
+        - url.query_args
+        - user.group_permissions
         - 'user.node_grants:view'
-        - user.permissions
       tags: {  }

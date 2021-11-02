@@ -1,0 +1,21 @@
+uuid: b4b0f1dc-73e4-489b-8e11-bf8f53fbde16
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_destination
+    - message.template.create_task_group
+  module:
+    - options
+id: message.create_task_group.field_message_destination
+field_name: field_message_destination
+entity_type: message
+bundle: create_task_group
+label: field_message_destination
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

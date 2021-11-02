@@ -21,59 +21,19 @@ use Drupal\social_task_assignment_auto_assign\Entity\TaskAssignmentAutoAssignInt
  */
 function social_task_assignment_auto_assign_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   // Form alters for the task add and edit forms.
-  if ($form_id === 'node_task_edit_form' || $form_id === 'node_task_form') {
-    
-    $node = $form_state->getformObject()->getEntity();
-    $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign');
-    $auto_assign = $social_task_auto_assign->getSocialTaskAutoAssignConfig($node->id());
-    $auto_assign_default = FALSE;
-    if ($auto_assign) {
-      $auto_assign_default = $auto_assign->getAutoAssign();      
-    }
-
-    // Attach new fieldset
-  $form['social_task_assignment_auto_assign'] = [
-    '#type' => 'fieldset',
-    '#title' => t('Auto assign'),
-    '#tree' => TRUE,
-    '#weight' => 5,
-    '#attributes' => ['class' => ['card']],
-  ];
-
-  $form['social_task_assignment_auto_assign']['enable_auto_assign'] = [
-    '#title' => t('Automatically assign all group members to this task'),
-    '#type' => 'checkbox',
-    '#default_value' => $auto_assign_default ? $auto_assign_default : FALSE,
-  ];
-
-  $form['actions']['submit']['#submit'][] = 'social_task_assignment_auto_assign_form_submit';
-
+  if ($form_id === 'node_task_edit_form' || $form_id === 'node_task_form') { 
+    $form['actions']['submit']['#submit'][] = 'social_task_assignment_auto_assign_form_submit';
   }
 }
 
 function social_task_assignment_auto_assign_form_submit(array $form, FormStateInterface $form_state) {
 
-  $social_task_auto_assign_value = FALSE;
-  $social_task_auto_assign_data = $form_state->getValue('social_task_assignment_auto_assign');
   $node = $form_state->getformObject()->getEntity();
-  
-  // Set a Drupal state to retrieve the given value later
-  if (isset($social_task_auto_assign_data) && is_array($social_task_auto_assign_data)) {
-    if ($social_task_auto_assign_data['enable_auto_assign'] === 1) {
-      $social_task_auto_assign_value = TRUE;
-    }
-    
-    $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign');
-    if ($social_task_auto_assign->getSocialTaskAutoAssignConfig($node->id())) {
-      // Update
-      $update = $social_task_auto_assign->updateSocialTaskAutoAssignConfig($node->id(), $social_task_auto_assign_value);
-    }
-    else {
-      // Create
-      $social_task_auto_assign->createSocialTaskAutoAssignConfig($node->id(), $social_task_auto_assign_value);
-    }
 
-  }
+  // Check if we have already all
+  // group members available to assign.
+  $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign');
+  $social_task_auto_assign->checkIfTaskAssignments($node->id());  
 
 }
 
@@ -86,35 +46,34 @@ function social_task_assignment_auto_assign_group_content_insert(GroupContentInt
   $content_plugin = $group_content->getContentPlugin();
   $entityTypeManager = \Drupal::entityTypeManager();
 
-  // When a task with auto assign enabled has been fired
+  // When a task has been fired
   if ($content_plugin->getPluginId() === 'group_node:task') {
 
-    // We want the auto assign to happen
-    // when auto assign enabled only!
-    $nid = $group_content->getEntity()->id();
-    $social_task_auto_assign = \Drupal::service('social_task_assignment_auto_assign'); 
-    if ($config = $social_task_auto_assign->getSocialTaskAutoAssignConfig($nid)) {
-      $auto_assign = $config->getAutoAssign(); 
-    }
+    $task = $group_content->getEntity()->id();    
+    $group = $group_content->getGroup();
 
-    if ($auto_assign === TRUE) {
-      $task = $group_content->getEntity()->id();    
-      $group = $group_content->getGroup();
+    $group_members = $group->getMembers();
+    foreach ($group_members as $member) {
+      // First we need to check if we are unique
+      $conditions = [
+        'field_account' => $member->getUser()->id(),
+        'field_task' => $task
+      ];
+      $task_assignment = $entityTypeManager->getStorage('task_assignment')->loadByProperties($conditions);
 
-      $group_members = $group->getMembers();
-      foreach ($group_members as $member) {
-
+      if (!$task_assignment) {
         $assignment = TaskAssignment::create([
           'user_id' => $member->getUser()->id(),
           'field_task' => $task,
           'field_account' => $member->getUser()->id(),
         ]);
-        $assignment->save();    
-      }
-
+        $assignment->save();
+      }     
+  
     }
+
   } 
-  // If we add new Group Members assign them when auto assign enabled
+  // If we add new Group Members copy them to task assignment
   if ($content_plugin->getPluginId() === 'group_membership') {
     $group_id = $group_content->getGroup()->id();
     $uid = $group_content->getEntity()->id();

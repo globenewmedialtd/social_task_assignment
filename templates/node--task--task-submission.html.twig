@@ -1,6 +1,21 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a node.
+ *
+ * Available variables:
+ * - $show_form: Whenever to show the webform
+ * - $show_no_form_text: Text in case form not shown.
+ */
+#}
 <article{{ attributes }}>
   <div{{ content_attributes }}>
+  {% if show_form %}
     {{ content }}
+  {% else %}
+    {{ show_no_form_text }}    
+  {% endif %} 
+  
   </div>
 </article>
 

@@ -35,7 +35,7 @@ class TaskAssignmentEntityDeleteAction extends ViewsBulkOperationsActionBase {
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
     $access = AccessResult::forbidden();
 
-    if ($object instanceof EventEnrollmentInterface) {
+    if ($object instanceof TaskAssignmentInterface) {
       $access = $object->access('delete', $account, TRUE);
 
       $task_id = $object->getFieldValue('field_task', 'target_id');

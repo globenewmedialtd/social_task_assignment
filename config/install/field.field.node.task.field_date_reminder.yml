@@ -1,0 +1,21 @@
+uuid: 5866a8dd-335b-4f32-8153-b3095302380d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_reminder
+    - node.type.task
+  module:
+    - datetime
+id: node.task.field_date_reminder
+field_name: field_date_reminder
+entity_type: node
+bundle: task
+label: 'Reminder date'
+description: 'Assignees to the task will be informed when reminder date reached.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

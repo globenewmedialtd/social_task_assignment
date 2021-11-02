@@ -1,9 +1,12 @@
+uuid: 7adec203-2449-4e33-b7b3-767d86bce7f9
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - options
+_core:
+  default_config_hash: 1YA9KOB7aQRB0N3tMAVPs8GeXyNW5ITYTlAUCvh4yZM
 id: node.field_task_flow
 field_name: field_task_flow
 entity_type: node

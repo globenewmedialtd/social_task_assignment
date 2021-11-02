@@ -1,3 +1,4 @@
+uuid: c8fcb08e-3440-4000-96a3-67cbcb6a5d22
 langcode: en
 status: true
 dependencies:
@@ -6,8 +7,9 @@ dependencies:
     - node.type.task
   module:
     - node
+    - user
 _core:
-  default_config_hash: BfiACBOAecXEgHSUzvDHGSp_NaBO9MPowhrnROArZv8
+  default_config_hash: Espofhdc96d7Xc2Bg2G0HgT1N1EEC6Cwe3OJktlt1F4
 id: task_show_webform
 label: 'Task show webform'
 module: views
@@ -23,8 +25,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -190,7 +193,7 @@ display:
           entity_field: nid
           plugin_id: node_nid
       display_extenders: {  }
-      css_class: 'card card__block'
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -198,6 +201,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   block_1:
     display_plugin: block
@@ -214,4 +218,5 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }

@@ -1,3 +1,4 @@
+uuid: cc9352ec-1130-450d-9018-6284afa77cf7
 langcode: en
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - node.type.task
   module:
     - image
+_core:
+  default_config_hash: 5bnA4zoffCvsej7IJ2t6YrrwnNnqsPPMK1ka2Ocfqhs
 id: node.task.field_task_image
 field_name: field_task_image
 entity_type: node

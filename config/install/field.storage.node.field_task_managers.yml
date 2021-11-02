@@ -1,9 +1,12 @@
+uuid: 86c53927-c2e1-4e31-898b-967bfd2b5253
 langcode: en
 status: true
 dependencies:
   module:
     - node
     - user
+_core:
+  default_config_hash: w8fHVa_jdvHSOYk6-C_LE_RtaJLT7LEnVIocL-RNdCw
 id: node.field_task_managers
 field_name: field_task_managers
 entity_type: node

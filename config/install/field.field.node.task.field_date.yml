@@ -1,3 +1,4 @@
+uuid: a3d309aa-629a-4b6b-8064-f5e085b7e529
 langcode: en
 status: true
 dependencies:
@@ -6,12 +7,14 @@ dependencies:
     - node.type.task
   module:
     - datetime
+_core:
+  default_config_hash: oIWNllYHKBI4RAUXhU_WL9VsDLlJpDTjnqWPw3Zc26o
 id: node.task.field_date
 field_name: field_date
 entity_type: node
 bundle: task
 label: 'Submission date'
-description: ''
+description: 'The submission form will be displayed only on or after the submission date.'
 required: false
 translatable: false
 default_value: {  }

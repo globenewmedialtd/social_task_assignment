@@ -9,17 +9,18 @@ dependencies:
     - field.field.node.task.field_date
     - field.field.node.task.field_date_cut_off
     - field.field.node.task.field_date_due
+    - field.field.node.task.field_date_reminder
     - field.field.node.task.field_files
     - field.field.node.task.field_task_flow
     - field.field.node.task.field_task_image
     - field.field.node.task.field_task_managers
     - field.field.node.task.field_webform
+    - image.style.social_medium
     - node.type.task
   module:
     - datetime
-    - file
     - image
-    - options
+    - lazy
     - text
     - user
 _core:
@@ -31,69 +32,30 @@ mode: small_teaser
 content:
   body:
     type: text_default
-    weight: 4
+    weight: 5
     region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  field_date:
-    weight: 8
-    label: above
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_date_cut_off:
-    weight: 9
-    label: above
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
   field_date_due:
-    weight: 7
-    label: above
+    weight: 6
+    label: inline
     settings:
       format_type: medium
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
-    region: content
-  field_files:
-    weight: 11
-    label: above
-    settings:
-      use_description_as_link_text: true
-    third_party_settings: {  }
-    type: file_default
-    region: content
-  field_task_flow:
-    weight: 5
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: list_default
     region: content
   field_task_image:
-    weight: 10
-    label: above
+    weight: 4
+    label: hidden
     settings:
-      image_style: ''
-      image_link: ''
-    third_party_settings: {  }
+      image_style: social_medium
+      image_link: content
+    third_party_settings:
+      lazy:
+        lazy_image: 0
     type: image
-    region: content
-  field_task_managers:
-    weight: 6
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
     region: content
   groups_type_closed_group:
     label: above
@@ -161,6 +123,12 @@ content:
     type: entity_reference_label
 hidden:
   field_content_visibility: true
+  field_date: true
+  field_date_cut_off: true
+  field_date_reminder: true
+  field_files: true
+  field_task_flow: true
+  field_task_managers: true
   field_webform: true
   flag_follow_content: true
   groups: true

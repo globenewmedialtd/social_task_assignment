@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.task.field_date
     - field.field.node.task.field_date_cut_off
     - field.field.node.task.field_date_due
+    - field.field.node.task.field_date_reminder
     - field.field.node.task.field_files
     - field.field.node.task.field_task_flow
     - field.field.node.task.field_task_image
@@ -15,6 +16,7 @@ dependencies:
     - field.field.node.task.field_webform
     - node.type.task
   module:
+    - datetime
     - file
     - text
     - user
@@ -32,6 +34,15 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
+  field_date_reminder:
+    weight: 6
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_files:
     weight: 5
     label: above

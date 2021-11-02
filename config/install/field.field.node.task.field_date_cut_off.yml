@@ -1,3 +1,4 @@
+uuid: 71bd58c2-42d8-4ced-965f-dffab4397cc6
 langcode: en
 status: true
 dependencies:
@@ -6,12 +7,14 @@ dependencies:
     - node.type.task
   module:
     - datetime
+_core:
+  default_config_hash: 6ilJNLayBRRz1KqgPlLNCnr3PEX4CM18GMNcYwTo1n0
 id: node.task.field_date_cut_off
 field_name: field_date_cut_off
 entity_type: node
 bundle: task
 label: 'Cut-off date'
-description: ''
+description: 'The submission form won''t be displayed when the current date is higher than the cut-off date.'
 required: false
 translatable: false
 default_value: {  }

@@ -1,0 +1,371 @@
+uuid: 264c64d5-849d-4cdb-9b32-f3cf8b96b2a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.profile.table
+    - field.storage.profile.field_profile_organization
+  module:
+    - profile
+    - social_profile
+    - social_task_assignment_vbo
+    - user
+id: manage_task_assignment_members
+label: 'Manage task assignment members'
+module: views
+description: ''
+tag: ''
+base_table: users_field_data
+base_field: uid
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: manage_by_task_organizers_only
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: mini
+        options:
+          items_per_page: 10
+          offset: 0
+          id: 0
+          total_pages: null
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          tags:
+            previous: ‹‹
+            next: ››
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            profile_entity_sortable: profile_entity_sortable
+            field_profile_organization: field_profile_organization
+          info:
+            profile_entity_sortable:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_profile_organization:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
+      row:
+        type: fields
+      fields:
+        social_views_bulk_operations_bulk_form_assignment_data_source:
+          id: social_views_bulk_operations_bulk_form_assignment_data_source
+          table: views
+          field: social_views_bulk_operations_bulk_form_assignment_data_source
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: 'Social Views bulk operations for adding new members to task TEST'
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          batch: 1
+          batch_size: '10'
+          form_step: true
+          buttons: 0
+          clear_on_exposed: 0
+          action_title: Action
+          selected_actions:
+            comment_delete_action: 0
+            social_task_assignment_vbo_test_action: social_task_assignment_vbo_test_action
+            social_user_send_email: 0
+            social_user_export_user_action: 0
+            user_remove_role_action: 0
+            user_unblock_user_action: 0
+            user_add_role_action: 0
+            user_block_user_action: 0
+            views_bulk_operations_delete_entity: 0
+            vbo_cancel_user_action: 0
+            social_group_add_members_to_group_action: 0
+            'entity:save_action:user': 0
+          preconfiguration:
+            social_task_assignment_vbo_test_action:
+              label_override: ''
+          plugin_id: social_views_bulk_operations_bulk_form_assignment_data_source
+        profile_entity_sortable:
+          id: profile_entity_sortable
+          table: profile
+          field: profile_entity_sortable
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          view_mode: table
+          entity_type: profile
+          plugin_id: profile_entity_sortable
+        field_profile_organization:
+          id: field_profile_organization
+          table: profile__field_profile_organization
+          field: field_profile_organization
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+      filters:
+        status:
+          value: '1'
+          table: users_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: user
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+      sorts: {  }
+      title: 'Manage task assignment members'
+      header: {  }
+      footer: {  }
+      empty: {  }
+      relationships:
+        profile:
+          id: profile
+          table: users_field_data
+          field: profile
+          relationship: none
+          group_type: group
+          admin_label: Profile
+          required: false
+          entity_type: user
+          plugin_id: standard
+      arguments: {  }
+      display_extenders: {  }
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+      tags:
+        - 'config:core.entity_view_display.profile.profile.autocomplete_item'
+        - 'config:core.entity_view_display.profile.profile.compact'
+        - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_teaser'
+        - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
+        - 'config:core.entity_view_display.profile.profile.hero'
+        - 'config:core.entity_view_display.profile.profile.medium_teaser'
+        - 'config:core.entity_view_display.profile.profile.search_index'
+        - 'config:core.entity_view_display.profile.profile.small'
+        - 'config:core.entity_view_display.profile.profile.small_teaser'
+        - 'config:core.entity_view_display.profile.profile.statistic'
+        - 'config:core.entity_view_display.profile.profile.table'
+        - 'config:core.entity_view_display.profile.profile.teaser'
+        - 'config:field.storage.profile.field_profile_organization'
+  page:
+    display_plugin: page
+    id: page
+    display_title: Page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: admin/manage-task-assignment-members
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url.query_args
+      tags:
+        - 'config:core.entity_view_display.profile.profile.autocomplete_item'
+        - 'config:core.entity_view_display.profile.profile.compact'
+        - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_teaser'
+        - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
+        - 'config:core.entity_view_display.profile.profile.hero'
+        - 'config:core.entity_view_display.profile.profile.medium_teaser'
+        - 'config:core.entity_view_display.profile.profile.search_index'
+        - 'config:core.entity_view_display.profile.profile.small'
+        - 'config:core.entity_view_display.profile.profile.small_teaser'
+        - 'config:core.entity_view_display.profile.profile.statistic'
+        - 'config:core.entity_view_display.profile.profile.table'
+        - 'config:core.entity_view_display.profile.profile.teaser'
+        - 'config:field.storage.profile.field_profile_organization'

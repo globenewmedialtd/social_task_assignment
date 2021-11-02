@@ -63,17 +63,20 @@ class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
     // Task ID
     $source = $webform_submission->getSourceEntity();
     $nid = $source->id();
+    $task_flow = $source->field_task_flow_value;
+
+    if (isset($task_flow) && $task_flow === 'feedback') {
+      $status = 'submitted';
+    }
+    else {
+      $status = 'completed';
+    }
+
     $owner  = $webform_submission->isOwner($account);
     $source_url = $webform_submission->getSourceUrl();
     $token_url = $webform_submission->getTokenUrl();
     $submission_id = $webform_submission->id();
-    //$owner = $webform_submission->getOwner();
-
-    //\Drupal::logger('social_task_assignment')->notice('source id: ' . $source->id());
-
-    //\Drupal::logger('social_task_assignment')->notice('webform submission id: ' . $webform_submission->id());
-    //\Drupal::logger('social_task_assignment')->notice('Owner:<pre><code>' . print_r($user_id, TRUE) . '</code></pre>' );
-
+    
     $conditions = [
       'field_account' => $user_id,
       'field_task' => $nid,
@@ -87,10 +90,8 @@ class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
     if ($assignment = array_pop($task_assignment)) {
       // For now we only want one submission.
       if ($assignment->field_status->value === 'open') {      
-        $submissions = [$submission_id];
-        $current = date('Y-m-d\TH:i:s', time());
-        $assignment->set('field_submission_date',$current);
-        $assignment->set('field_status','submitted');
+        $submissions = [$submission_id];       
+        $assignment->set('field_status', $status);
         $assignment->set('field_webform_submissions',$submissions);
         $assignment->save();
       }  

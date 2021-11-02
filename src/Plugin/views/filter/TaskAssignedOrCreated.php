@@ -87,6 +87,16 @@ class TaskAssignedOrCreated extends FilterPluginBase {
     $join = Views::pluginManager('join')->createInstance('standard', $configuration);
     $this->query->addRelationship('task_assignment__field_account', $join, 'node_field_data');
 
+    $configuration = [
+      'table' => 'task_assignment__field_assigned',
+      'field' => 'entity_id',
+      'left_table' => 'task_assignment__field_task',
+      'left_field' => 'entity_id',
+      'operator' => '=',
+    ];
+    $join = Views::pluginManager('join')->createInstance('standard', $configuration);
+    $this->query->addRelationship('task_assignment__field_assigned', $join, 'node_field_data');
+
     $or_condition = new Condition('OR');
 
     // Check if the user is the author of the task.
@@ -98,9 +108,10 @@ class TaskAssignedOrCreated extends FilterPluginBase {
     // Or if the user assigned to the task.
     $assigned_to_task = new Condition('AND');
     $assigned_to_task->condition('task_assignment__field_account.field_account_target_id', $account_profile, '=');
+    $assigned_to_task->condition('task_assignment__field_assigned.field_assigned_value','1','=');
     $or_condition->condition($assigned_to_task);
-
     $this->query->addWhere('assigned_or_created', $or_condition);
+    
   }
 
   /**

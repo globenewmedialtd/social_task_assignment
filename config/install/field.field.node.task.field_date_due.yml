@@ -1,3 +1,4 @@
+uuid: da1fdb2e-1abf-4cd0-80c5-a4b90dfcc6e6
 langcode: en
 status: true
 dependencies:
@@ -6,12 +7,14 @@ dependencies:
     - node.type.task
   module:
     - datetime
+_core:
+  default_config_hash: lyMSBt58TUtGfN7RsuIJ8JT5350am_n8SYswOm39cK4
 id: node.task.field_date_due
 field_name: field_date_due
 entity_type: node
 bundle: task
 label: 'Due date'
-description: ''
+description: 'Late assignees will be just flagged  '
 required: true
 translatable: false
 default_value: {  }

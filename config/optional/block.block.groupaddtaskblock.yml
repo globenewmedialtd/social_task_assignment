@@ -1,3 +1,4 @@
+uuid: aac3c540-bb26-4345-8156-fa18ec7bc0a6
 langcode: en
 status: true
 dependencies:
@@ -7,11 +8,11 @@ dependencies:
   theme:
     - socialblue
 _core:
-  default_config_hash: AFa6I-bCv7eh2DSKn0ZKlVxFpO0n61IP4XJHmH6ipSI
+  default_config_hash: C7f5RlkqR4OW9g1bZgcz1MxzanfuHLTkxyO1Wl4Kra0
 id: groupaddtaskblock
 theme: socialblue
 region: complementary_top
-weight: -32
+weight: -28
 provider: null
 plugin: group_add_task_block
 settings:

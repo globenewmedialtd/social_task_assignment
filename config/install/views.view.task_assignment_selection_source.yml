@@ -1,0 +1,844 @@
+uuid: 68eb60de-162a-4107-8b04-8fa7daea64a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.profile.table
+    - field.storage.profile.field_profile_organization
+    - field.storage.task_assignment.field_feedback
+    - field.storage.task_assignment.field_status
+  module:
+    - node
+    - options
+    - profile
+    - social_profile
+    - social_task_assignment
+    - social_task_assignment_vbo
+    - text
+    - user
+_core:
+  default_config_hash: L5olpHzz-5nfMDNEC6jnLp-2uKvm7C4BKvN3xS96WoE
+id: task_assignment_selection_source
+label: 'Task assignment selection source'
+module: views
+description: ''
+tag: ''
+base_table: task_assignment_field_data
+base_field: id
+display:
+  default:
+    display_plugin: default
+    id: default
+    display_title: Master
+    position: 0
+    display_options:
+      access:
+        type: manage_by_task_organizers_only
+        options: {  }
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: true
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: full
+        options:
+          items_per_page: 10
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: true
+          override: true
+          sticky: false
+          caption: ''
+          summary: ''
+          description: ''
+          columns:
+            profile_entity_sortable: profile_entity_sortable
+            field_status: field_status
+            field_feedback: field_feedback
+            field_submission_date: field_submission_date
+            id: id
+          info:
+            profile_entity_sortable:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_status:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_feedback:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_submission_date:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            id:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          default: '-1'
+          empty_table: false
+      row:
+        type: fields
+      fields:
+        profile_entity_sortable:
+          id: profile_entity_sortable
+          table: profile
+          field: profile_entity_sortable
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: Assignee
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          view_mode: table
+          entity_type: profile
+          plugin_id: profile_entity_sortable
+        field_status:
+          id: field_status
+          table: task_assignment__field_status
+          field: field_status
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: Status
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: list_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        field_feedback:
+          id: field_feedback
+          table: task_assignment__field_feedback
+          field: field_feedback
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: text_default
+          settings: {  }
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+        id:
+          id: id
+          table: task_assignment_field_data
+          field: id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ID
+          exclude: false
+          alter:
+            alter_text: true
+            text: "<a class=\"use-ajax\" \r\n    data-dialog-options=\"{&quot;width&quot;:900}\" \r\n    data-dialog-type=\"modal\" \r\n    href=\"/admin/structure/task_assignment/{{ id }}?destination=/node/{{ raw_arguments.nid }}/manage-task-assignments\">\r\n    view\r\n</a>"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: task_assignment
+          entity_field: id
+          plugin_id: field
+      filters:
+        field_status_value:
+          id: field_status_value
+          table: task_assignment__field_status
+          field: field_status_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            all: all
+            open: open
+            submitted: submitted
+            completed: completed
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_status_value_op
+            label: Status
+            description: ''
+            use_operator: false
+            operator: field_status_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_status_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              contentmanager: '0'
+              sitemanager: '0'
+              internal: '0'
+            reduce: true
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          plugin_id: list_field
+        field_assigned_value:
+          id: field_assigned_value
+          table: task_assignment__field_assigned
+          field: field_assigned_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+      sorts: {  }
+      title: 'Assign task to group members'
+      header: {  }
+      footer: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: 'All members have been assigned to this task.'
+          plugin_id: text_custom
+      relationships:
+        field_task:
+          id: field_task
+          table: task_assignment__field_task
+          field: field_task
+          relationship: none
+          group_type: group
+          admin_label: 'field_task: Content'
+          required: true
+          plugin_id: standard
+        field_account:
+          id: field_account
+          table: task_assignment__field_account
+          field: field_account
+          relationship: none
+          group_type: group
+          admin_label: 'field_account: User'
+          required: false
+          plugin_id: standard
+        profile:
+          id: profile
+          table: users_field_data
+          field: profile
+          relationship: field_account
+          group_type: group
+          admin_label: Profile
+          required: false
+          entity_type: user
+          plugin_id: standard
+      arguments:
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: field_task
+          group_type: group
+          admin_label: ''
+          default_action: empty
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags:
+        - 'config:core.entity_view_display.profile.profile.autocomplete_item'
+        - 'config:core.entity_view_display.profile.profile.compact'
+        - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_teaser'
+        - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
+        - 'config:core.entity_view_display.profile.profile.hero'
+        - 'config:core.entity_view_display.profile.profile.medium_teaser'
+        - 'config:core.entity_view_display.profile.profile.search_index'
+        - 'config:core.entity_view_display.profile.profile.small'
+        - 'config:core.entity_view_display.profile.profile.small_teaser'
+        - 'config:core.entity_view_display.profile.profile.statistic'
+        - 'config:core.entity_view_display.profile.profile.table'
+        - 'config:core.entity_view_display.profile.profile.teaser'
+        - 'config:field.storage.task_assignment.field_feedback'
+        - 'config:field.storage.task_assignment.field_status'
+  page:
+    display_plugin: page
+    id: page
+    display_title: Page
+    position: 1
+    display_options:
+      display_extenders: {  }
+      path: node/%node/manage-task-assignments/add-assignees
+      menu:
+        type: none
+        title: Assignments
+        description: ''
+        expanded: false
+        parent: ''
+        weight: 0
+        context: '0'
+        menu_name: main
+      filters:
+        field_assigned_value:
+          id: field_assigned_value
+          table: task_assignment__field_assigned
+          field: field_assigned_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: '0'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          plugin_id: boolean
+      defaults:
+        filters: false
+        filter_groups: false
+        fields: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      fields:
+        social_views_bulk_operations_bulk_form_assignment_source:
+          id: social_views_bulk_operations_bulk_form_assignment_source
+          table: views
+          field: social_views_bulk_operations_bulk_form_assignment_source
+          relationship: none
+          group_type: group
+          admin_label: ''
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: '0'
+          element_class: views-field-views-bulk-operations-bulk-form
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          batch: 1
+          batch_size: '10'
+          form_step: true
+          buttons: 0
+          clear_on_exposed: 0
+          action_title: Action
+          selected_actions:
+            comment_delete_action: 0
+            social_task_assignment_vbo_delete_task_assignment_action: 0
+            social_task_assignment_vbo_unassign_action: 0
+            social_task_assignment_vbo_set_assignment_task_assignment_action: social_task_assignment_vbo_set_assignment_task_assignment_action
+            social_task_assignment_vbo_export_assignments_action: 0
+            social_task_assignment_vbo_send_email_action: 0
+            views_bulk_operations_delete_entity: 0
+            'entity:save_action:task_assignment': 0
+          preconfiguration:
+            social_task_assignment_vbo_set_assignment_task_assignment_action:
+              label_override: 'Assign task to'
+          plugin_id: social_views_bulk_operations_bulk_form_assignment_source
+        profile_entity_sortable:
+          id: profile_entity_sortable
+          table: profile
+          field: profile_entity_sortable
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: Member
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          view_mode: table
+          entity_type: profile
+          plugin_id: profile_entity_sortable
+        field_profile_organization:
+          id: field_profile_organization
+          table: profile__field_profile_organization
+          field: field_profile_organization
+          relationship: profile
+          group_type: group
+          admin_label: ''
+          label: Organization
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          plugin_id: field
+      exposed_block: false
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+      tags:
+        - 'config:core.entity_view_display.profile.profile.autocomplete_item'
+        - 'config:core.entity_view_display.profile.profile.compact'
+        - 'config:core.entity_view_display.profile.profile.compact_notification'
+        - 'config:core.entity_view_display.profile.profile.compact_teaser'
+        - 'config:core.entity_view_display.profile.profile.default'
+        - 'config:core.entity_view_display.profile.profile.featured'
+        - 'config:core.entity_view_display.profile.profile.hero'
+        - 'config:core.entity_view_display.profile.profile.medium_teaser'
+        - 'config:core.entity_view_display.profile.profile.search_index'
+        - 'config:core.entity_view_display.profile.profile.small'
+        - 'config:core.entity_view_display.profile.profile.small_teaser'
+        - 'config:core.entity_view_display.profile.profile.statistic'
+        - 'config:core.entity_view_display.profile.profile.table'
+        - 'config:core.entity_view_display.profile.profile.teaser'
+        - 'config:field.storage.profile.field_profile_organization'

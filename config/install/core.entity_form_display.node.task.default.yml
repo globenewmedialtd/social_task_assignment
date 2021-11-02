@@ -1,3 +1,4 @@
+uuid: 831ab925-0793-4ae1-a919-6948941ea82c
 langcode: en
 status: true
 dependencies:
@@ -7,6 +8,7 @@ dependencies:
     - field.field.node.task.field_date
     - field.field.node.task.field_date_cut_off
     - field.field.node.task.field_date_due
+    - field.field.node.task.field_date_reminder
     - field.field.node.task.field_files
     - field.field.node.task.field_task_flow
     - field.field.node.task.field_task_image
@@ -61,6 +63,7 @@ third_party_settings:
         - field_date
         - field_date_due
         - field_date_cut_off
+        - field_date_reminder
       parent_name: ''
       weight: 1
       format_type: fieldset
@@ -115,10 +118,9 @@ third_party_settings:
         required_fields: true
         id: tags
         classes: card
-        label: Tags
       region: hidden
 _core:
-  default_config_hash: SNSKEg0OoBp_L-VFDn01J2rEb7iNLf6Amef_bGk7ufY
+  default_config_hash: DXJnZxU9Vhmqqgx37RNOwJ2Je9TEFGAPM2sSeDT17mk
 id: node.task.default
 targetEntityType: node
 bundle: task
@@ -136,7 +138,7 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 11
+    weight: 28
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -160,6 +162,12 @@ content:
     region: content
   field_date_due:
     weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_date_reminder:
+    weight: 8
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -219,13 +227,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 10
+    weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 12
+    weight: 29
     region: content
     settings:
       display_label: true
@@ -240,7 +248,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 13
+    weight: 30
     region: content
     settings:
       match_operator: CONTAINS

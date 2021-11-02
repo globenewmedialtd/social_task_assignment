@@ -1,0 +1,21 @@
+uuid: 71d456d3-f239-408d-9b8b-654d7730830a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.message.field_message_context
+    - message.template.activity_on_tasks_im_organizing
+  module:
+    - options
+id: message.activity_on_tasks_im_organizing.field_message_context
+field_name: field_message_context
+entity_type: message
+bundle: activity_on_tasks_im_organizing
+label: field_message_context
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -67,10 +67,8 @@ class SocialTaskAssignmentAutoAssignService {
       $tasks = $group->getContentEntities($plugin_id);
       foreach ($tasks as $task) {
         if ($task instanceof NodeInterface) {         
-          $nid = $task->id();
-          if ($this->isTaskWithAutoAssignEnabled($nid)) {      
-            $this->autoAssign($nid, $uid);
-          }
+          $nid = $task->id();                
+          $this->autoAssign($nid, $uid);          
         }
       }
     }
@@ -93,18 +91,7 @@ class SocialTaskAssignmentAutoAssignService {
       $auto_assign = $config->getAutoAssign();  
     }
 
-    $due_date = $task->field_due_date->date;
-    $task_terminated = FALSE;
-    if (isset($due_date)) {
-    	$timestamp_due_date = $due_date->getTimestamp();
-    	$timestamnp_current = \Drupal::time()->getCurrentTime();  
-    	$task_terminated = FALSE;
-    	if ($timestamp_current > $timestamp_due_date) {
-      	$task_terminated = TRUE;
-    	}
-    }
-
-    if ($auto_assign && !$task_terminated) {
+    if ($auto_assign) {
       return TRUE;
     }
 
@@ -133,9 +120,7 @@ class SocialTaskAssignmentAutoAssignService {
       foreach ($tasks as $task) {
         if ($task instanceof NodeInterface) {
           $nid = $task->id();
-          if ($this->isTaskWithAutoAssignEnabled($nid)) {         
-            $this->deleteAssignments($nid, $uid);
-          }
+          $this->deleteAssignments($nid, $uid);          
         }
       }
     }   
@@ -152,14 +137,12 @@ class SocialTaskAssignmentAutoAssignService {
     // Check if user has assigned the task
     $assigned = $task_assignment->loadByProperties([
       'field_account' => $uid,
-      'field_task' => $nid
+      'field_task' => $nid,
     ]);
   
     foreach($assigned as $key => $record) {
       if ($record instanceof TaskAssignmentInterface) {
-        if ($this->isTaskWithAutoAssignEnabled($record->field_task->target_id)) {
-          $delete_assigned[$key] = $key; 
-        }
+          $delete_assigned[$key] = $key;         
       }
     }
   
@@ -172,7 +155,54 @@ class SocialTaskAssignmentAutoAssignService {
   }
 
   /**
-   * Create assignments
+   * Check if we need to import members into assignments
+   */
+  public function checkIfTaskAssignments($nid) {
+
+    $task_assignment = $this->entityTypeManager->getStorage('task_assignment');
+    $task = $this->entityTypeManager->getStorage('node')->load($nid);
+    $group_members = $this->getGroupMembers($task);
+    
+    // Check if anyone has assigned the task
+    $assigned = $task_assignment->loadByProperties([
+      'field_task' => $nid
+    ]);
+
+    if(!$assigned && is_array($group_members)) {
+      // Auto assign them
+      foreach($group_members as $uid) {
+        $this->autoAssign($nid,$uid);
+      }
+    }
+
+  }
+
+
+  /**
+   * Import all group members into task assignments
+   */
+  protected function getGroupMembers($task) {
+
+    // Get the group from the $task node object
+    $group = _social_group_get_current_group($task);
+
+    if (isset($group)) {
+
+      $members = $group->getMembers();
+      foreach ($members as $member) {
+        $user = $member->getUser();
+        $uid = $user->id();
+        $userids[$uid] = $uid;
+      }
+
+    }
+
+    return $userids;
+
+  }  
+
+  /**
+   * Create assignments with status FALSE
    */
   protected function autoAssign($nid, $uid) {
 
@@ -193,8 +223,16 @@ class SocialTaskAssignmentAutoAssignService {
         'field_task' => $nid,
         'field_account' => $uid,
       ]);
-      $assignment->save(); 
-    }  
+      $assignment->save();
+
+    }
+
+    if ($assigned_record = array_pop($assigned)) {     
+      // We update when already assigend
+      $assigned_record->field_assigned->value = TRUE;
+      $assigned_record->save();
+    }
+
 
   }
 

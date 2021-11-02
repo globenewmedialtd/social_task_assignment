@@ -1,13 +1,13 @@
+uuid: e5a8ce8f-2ad0-43c9-96d8-99c4684d2f21
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.task_assignment.field_webform_submissions
-    - webform.webform.default
   module:
     - social_task_assignment
 _core:
-  default_config_hash: TpOfn_lXm3oB1Ws9P_QnF6zWw3KfFsQG07lP-XX-Vic
+  default_config_hash: w7OWJEs7m70BnUiwrfveAqHyATzX-EQLkbGlE6WL7sQ
 id: task_assignment.task_assignment.field_webform_submissions
 field_name: field_webform_submissions
 entity_type: task_assignment
@@ -21,8 +21,7 @@ default_value_callback: ''
 settings:
   handler: 'default:webform_submission'
   handler_settings:
-    target_bundles:
-      default: default
+    target_bundles: {  }
     sort:
       field: _none
     auto_create: false

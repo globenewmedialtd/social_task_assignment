@@ -1,10 +1,12 @@
+uuid: acc7725e-4ad1-4183-a827-e3a86fd59bab
 langcode: en
 status: true
 dependencies:
   module:
     - user
     - webform
-    - social_task_assignment
+_core:
+  default_config_hash: u1DsDScPSOgUXuiwIP8x5x_qYS8E4ifwmDUGAh3W3S8
 id: attached_webform_submissions
 label: 'Attached Webform Submissions'
 module: views
@@ -117,7 +119,18 @@ display:
       filters: {  }
       sorts: {  }
       title: Submissions
-      header: {  }
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: '<h4>Your submission</h4>'
+          plugin_id: text_custom
       footer: {  }
       empty: {  }
       relationships: {  }
@@ -199,7 +212,7 @@ display:
           entity_field: entity_id
           plugin_id: string
       display_extenders: {  }
-      css_class: 'card__block card'
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:

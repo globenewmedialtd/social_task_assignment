@@ -122,7 +122,11 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
    * {@inheritdoc}
    */
   public function viewsForm(array &$form, FormStateInterface $form_state) {
-    $this->view->setExposedInput(['status' => TRUE]);
+    $this->view->setExposedInput(['field_assigned' => TRUE]);
+    //$this->view->setExposedInput(['field_status_value' => ['open','submitted','completed']]);
+
+    //kint($this->view);
+
 
     parent::viewsForm($form, $form_state);
 
@@ -133,19 +137,26 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
     $action_options = $this->getBulkOptions();
 
     if (!empty($this->view->result) && !empty($action_options)) {
-      $list = &$form[$this->options['id']];
+      $list = $form[$this->options['id']];   
 
       foreach ($this->view->result as $row_index => $row) {
         $entity = $this->getEntity($row);
         $list[$row_index]['#title'] = $this->getEntityLabel($entity);
       }
-    }
+
+    }   
 
     $task = social_task_assignment_get_current_task();
+
     if (!$task) {
       return;
-    }
+    }    
+
+    
+
     $tempstoreData = $this->getTempstoreData($this->view->id(), $this->view->current_display);
+
+    
 
     // Make sure the selection is saved for the current task.
     if (!empty($tempstoreData['task_id']) && $tempstoreData['task_id'] !== $task->id()) {
@@ -171,8 +182,15 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
     // Render proper classes for the header in VBO form.
     $wrapper = &$form['header'][$this->options['id']];
 
+    // Because we are making use of exposed filter
+    // we need to have a class on multipage to 
+    // display the multipage area without any issues.
+    if ($wrapper['multipage'] === NULL) {
+      $wrapper['#attributes']['class'][] = 'no-multipage';
+    }
+
     if (!empty($task->id())) {
-      $wrapper['multipage']['#attributes']['event-id'] = $task->id();
+      $wrapper['multipage']['#attributes']['task-id'] = $task->id();
       if (!empty($wrapper['multipage']['#attributes']['data-display-id'])) {
         $current_display = $wrapper['multipage']['#attributes']['data-display-id'];
         $wrapper['multipage']['#attributes']['data-display-id'] = $current_display . '/' . $task->id();
@@ -184,12 +202,13 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
     $wrapper['#attributes']['class'][] = 'card__block';
     $form['#attached']['library'][] = 'social_task_assignment_vbo/views_bulk_operations.frontUi';
 
+
     // Render select all results checkbox.
     if (!empty($wrapper['select_all'])) {
       $wrapper['select_all']['#title'] = $this->t('Select / unselect all @count members across all the pages', [
-        '@count' => $this->tempStoreData['total_results'] ? ' ' . $this->tempStoreData['total_results'] : '',
+       '@count' => $this->tempStoreData['total_results'] ? ' ' . $this->tempStoreData['total_results'] : '',
       ]);
-      // Styling attributes for the select box.
+       //Styling attributes for the select box.
       $form['header'][$this->options['id']]['select_all']['#attributes']['class'][] = 'form-no-label';
       $form['header'][$this->options['id']]['select_all']['#attributes']['class'][] = 'checkbox';
     }
@@ -227,11 +246,20 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
       $wrapper['multipage']['clear']['#attributes']['class'][] = 'btn-default dropdown-toggle waves-effect waves-btn margin-top-l margin-left-m';
     }
 
-    $actions = &$wrapper['actions'];
+    $actions = &$wrapper['actions'];   
     if (!empty($actions) && !empty($wrapper['action'])) {
+
+      $bulk_options_count = count($this->bulkOptions);
       $actions['#theme'] = 'links__dropbutton__operations__actions';
       $actions['#label'] = $this->t('Actions');
       $actions['#type'] = 'dropbutton';
+      $actions['#attributes'] = [
+        'class' => ['actions-dropbutton'],
+        'no-split' => [
+          'title' => $this->t('Actions'),
+          'alignment' => 'right',
+        ],
+      ];
 
       $items = [];
       foreach ($wrapper['action']['#options'] as $key => $value) {
@@ -239,17 +267,21 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
           $items[] = [
             '#type' => 'submit',
             '#value' => $value,
-          ];
-        }
-      }
+         ];
+       }
+     }
 
       // Add our links to the dropdown buttondrop type.
-      $actions['#links'] = $items;
+      $actions['#links'] = $items;      
+
+
     }
+    
 
     // Remove the Views select list and submit button.
     $form['actions']['#type'] = 'hidden';
-    $form['header']['social_views_bulk_operations_bulk_form_assignments_1']['action']['#access'] = FALSE;
+    $form['header']['social_views_bulk_operations_bulk_form_assignments']['action']['#access'] = FALSE;
+  
   }
 
   /**
@@ -293,11 +325,9 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
 
     if ($form_state->get('step') === 'views_form_views_form' && $this->view->id() === 'manage_all_task_assignments') {
       /** @var \Drupal\Core\Url $url */
-      $url = $form_state->getRedirect();
+      $url = $form_state->getRedirect();     
 
       if ($url->getRouteName() === 'views_bulk_operations.execute_configurable') {
-        $parameters = $url->getRouteParameters();
-
         if (empty($parameters['node'])) {
           $node = \Drupal::routeMatch()->getParameter('node');
           if ($node instanceof NodeInterface) {
@@ -307,9 +337,9 @@ class SocialTaskAssignmentVboViewsBulkOperationsBulkForm extends ViewsBulkOperat
           elseif (!is_object($node)) {
             $parameters['node'] = $node;
           }
-        }
+        }        
 
-        $url = Url::fromRoute('social_task_assignment_vbo.vbo.execute_configurable', [
+        $url = Url::fromRoute('social_task_assignment_vbo.management.vbo.execute_configurable', [
           'node' => $parameters['node'],
         ]);
 

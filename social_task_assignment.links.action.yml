@@ -3,12 +3,3 @@ entity.task_assignment.add_form:
   title: 'Add Task assignment'
   appears_on:
     - entity.task_assignment.collection
-
-social_task_assignment.add_member:
-  title: 'Add assignees'
-  route_name: 'social_task_assignment.add_assignees'
-  appears_on:
-    - view.manage_all_task_assignments.page_1
-  cache_contexts:
-    - 'user.permissions'
-    - 'user.roles'

@@ -1,3 +1,4 @@
+uuid: 38c8ec0e-3f78-4d32-b09f-9394c750d7ee
 langcode: en
 status: true
 dependencies:
@@ -8,6 +9,8 @@ dependencies:
   module:
     - datetime
     - node
+    - options
+    - social_task_assignment
     - user
 _core:
   default_config_hash: xwuotyJYxWKqrO7rhALHKrzzEKn4P8ktl9FbJPllVXs
@@ -366,8 +369,8 @@ display:
         options:
           items_per_page: 2
           offset: 0
-      title: 'Recently created topics'
-      block_description: 'Recently created topics'
+      title: 'Recently created tasks'
+      block_description: 'Recently created tasks'
       arguments:
         uid:
           id: uid
@@ -527,6 +530,45 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: node_access
+        task_assigned_or_created_filter:
+          id: task_assigned_or_created_filter
+          table: node
+          field: task_assigned_or_created_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          plugin_id: task_assigned_or_created
       filter_groups:
         operator: AND
         groups:
@@ -582,6 +624,162 @@ display:
         description: ''
         weight: 0
       exposed_block: true
+      filters:
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: in
+          value:
+            task: task
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+        task_assigned_or_created_filter:
+          id: task_assigned_or_created_filter
+          table: node
+          field: task_assigned_or_created_filter
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: ''
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          plugin_id: task_assigned_or_created
+        field_status_value:
+          id: field_status_value
+          table: task_assignment__field_status
+          field: field_status_value
+          relationship: reverse__task_assignment__field_task
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_status_value_op
+            label: 'Status (field_status)'
+            description: null
+            use_operator: false
+            operator: field_status_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_status_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: true
+          group_info:
+            label: Status
+            description: ''
+            identifier: field_status_value
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '1'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: open
+                operator: or
+                value:
+                  open: open
+              2:
+                title: submitted
+                operator: or
+                value:
+                  submitted: submitted
+              3:
+                title: completed
+                operator: or
+                value:
+                  completed: completed
+          reduce_duplicates: false
+          plugin_id: list_field
+      defaults:
+        filters: false
+        filter_groups: false
+        relationships: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      relationships:
+        reverse__task_assignment__field_task:
+          id: reverse__task_assignment__field_task
+          table: node_field_data
+          field: reverse__task_assignment__field_task
+          relationship: none
+          group_type: group
+          admin_label: field_task
+          required: true
+          entity_type: node
+          plugin_id: entity_reverse
     cache_metadata:
       max-age: -1
       contexts:

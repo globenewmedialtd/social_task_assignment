@@ -13,7 +13,7 @@ class SocialTaskAssignmentVboViewsBulkOperationsConfirmAction extends ConfirmAct
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $view_id = 'manage_all_task_assignments', $display_id = 'page_1') {
+  public function buildForm(array $form, FormStateInterface $form_state, $view_id = 'task_assignment_selection_source', $display_id = 'page') {
     $form = parent::buildForm($form, $form_state, $view_id, $display_id);
     $form_data = $this->getFormData($view_id, $display_id);
 
@@ -21,8 +21,8 @@ class SocialTaskAssignmentVboViewsBulkOperationsConfirmAction extends ConfirmAct
     if (isset($form_data['action_id'])) {
       $form['description'] = [
         '#markup' => $this->formatPlural($form_data['selected_count'],
-        'Are you sure you want to "%action" the following assignee?',
-        'Are you sure you want to "%action" the following %count assignees?',
+        'Are you sure you want to "%action" the following member?',
+        'Are you sure you want to "%action" the following %count members?',
         [
           '%action' => $form_data['action_label'],
           '%count' => $form_data['selected_count'],

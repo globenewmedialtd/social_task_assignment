@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.task.field_date
     - field.field.node.task.field_date_cut_off
     - field.field.node.task.field_date_due
+    - field.field.node.task.field_date_reminder
     - field.field.node.task.field_files
     - field.field.node.task.field_task_flow
     - field.field.node.task.field_task_image
@@ -103,6 +104,7 @@ hidden:
   field_date: true
   field_date_cut_off: true
   field_date_due: true
+  field_date_reminder: true
   field_files: true
   field_task_flow: true
   field_task_image: true

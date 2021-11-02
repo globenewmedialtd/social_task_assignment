@@ -1,3 +1,4 @@
+uuid: 7b72da14-bf72-41e9-9aad-5fd64679a863
 langcode: en
 status: true
 dependencies:
@@ -7,7 +8,7 @@ dependencies:
   module:
     - text
 _core:
-  default_config_hash: busDz3abIUfmNcMYeKukCqxKE5Y2H2ih_UMkJFNfqdA
+  default_config_hash: fX4jM-sxbjmHRFleTDoZGnD2ygEllKqyRlO1uky_Sec
 id: node.task.body
 field_name: body
 entity_type: node

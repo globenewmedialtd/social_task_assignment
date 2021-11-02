@@ -62,8 +62,8 @@
 
 {% if not bare %}
 
-  <section>
-dddd
+  <section{{ attributes.addClass(classes) }}>
+
     {{ title_prefix }}
     {% if label %}
       <h3 {{ title_attributes.addClass(title_classes) }}>{{ label }}</h3>

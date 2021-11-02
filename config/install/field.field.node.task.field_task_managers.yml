@@ -1,14 +1,17 @@
+uuid: a802065b-0c00-4e4e-8b83-997141edbe62
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_task_managers
     - node.type.task
+_core:
+  default_config_hash: 2l1ezwfelNEVymkdDcWRtewIFjfMuEDuoRenPVtEjGs
 id: node.task.field_task_managers
 field_name: field_task_managers
 entity_type: node
 bundle: task
-label: Organizers
+label: Tutors
 description: ''
 required: false
 translatable: false

@@ -6,4 +6,8 @@
   margin-bottom: 10px !important;
 }
 
+.no-multipage {
+  min-height: 56px;
+}
+
 /*# sourceMappingURL=vbo_form.css.map */

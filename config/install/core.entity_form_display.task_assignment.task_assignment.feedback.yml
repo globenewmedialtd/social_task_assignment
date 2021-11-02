@@ -1,14 +1,14 @@
+uuid: f4902777-c22b-4090-8f72-524de3031e50
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_form_mode.task_assignment.feedback
     - field.field.task_assignment.task_assignment.field_account
-    - field.field.task_assignment.task_assignment.field_due_date
+    - field.field.task_assignment.task_assignment.field_assigned
     - field.field.task_assignment.task_assignment.field_feedback
     - field.field.task_assignment.task_assignment.field_information
     - field.field.task_assignment.task_assignment.field_status
-    - field.field.task_assignment.task_assignment.field_submission_date
     - field.field.task_assignment.task_assignment.field_task
     - field.field.task_assignment.task_assignment.field_upload
     - field.field.task_assignment.task_assignment.field_webform_submissions
@@ -46,9 +46,8 @@ content:
     third_party_settings: {  }
 hidden:
   field_account: true
-  field_due_date: true
+  field_assigned: true
   field_information: true
-  field_submission_date: true
   field_task: true
   field_webform_submissions: true
   langcode: true

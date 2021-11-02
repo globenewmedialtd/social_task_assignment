@@ -22,13 +22,16 @@ class SocialTaskAssignmentAccessCheck implements AccessInterface {
     $parameters = $route_match->getParameters();
     $node = $parameters->get('node');
 
+    // In case we are on a node
     if (isset($node) && !is_object($node)) {
       $node = \Drupal::entityTypeManager()->getStorage('node')->load($node);
     }
     
-    if ($node->getType() === 'task') {
+    if (is_object($node)) {
+      if ($node->getType() === 'task') {
         return AccessResult::allowed();
-    }
+      }
+    } 
 
     return AccessResult::neutral();
     

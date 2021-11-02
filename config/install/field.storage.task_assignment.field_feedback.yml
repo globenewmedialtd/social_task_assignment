@@ -1,3 +1,4 @@
+uuid: f370b3c0-a129-4cb7-b286-fbbb7b9b9332
 langcode: en
 status: true
 dependencies:
@@ -5,7 +6,7 @@ dependencies:
     - social_task_assignment
     - text
 _core:
-  default_config_hash: 0VG_LwgVbuU1HuEBwCnCkDcPuzCv82rjw5_gsxIOK3Q
+  default_config_hash: vAbEIw7fLkHs5i7NvkuwhLqqlCYhQZfbl81a4AWUx1s
 id: task_assignment.field_feedback
 field_name: field_feedback
 entity_type: task_assignment

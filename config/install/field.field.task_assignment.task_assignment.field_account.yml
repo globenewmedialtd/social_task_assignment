@@ -1,3 +1,4 @@
+uuid: ba54f105-1fbe-4e31-81b6-9e05891dc926
 langcode: en
 status: true
 dependencies:
@@ -6,7 +7,7 @@ dependencies:
   module:
     - social_task_assignment
 _core:
-  default_config_hash: RywwhAe7H9ukx726Letbol5-bsgXYewp79jMccsYFMQ
+  default_config_hash: odLCmztmRAgiXx2cRVjHYX4cw9TZk1IyvTo3RQJyjQs
 id: task_assignment.task_assignment.field_account
 field_name: field_account
 entity_type: task_assignment

@@ -52,7 +52,6 @@ use Drupal\node\NodeInterface;
  *     "canonical" = "/admin/structure/task_assignment/{task_assignment}",
  *     "add-form" = "/admin/structure/task_assignment/add",
  *     "edit-form" = "/admin/structure/task_assignment/{task_assignment}/edit",
- *     "delete-form" = "/admin/structure/task_assignment/{task_assignment}/delete",
  *     "collection" = "/admin/structure/task_assignment",
  *   },
  *   field_ui_base_route = "task_assignment.settings"

@@ -1,0 +1,37 @@
+uuid: 2a77b9b2-664b-4b48-a1d3-fdf7fb3b38cb
+langcode: en
+status: true
+dependencies:
+  module:
+    - activity_logger
+third_party_settings:
+  activity_logger:
+    activity_bundle_entities:
+      task_assignment-task_assignment: task_assignment-task_assignment
+    activity_action: update_entity_action
+    activity_context: task_organizer_activity_context
+    activity_destinations:
+      notifications: notifications
+      email: email
+    activity_create_direct: false
+    activity_aggregate: false
+    activity_entity_condition: task_assignment_assigned
+template: activity_on_tasks_im_organizing
+label: 'Activity on tasks I am organizing'
+description: 'Activity on tasks I am organizing'
+text:
+  -
+    value: "<p><a href=\"[social_task_assignment:assigned_task_url]\">[social_task_assignment:assigned_user]</a> has been assigned to the task [social_task_assignment:task_iam_organizing] you are organizing</p>\r\n"
+    format: full_html
+  -
+    value: "<p><a href=\"[social_task_assignment:assigned_task_url]\">[social_task_assignment:assigned_user]</a> has been assigned to the task [social_task_assignment:task_iam_organizing] you are organizing</p>\r\n"
+    format: full_html
+  -
+    value: "<p><a href=\"[social_task_assignment:assigned_task_url]\">[social_task_assignment:assigned_user]</a> has been assigned to the task [social_task_assignment:task_iam_organizing] you are organizing</p>\r\n"
+    format: full_html
+settings:
+  'token options':
+    clear: false
+    'token replace': true
+  purge_override: false
+  purge_methods: {  }
