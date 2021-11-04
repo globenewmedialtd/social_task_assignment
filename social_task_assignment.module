@@ -22,6 +22,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\views\Views;
 use Drupal\Core\Database\Query\Condition;
+use Drupal\webform\Entity\WebformSubmission;
 
 
 /**
@@ -380,6 +381,16 @@ function social_task_assignment_views_data_alter(array &$data) {
     ],
   ];
 
+  $data['node']['task_status_filter'] = [
+    'title' => t('Task status filter'),
+    'filter' => [
+      'title' => t('Status'),
+      'help' => t('Status filter on the user profiles.'),
+      'field' => 'field_task',
+      'id' => 'task_status_filter',
+    ],    
+  ];
+
   $data['node']['task_upcoming_due_date_sort'] = [
     'title' => t('Task sorting (overdue and upcoming)'),
     'help' => t('For upcoming tasks sort ASC by due date and for overdue tasks change order to DESC.'),
@@ -415,6 +426,8 @@ function social_task_assignment_views_data_alter(array &$data) {
       'id' => 'social_task_assignment_activity_notification_visibility_access',
     ],
   ];
+
+
 
 
 
@@ -567,6 +580,7 @@ function social_task_assignment_cron() {
 }
 */
 
+
 function social_task_assignment_activity_creator_related_entity_object_alter(&$related_object, $data) {
   if(isset($related_object['target_type']) && $related_object['target_type'] === 'task_assignment') {
 
@@ -591,6 +605,61 @@ function social_task_assignment_activity_creator_related_entity_object_alter(&$r
     
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_delete()
+ */
+function social_task_assignment_node_delete(EntityInterface $entity) {
+
+  // Make sure to delete all related task_assignments
+  // when task node has been deleted
+  if ($entity->bundle() === 'task') {
+    $entity_id = $entity->id();  
+    $query = \Drupal::entityQuery('task_assignment')
+      ->condition('field_task', $entity_id, '=');
+    $task_assignments = $query->execute();
+
+    $itemsToDelete = \Drupal::entityTypeManager()->getStorage('task_assignment')
+      ->loadMultiple($task_assignments);
+
+    foreach ($itemsToDelete as $item) {
+      $item->delete();
+    }
+
+    $message = 'Attached task assignment entities deleted for task' . ' ' . $entity_id;
+    \Drupal::logger('social_task_assignment')->notice($message);
+
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete()
+ */
+function social_task_assignment_task_assignment_delete(EntityInterface $entity) {
+
+  if(isset($entity->field_webform_submissions)) {
+
+    $submissions = $entity->field_webform_submissions->getValue();
+    if (isset($submissions)) {
+      foreach($submissions as $submission) {
+        $sid = $submission['target_id'];
+        $submissions_to_delete[$sid] = $sid; 
+      }      
+
+      $itemsToDelete = \Drupal::entityTypeManager()->getStorage('webform_submission')
+      ->loadMultiple($submissions_to_delete);
+
+      foreach ($itemsToDelete as $item) {
+        $item->delete();
+      }
+
+      $message = 'Attached webform submission entities deleted for task assignment' . ' ' . $entity_id;
+      \Drupal::logger('social_task_assignment')->notice($message);
+
+    }
+  }   
+}
+
 
 
 

@@ -8,7 +8,6 @@ dependencies:
   module:
     - datetime
     - node
-    - options
     - social_task_assignment
     - user
 _core:
@@ -292,7 +291,7 @@ display:
           admin_label: ''
           default_action: 'not found'
           exception:
-            value: ''
+            value: all
             title_enable: false
             title: All
           title_enable: false
@@ -326,6 +325,7 @@ display:
         operator: AND
         groups:
           1: AND
+      group_by: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -705,61 +705,62 @@ display:
             group_items: {  }
           entity_type: node
           plugin_id: task_assigned_or_created
-        field_status_value:
-          id: field_status_value
-          table: task_assignment__field_status
-          field: field_status_value
-          relationship: reverse__task_assignment__field_task
+        task_status_filter:
+          id: task_status_filter
+          table: node
+          field: task_status_filter
+          relationship: none
           group_type: group
           admin_label: ''
-          operator: or
+          operator: in
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: field_status_value_op
-            label: 'Status (field_status)'
-            description: null
+            operator_id: task_status_filter_op
+            label: 'Task status filter'
+            description: ''
             use_operator: false
-            operator: field_status_value_op
+            operator: task_status_filter_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_status_value
+            identifier: task_status_filter
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            reduce: false
+              anonymous: '0'
+              administrator: '0'
+              contentmanager: '0'
+              sitemanager: '0'
+            reduce: 0
           is_grouped: true
           group_info:
             label: Status
             description: ''
-            identifier: field_status_value
+            identifier: task_status_filter
             optional: true
-            widget: select
+            widget: radios
             multiple: false
             remember: false
             default_group: '1'
             default_group_multiple: {  }
             group_items:
               1:
-                title: open
-                operator: or
-                value:
-                  open: open
+                title: Open
+                operator: in
+                value: '1'
               2:
-                title: submitted
-                operator: or
-                value:
-                  submitted: submitted
+                title: Submitted
+                operator: in
+                value: '2'
               3:
-                title: completed
-                operator: or
-                value:
-                  completed: completed
-          reduce_duplicates: false
-          plugin_id: list_field
+                title: Completed
+                operator: in
+                value: '3'
+          entity_type: node
+          plugin_id: task_status_filter
       defaults:
         filters: false
         filter_groups: false
@@ -768,17 +769,7 @@ display:
         operator: AND
         groups:
           1: AND
-      relationships:
-        reverse__task_assignment__field_task:
-          id: reverse__task_assignment__field_task
-          table: node_field_data
-          field: reverse__task_assignment__field_task
-          relationship: none
-          group_type: group
-          admin_label: field_task
-          required: true
-          entity_type: node
-          plugin_id: entity_reverse
+      relationships: {  }
     cache_metadata:
       max-age: -1
       contexts:
