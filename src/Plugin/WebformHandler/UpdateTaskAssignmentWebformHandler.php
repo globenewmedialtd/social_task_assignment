@@ -63,7 +63,7 @@ class UpdateTaskAssignmentWebformHandler extends WebformHandlerBase {
     // Task ID
     $source = $webform_submission->getSourceEntity();
     $nid = $source->id();
-    $task_flow = $source->field_task_flow_value;
+    $task_flow = $source->field_task_flow->value;
 
     if (isset($task_flow) && $task_flow === 'feedback') {
       $status = 'submitted';
