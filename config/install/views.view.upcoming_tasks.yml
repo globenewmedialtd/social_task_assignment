@@ -35,7 +35,7 @@ display:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }
@@ -249,6 +249,51 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: node_access
+        field_account_target_id:
+          id: field_account_target_id
+          table: task_assignment__field_account
+          field: field_account_target_id
+          relationship: reverse__task_assignment__field_task
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: '[current-user:uid]'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: field_account_target_id_op
+            label: 'Account (field_account)'
+            description: null
+            use_operator: false
+            operator: field_account_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_account_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: null
+            min_placeholder: null
+            max_placeholder: null
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          use_tokens: 1
+          plugin_id: numeric
       sorts:
         field_date_due_value:
           id: field_date_due_value
@@ -261,7 +306,7 @@ display:
           exposed: false
           expose:
             label: ''
-          granularity: second
+          granularity: minute
           plugin_id: datetime
       title: 'Upcoming tasks'
       header: {  }
@@ -513,13 +558,73 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           plugin_id: node_access
+        field_account_target_id:
+          id: field_account_target_id
+          table: task_assignment__field_account
+          field: field_account_target_id
+          relationship: reverse__task_assignment__field_task
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: '[current-user:uid]'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            placeholder: ''
+            min_placeholder: ''
+            max_placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          use_tokens: 1
+          plugin_id: numeric
       defaults:
         filters: false
         filter_groups: false
+        sorts: false
       filter_groups:
         operator: AND
         groups:
           1: AND
+      sorts:
+        field_date_due_value:
+          id: field_date_due_value
+          table: node__field_date_due
+          field: field_date_due_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          granularity: minute
+          plugin_id: datetime
     cache_metadata:
       max-age: -1
       contexts:
