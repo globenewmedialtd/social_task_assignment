@@ -227,11 +227,10 @@ function social_task_assignment_form_task_assignment_feedback_form_alter(&$form,
     'visible' => [
       ':input[name="field_status"]' => ['value' => 'submitted'],
     ],
-    'visible' => [
+    [
       ':input[name="field_status"]' => ['value' => 'feedback'],
     ],
   ];
-
 
 
   // We hide the action buttons, because we do not need them in
