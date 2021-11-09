@@ -23,6 +23,7 @@ use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\views\Views;
 use Drupal\Core\Database\Query\Condition;
 use Drupal\webform\Entity\WebformSubmission;
+use Drupal\group\Entity\GroupInterface;
 
 
 /**
@@ -444,6 +445,21 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
     $uid = $current_user->id();
     $nid = $entity->id();
 
+    $is_group_manager_or_admin = FALSE;
+
+    // We need to get our group
+    $group = _social_group_get_current_group($entity);
+    //kint($group);
+    //kint($group);
+    //kint($is_group_manager_or_admin);
+    if ($group instanceof GroupInterface) {
+      $member = $group->getMember($current_user);
+      if ($member->hasPermission("edit group")) {
+        $is_group_manager_or_admin = TRUE; 
+      }
+    }
+
+
     // Create our custom task assignment tag so we can also invalidate f.e. teasers
     // cache when people assigned. 
     $assignment_tag = 'task_assignment:' . $nid . '-' . $uid;
@@ -491,11 +507,13 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
         ->condition('field_task', $nid)
         ->count()
         ->execute();
-  
-      $build['assignments_count'] = [
-        '#type' => '#text_field',
-        '#markup' => $assignments_count,
-      ];
+
+      if ($is_group_manager_or_admin) {  
+        $build['assignments_count'] = [
+          '#type' => '#text_field',
+          '#markup' => $assignments_count,
+        ];
+      }
   
       // Prepare assignments counter for teasers - OPEN.
       $assignments_count_open = $storage->getQuery()
@@ -503,11 +521,13 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
         ->condition('field_status', 'open')
         ->count()
         ->execute();
-  
-      $build['assignments_count_open'] = [
-        '#type' => '#text_field',
-        '#markup' => $assignments_count_open,
-      ];
+
+      if ($is_group_manager_or_admin) {    
+        $build['assignments_count_open'] = [
+          '#type' => '#text_field',
+          '#markup' => $assignments_count_open,
+        ];
+      }
   
       // Prepare assignments counter for teasers - SUBMITTED.
       $assignments_count_submitted = $storage->getQuery()
@@ -515,11 +535,13 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
         ->condition('field_status', 'submitted')
         ->count()
         ->execute();
-  
-      $build['assignments_count_submitted'] = [
-        '#type' => '#text_field',
-        '#markup' => $assignments_count_submitted,
-      ];    
+
+      if ($is_group_manager_or_admin) {
+        $build['assignments_count_submitted'] = [
+          '#type' => '#text_field',
+          '#markup' => $assignments_count_submitted,
+        ];
+      }    
   
       // Prepare assignments counter for teasers - COMPLETED.
       $assignments_count_completed = $storage->getQuery()
@@ -527,14 +549,13 @@ function social_task_assignment_node_view_alter(array &$build, EntityInterface $
         ->condition('field_status', 'completed')
         ->count()
         ->execute();
-  
-      $build['assignments_count_completed'] = [
-        '#type' => '#text_field',
-        '#markup' => $assignments_count_completed,
-      ];     
-  
 
-
+      if ($is_group_manager_or_admin) {     
+        $build['assignments_count_completed'] = [
+          '#type' => '#text_field',
+          '#markup' => $assignments_count_completed,
+        ]; 
+      } 
 
     }
 
